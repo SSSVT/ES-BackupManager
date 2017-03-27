@@ -36,5 +36,23 @@ namespace ES_BackupManager
 
             client.Close();
         }
+
+        private void checkBox_Full_Checked(object sender, RoutedEventArgs e)
+        {
+            this.checkBox_Diff.IsChecked = false;
+            this.checkBox_Log.IsChecked = false;
+        }
+
+        private void checkBox_Diff_Checked(object sender, RoutedEventArgs e)
+        {
+            this.checkBox_Full.IsChecked = false;
+            this.checkBox_Log.IsChecked = false;
+        }
+
+        private void checkBox_Log_Checked(object sender, RoutedEventArgs e)
+        {
+            this.checkBox_Diff.IsChecked = false;
+            this.checkBox_Full.IsChecked = false;
+        }
     }
 }
