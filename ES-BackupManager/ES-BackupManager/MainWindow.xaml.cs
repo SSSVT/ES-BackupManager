@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ES_BackupManager.ESBackupServerService;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,17 @@ namespace ES_BackupManager
         public MainWindow()
         {
             InitializeComponent();
+
+            this.LoadComponents();
+        }
+
+        private void LoadComponents()
+        {
+            ESBackupServerServiceClient client = new ESBackupServerServiceClient();
+
+            //TODO:Implementovat načítání komponentů, které jsou potřeba
+
+            client.Close();
         }
     }
 }
