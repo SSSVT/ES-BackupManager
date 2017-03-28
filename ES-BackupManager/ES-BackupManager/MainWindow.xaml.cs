@@ -30,11 +30,24 @@ namespace ES_BackupManager
 
         private void LoadComponents()
         {
+            this.radioButton_ExpireAfter.IsChecked = true;            
+
             ESBackupServerServiceClient client = new ESBackupServerServiceClient();
 
             //TODO:Implementovat načítání komponentů, které jsou potřeba
 
             client.Close();
+        }
+        private void radioButton_ExpireAfter_Checked(object sender, RoutedEventArgs e)
+        {
+            this.textBox_ExpireDate_After.IsEnabled = true;
+            this.DatePicker_ExpireOn.IsEnabled = false;
+        }
+
+        private void radioButton_ExpireOn_Checked(object sender, RoutedEventArgs e)
+        {
+            this.textBox_ExpireDate_After.IsEnabled = false;
+            this.DatePicker_ExpireOn.IsEnabled = true;
         }
     }
 }
