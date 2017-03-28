@@ -99,7 +99,7 @@
     <Compile Include="AppStruct\Windows\SaveSettingsWindows.xaml.cs">
       <DependentUpon>SaveSettingsWindows.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Connected Services\ESBackupServerService\Reference.cs">
+    <Compile Include="Connected Services\ESBackupServerAdminService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -127,12 +127,30 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Connected Services\ESBackupServerService\ESBackupServerService.wsdl" />
-    <None Include="Connected Services\ESBackupServerService\ESBackupServerService.xsd">
+    <None Include="Connected Services\ESBackupServerAdminService\ESBackupServerAdminService.wsdl" />
+    <None Include="Connected Services\ESBackupServerAdminService\ESBackupServerAdminService.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\ESBackupServerService\ESBackupServerService1.xsd">
+    <None Include="Connected Services\ESBackupServerAdminService\ESBackupServerAdminService1.xsd">
       <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ESBackupServerAdminService\ESBackupServerAdminService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ESBackupServerAdminService\ESBackupServerAdminService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ESBackupServerAdminService\ES_BackupManager.ESBackupServerAdminService.Backup.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\ESBackupServerAdminService\ES_BackupManager.ESBackupServerAdminService.Client.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\ESBackupServerAdminService\ES_BackupManager.ESBackupServerAdminService.Configuration.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\ESBackupServerAdminService\ES_BackupManager.ESBackupServerAdminService.Log.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -149,19 +167,19 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Connected Services\ESBackupServerService\" />
+    <WCFMetadataStorage Include="Connected Services\ESBackupServerAdminService\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\ESBackupServerService\ESBackupServerService.disco" />
+    <None Include="Connected Services\ESBackupServerAdminService\ESBackupServerAdminService.disco" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\ESBackupServerService\configuration91.svcinfo" />
+    <None Include="Connected Services\ESBackupServerAdminService\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\ESBackupServerService\configuration.svcinfo" />
+    <None Include="Connected Services\ESBackupServerAdminService\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\ESBackupServerService\Reference.svcmap">
+    <None Include="Connected Services\ESBackupServerAdminService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

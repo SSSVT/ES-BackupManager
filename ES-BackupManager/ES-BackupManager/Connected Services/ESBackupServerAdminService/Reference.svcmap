@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="4ce49f4d-00c7-44e2-a44c-9648ea3f7776" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:53095/ESBackupServerAdminService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="ESBackupServerAdminService2.xsd" MetadataType="Schema" ID="c6142433-40e8-4bf0-9b28-c1c5cdcb15a4" SourceId="1" SourceUrl="http://localhost:53095/ESBackupServerAdminService.svc?xsd=xsd2" />
+    <MetadataFile FileName="ESBackupServerAdminService.disco" MetadataType="Disco" ID="d525021e-7950-4a5b-b33a-b15c8d75ca5e" SourceId="1" SourceUrl="http://localhost:53095/ESBackupServerAdminService.svc?disco" />
+    <MetadataFile FileName="ESBackupServerAdminService.wsdl" MetadataType="Wsdl" ID="1398dcaf-cb7f-40f3-b72a-8e41902832ca" SourceId="1" SourceUrl="http://localhost:53095/ESBackupServerAdminService.svc?wsdl" />
+    <MetadataFile FileName="ESBackupServerAdminService.xsd" MetadataType="Schema" ID="73a56e88-ab1f-4041-9f38-7d63087834fc" SourceId="1" SourceUrl="http://localhost:53095/ESBackupServerAdminService.svc?xsd=xsd1" />
+    <MetadataFile FileName="ESBackupServerAdminService1.xsd" MetadataType="Schema" ID="834d7bc5-2d1c-4e09-9f62-681af84f98ec" SourceId="1" SourceUrl="http://localhost:53095/ESBackupServerAdminService.svc?xsd=xsd0" />
+    <MetadataFile FileName="ESBackupServerAdminService3.xsd" MetadataType="Schema" ID="97c6b1df-afe5-442d-b688-1d3324e10d06" SourceId="1" SourceUrl="http://localhost:53095/ESBackupServerAdminService.svc?xsd=xsd3" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

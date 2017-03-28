@@ -5,8 +5,32 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ES_BackupManager.AppStruct.Windows"
         mc:Ignorable="d"
-        Title="LogWindow" Height="300" Width="300">
+        Title="LogWindow" Height="384" Width="562">
     <Grid>
-        
+        <GroupBox Header="Logs" Margin="10,0,10,5">
+            <Grid>
+                <GroupBox Header="Information" Margin="178,0,10,10">
+                    <Grid>
+                        <Label Content="Client:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                        <Label x:Name="label_Client" Content="CLIENT" HorizontalAlignment="Left" Margin="100,10,0,0" VerticalAlignment="Top" Width="200"/>
+                        <Label Content="Backup:" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
+                        <Label Content="Time:" HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top"/>
+                        <Label x:Name="label_Backup" Content="BACKUP" HorizontalAlignment="Left" Margin="100,41,0,0" VerticalAlignment="Top"/>
+                        <Label x:Name="label_Time" Content="UTC TIME" HorizontalAlignment="Left" Margin="100,72,0,0" VerticalAlignment="Top"/>
+                        <Label Content="Time:" HorizontalAlignment="Left" Margin="10,103,0,0" VerticalAlignment="Top"/>
+
+                    </Grid>
+                </GroupBox>
+                <GroupBox Header="List of Logs" HorizontalAlignment="Left" Height="316" Margin="10,0,0,0" VerticalAlignment="Top" Width="163">
+                    <ListView x:Name="listView_Logs" Margin="5,5,5,5">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </GroupBox>
+            </Grid>
+        </GroupBox>
     </Grid>
 </Window>

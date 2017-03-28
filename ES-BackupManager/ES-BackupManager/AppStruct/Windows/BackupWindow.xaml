@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ES_BackupManager.AppStruct.Windows"
         mc:Ignorable="d"
-        Title="BackupWindow" Height="300" Width="300">
+        Title="BackupWindow" Height="384" Width="562">
     <Grid>
-        
+        <DataGrid x:Name="Backup_dataGrid" HorizontalAlignment="Left" Height="333" Margin="10,10,0,0" VerticalAlignment="Top" Width="534"/>
     </Grid>
 </Window>

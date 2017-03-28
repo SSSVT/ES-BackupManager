@@ -1,5 +1,5 @@
 ﻿using ES_BackupManager.AppStruct.Windows;
-using ES_BackupManager.ESBackupServerService;
+using ES_BackupManager.ESBackupServerAdminService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,11 +31,15 @@ namespace ES_BackupManager
 
         private void LoadComponents()
         {
-            this.radioButton_ExpireAfter.IsChecked = true;            
-
-            ESBackupServerServiceClient client = new ESBackupServerServiceClient();
+            this.radioButton_ExpireAfter.IsChecked = true;
 
             //TODO:Implementovat načítání komponentů, které jsou potřeba
+            ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
+
+            foreach (Client item in client.GetClients())
+            {
+                this.listView_Clients.Items.Add(item);              
+            }            
 
             client.Close();
         }
@@ -53,22 +57,14 @@ namespace ES_BackupManager
 
         private void button_ViewLogs_Click(object sender, RoutedEventArgs e)
         {
-            LogWindow lw = new LogWindow();
-
-            if (lw.ShowDialog() == true)
-            {
-
-            }
+            LogWindow lw = new LogWindow(this.listView_Clients.SelectedItem as Client);
+            lw.ShowDialog();
         }
 
         private void button_ViewBackups_Click(object sender, RoutedEventArgs e)
         {
-            BackupWindow bw = new BackupWindow();
-
-            if (bw.ShowDialog() == true)
-            {
-
-            }
+            BackupWindow bw = new BackupWindow(this.listView_Clients.SelectedItem as Client);
+            bw.ShowDialog();
         }
 
         private void btn_LoadSett_Click(object sender, RoutedEventArgs e)
@@ -98,6 +94,32 @@ namespace ES_BackupManager
             if (msw.ShowDialog() == true)
             {
 
+            }
+        }
+
+        private void listView_Clients_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Client c = this.listView_Clients.SelectedItem as Client;
+
+            this.label_Client.Content = c.Name;
+
+            //TEST
+            try
+            {
+                if (c.Logins.FirstOrDefault().Active)
+                    this.label_Status.Content = "Online";
+                else
+                    this.label_Status.Content = "Offline";
+
+                if (c.Verified)
+                    this.label_Verification.Content = "Verified";
+                else
+                    this.label_Verification.Content = "Unknown";
+            }
+            catch (Exception)
+            {
+                this.label_Status.Content = "EXCEPTION";
+                this.label_Verification.Content = "EXCEPTION";
             }
         }
     }

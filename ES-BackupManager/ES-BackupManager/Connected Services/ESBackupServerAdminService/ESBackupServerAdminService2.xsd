@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/ESBackupServer.Database.Objects" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/ESBackupServer.Database.Objects" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:53095/ESBackupServerAdminService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:complexType name="ArrayOfClient">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Client" nillable="true" type="tns:Client" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfClient" nillable="true" type="tns:ArrayOfClient" />
+  <xs:complexType name="Client">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Backups" nillable="true" type="tns:ArrayOfBackup" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ID" type="xs:int" />
+      <xs:element minOccurs="0" name="IDLastDifferentialBackup" nillable="true" type="xs:long" />
+      <xs:element minOccurs="0" name="IDLastFullBackup" nillable="true" type="xs:long" />
+      <xs:element minOccurs="0" name="LastDifferentialBackup" nillable="true" type="tns:Backup" />
+      <xs:element minOccurs="0" name="LastFullBackup" nillable="true" type="tns:Backup" />
+      <xs:element minOccurs="0" name="Logins" nillable="true" type="tns:ArrayOfLogin" />
+      <xs:element minOccurs="0" name="Logs" nillable="true" type="tns:ArrayOfLog" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Username" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Verified" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Client" nillable="true" type="tns:Client" />
+  <xs:complexType name="ArrayOfBackup">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Backup" nillable="true" type="tns:Backup" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfBackup" nillable="true" type="tns:ArrayOfBackup" />
+  <xs:complexType name="Backup">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Client" nillable="true" type="tns:Client" />
+      <xs:element minOccurs="0" name="Compressed" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ExpirationDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ID" type="xs:long" />
+      <xs:element minOccurs="0" name="IDClient" nillable="true" type="tns:Client" />
+      <xs:element minOccurs="0" name="Logs" nillable="true" type="tns:ArrayOfLog" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TimeEnd" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="TimeStart" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Backup" nillable="true" type="tns:Backup" />
+  <xs:complexType name="ArrayOfLog">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Log" nillable="true" type="tns:Log" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfLog" nillable="true" type="tns:ArrayOfLog" />
+  <xs:complexType name="Log">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Backup" nillable="true" type="tns:Backup" />
+      <xs:element minOccurs="0" name="Client" nillable="true" type="tns:Client" />
+      <xs:element minOccurs="0" name="ID" type="ser:guid" />
+      <xs:element minOccurs="0" name="IDBackup" nillable="true" type="xs:long" />
+      <xs:element minOccurs="0" name="IDClient" type="xs:int" />
+      <xs:element minOccurs="0" name="IDLogType" type="xs:unsignedByte" />
+      <xs:element minOccurs="0" name="LogType" nillable="true" type="tns:LogType" />
+      <xs:element minOccurs="0" name="UTCTime" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Value" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Log" nillable="true" type="tns:Log" />
+  <xs:complexType name="LogType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ID" type="xs:unsignedByte" />
+      <xs:element minOccurs="0" name="Logs" nillable="true" type="tns:ArrayOfLog" />
+      <xs:element minOccurs="0" name="Name" type="tns:LogTypeNames" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LogType" nillable="true" type="tns:LogType" />
+  <xs:simpleType name="LogTypeNames">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Error">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Warning">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Message">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">3</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="LogTypeNames" nillable="true" type="tns:LogTypeNames" />
+  <xs:complexType name="ArrayOfLogin">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Login" nillable="true" type="tns:Login" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfLogin" nillable="true" type="tns:ArrayOfLogin" />
+  <xs:complexType name="Login">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Active" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Client" nillable="true" type="tns:Client" />
+      <xs:element minOccurs="0" name="ID" type="ser:guid" />
+      <xs:element minOccurs="0" name="IDClient" type="xs:int" />
+      <xs:element minOccurs="0" name="IP" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="UTCTime" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Login" nillable="true" type="tns:Login" />
+</xs:schema>
