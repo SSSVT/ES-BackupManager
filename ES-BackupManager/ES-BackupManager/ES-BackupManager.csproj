@@ -56,11 +56,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="App\Windows\BackupWindow.xaml">
+    <Page Include="AppStruct\Windows\BackupWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="App\Windows\LogWindow.xaml">
+    <Page Include="AppStruct\Windows\LoadSettingsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppStruct\Windows\LogWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppStruct\Windows\MoreSettingsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppStruct\Windows\SaveSettingsWindows.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -72,11 +84,20 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="App\Windows\BackupWindow.xaml.cs">
+    <Compile Include="AppStruct\Windows\BackupWindow.xaml.cs">
       <DependentUpon>BackupWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="App\Windows\LogWindow.xaml.cs">
+    <Compile Include="AppStruct\Windows\LoadSettingsWindow.xaml.cs">
+      <DependentUpon>LoadSettingsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppStruct\Windows\LogWindow.xaml.cs">
       <DependentUpon>LogWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppStruct\Windows\MoreSettingsWindow.xaml.cs">
+      <DependentUpon>MoreSettingsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppStruct\Windows\SaveSettingsWindows.xaml.cs">
+      <DependentUpon>SaveSettingsWindows.xaml</DependentUpon>
     </Compile>
     <Compile Include="Connected Services\ESBackupServerService\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -122,7 +143,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App\Objects\" />
+    <Folder Include="AppStruct\Objects\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />

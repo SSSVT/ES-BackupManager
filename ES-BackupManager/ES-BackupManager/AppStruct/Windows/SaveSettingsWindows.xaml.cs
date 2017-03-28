@@ -12,14 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace ES_BackupManager.App.Windows
+namespace ES_BackupManager.AppStruct.Windows
 {
     /// <summary>
-    /// Interaction logic for BackupWindow.xaml
+    /// Interaction logic for SaveSettingsWindows.xaml
     /// </summary>
-    public partial class BackupWindow : Window
+    public partial class SaveSettingsWindows : Window
     {
-        public BackupWindow()
+        public SaveSettingsWindows()
         {
             InitializeComponent();
         }

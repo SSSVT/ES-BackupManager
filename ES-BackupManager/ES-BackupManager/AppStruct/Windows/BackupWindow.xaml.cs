@@ -12,14 +12,15 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace ES_BackupManager.App.Windows
+namespace ES_BackupManager.AppStruct.Windows
 {
     /// <summary>
-    /// Interaction logic for LogWindow.xaml
+    /// Interaction logic for BackupWindow.xaml
     /// </summary>
-    public partial class LogWindow : Window
+    public partial class BackupWindow : Window
     {
-        public LogWindow()
+        //TODO: Implementovat do kontruktoru parametry (Client...)
+        public BackupWindow()
         {
             InitializeComponent();
         }

@@ -23,18 +23,18 @@
         </GroupBox>
         <GroupBox Header="Client Informations:" Height="198" Margin="297,28,10,0" VerticalAlignment="Top">
             <Grid x:Name="Main_Grid_ClientInfo" Margin="0,10,0,0">
-                <Label Content="Client:" VerticalAlignment="Top" HorizontalAlignment="Left" Width="45"/>
-                <Label Content="Status:" HorizontalAlignment="Left" Margin="0,26,0,0" VerticalAlignment="Top"/>
-                <Label Content="Verified:" HorizontalAlignment="Left" Margin="0,52,0,0" VerticalAlignment="Top"/>
-                <Button x:Name="button_ViewBackups" Content="View backups" HorizontalAlignment="Left" Margin="10,134,0,0" VerticalAlignment="Top" Width="100"/>
-                <Button x:Name="button_ViewLogs" Content="View logs" HorizontalAlignment="Left" Margin="115,134,0,0" VerticalAlignment="Top" Width="100"/>
+                <Label Content="Client:" VerticalAlignment="Top" HorizontalAlignment="Left" Width="45" Margin="21,1,0,0"/>
+                <Label Content="Status:" HorizontalAlignment="Left" Margin="21,27,0,0" VerticalAlignment="Top"/>
+                <Label Content="Verified:" HorizontalAlignment="Left" Margin="21,53,0,0" VerticalAlignment="Top"/>
+                <Button x:Name="button_ViewBackups" Content="View backups" HorizontalAlignment="Left" Margin="31,135,0,0" VerticalAlignment="Top" Width="100" Click="button_ViewBackups_Click"/>
+                <Button x:Name="button_ViewLogs" Content="View logs" HorizontalAlignment="Left" Margin="136,135,0,0" VerticalAlignment="Top" Width="100" Click="button_ViewLogs_Click"/>
             </Grid>
         </GroupBox>
         <GroupBox Header="Backup Settings:" Height="332" Margin="297,226,10,0" VerticalAlignment="Top">
             <Grid x:Name="Main_Grid_ClientSettings" Margin="0 10 0 0">
                 <Label Content="Backup Type:" VerticalAlignment="Top" HorizontalAlignment="Left" Width="100" Margin="10,0,0,0"/>
-                <Button x:Name="btn_LoadSett" Content="Load Settings" HorizontalAlignment="Left" Margin="545,10,0,0" VerticalAlignment="Top" Width="100"/>
-                <Button x:Name="btn_SaveSett" Content="Save Settings" HorizontalAlignment="Left" Margin="545,35,0,0" VerticalAlignment="Top" Width="100"/>
+                <Button x:Name="btn_LoadSett" Content="Load Settings" HorizontalAlignment="Left" Margin="545,10,0,0" VerticalAlignment="Top" Width="100" Click="btn_LoadSett_Click"/>
+                <Button x:Name="btn_SaveSett" Content="Save Settings" HorizontalAlignment="Left" Margin="545,35,0,0" VerticalAlignment="Top" Width="100" Click="btn_SaveSett_Click"/>
                 <ComboBox x:Name="comboBox_BackupType" HorizontalAlignment="Left" Margin="160,4,0,0" VerticalAlignment="Top" Width="370" SelectedIndex="0">
                     <ComboBoxItem Content="Full"/>
                     <ComboBoxItem Content="Differencial"/>
@@ -54,7 +54,7 @@
                 </GroupBox>
                 <Button x:Name="button_Backup" Content="Backup
 " HorizontalAlignment="Left" Margin="545,268,0,0" VerticalAlignment="Top" Width="100"/>
-                <Button x:Name="button_MoreSettings" Content="More Settings" HorizontalAlignment="Left" Margin="10,202,0,0" VerticalAlignment="Top" Width="100"/>
+                <Button x:Name="button_MoreSettings" Content="More Settings" HorizontalAlignment="Left" Margin="10,202,0,0" VerticalAlignment="Top" Width="100" Click="button_MoreSettings_Click"/>
             </Grid>
         </GroupBox>
     </Grid>

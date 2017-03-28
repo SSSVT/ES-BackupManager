@@ -1,4 +1,5 @@
-﻿using ES_BackupManager.ESBackupServerService;
+﻿using ES_BackupManager.AppStruct.Windows;
+using ES_BackupManager.ESBackupServerService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,6 +49,56 @@ namespace ES_BackupManager
         {
             this.textBox_ExpireDate_After.IsEnabled = false;
             this.DatePicker_ExpireOn.IsEnabled = true;
+        }
+
+        private void button_ViewLogs_Click(object sender, RoutedEventArgs e)
+        {
+            LogWindow lw = new LogWindow();
+
+            if (lw.ShowDialog() == true)
+            {
+
+            }
+        }
+
+        private void button_ViewBackups_Click(object sender, RoutedEventArgs e)
+        {
+            BackupWindow bw = new BackupWindow();
+
+            if (bw.ShowDialog() == true)
+            {
+
+            }
+        }
+
+        private void btn_LoadSett_Click(object sender, RoutedEventArgs e)
+        {
+            LoadSettingsWindow lsw = new LoadSettingsWindow();
+
+            if (lsw.ShowDialog() == true)
+            {
+
+            }
+        }
+
+        private void btn_SaveSett_Click(object sender, RoutedEventArgs e)
+        {
+            SaveSettingsWindows ssw = new SaveSettingsWindows();
+
+            if (ssw.ShowDialog() == true)
+            {
+
+            }
+        }
+
+        private void button_MoreSettings_Click(object sender, RoutedEventArgs e)
+        {
+            MoreSettingsWindow msw = new MoreSettingsWindow();
+
+            if (msw.ShowDialog() == true)
+            {
+
+            }
         }
     }
 }
