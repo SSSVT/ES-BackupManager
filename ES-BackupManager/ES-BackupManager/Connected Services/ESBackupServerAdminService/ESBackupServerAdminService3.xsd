@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/ESBackupServer.App.Objects" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/ESBackupServer.App.Objects" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:53095/ESBackupServerAdminService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/ESBackupServer.Database.Objects" />
+  <xs:import schemaLocation="http://localhost:53095/ESBackupServerAdminService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/ESBackupServer.App.Objects.Config" />
   <xs:complexType name="Configuration">
-    <xs:sequence />
+    <xs:sequence>
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/ESBackupServer.Database.Objects" minOccurs="0" name="Client" nillable="true" type="q1:Client" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/ESBackupServer.App.Objects.Config" minOccurs="0" name="Events" nillable="true" type="q2:ArrayOfEventDefinition" />
+      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/ESBackupServer.Database.Objects" minOccurs="0" name="Templates" nillable="true" type="q3:ArrayOfBackupTemplate" />
+      <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/ESBackupServer.App.Objects.Config" minOccurs="0" name="TimeActions" nillable="true" type="q4:ArrayOfTimeActionDefinition" />
+    </xs:sequence>
   </xs:complexType>
   <xs:element name="Configuration" nillable="true" type="tns:Configuration" />
 </xs:schema>

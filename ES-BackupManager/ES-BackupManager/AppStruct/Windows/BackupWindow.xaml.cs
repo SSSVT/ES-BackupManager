@@ -1,4 +1,5 @@
-﻿using ES_BackupManager.ESBackupServerAdminService;
+﻿using ES_BackupManager.AppStruct.Objects;
+using ES_BackupManager.ESBackupServerAdminService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,13 +22,13 @@ namespace ES_BackupManager.AppStruct.Windows
     public partial class BackupWindow : Window
     {
         //TODO: Implementovat do kontruktoru parametry (Client...)
-        public BackupWindow(Client c)
+        public BackupWindow(ClientWPF c)
         {
             InitializeComponent();
 
             this.LoadGrid(c);
         }
-        private void LoadGrid(Client c)
+        private void LoadGrid(ClientWPF c)
         {
             foreach (Backup item in c.Backups)
             {

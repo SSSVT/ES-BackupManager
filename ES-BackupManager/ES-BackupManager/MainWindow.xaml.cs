@@ -1,4 +1,6 @@
-﻿using ES_BackupManager.AppStruct.Windows;
+﻿using ES_BackupManager.AppStruct.Components;
+using ES_BackupManager.AppStruct.Objects;
+using ES_BackupManager.AppStruct.Windows;
 using ES_BackupManager.ESBackupServerAdminService;
 using System;
 using System.Collections.Generic;
@@ -37,8 +39,16 @@ namespace ES_BackupManager
             ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
 
             foreach (Client item in client.GetClients())
-            {
-                this.listView_Clients.Items.Add(item);              
+            {                
+                ClientWPF cWPF = new ClientWPF();
+                cWPF.ID = item.ID;
+                cWPF.Name = item.Name;
+                cWPF.Description = item.Description;
+                cWPF.Verified = item.Verified;
+                cWPF.LogWPF = ClassConvertor.ToLogWPF(item.Logs);
+                //cWPF.Backups = item.Backups;
+                cWPF.Templates = item.Templates;
+                this.listView_Clients.Items.Add(cWPF);              
             }            
 
             client.Close();
@@ -56,15 +66,23 @@ namespace ES_BackupManager
         }
 
         private void button_ViewLogs_Click(object sender, RoutedEventArgs e)
-        {
-            LogWindow lw = new LogWindow(this.listView_Clients.SelectedItem as Client);
-            lw.ShowDialog();
+        {        
+            ClientWPF c = this.listView_Clients.SelectedItem as ClientWPF;
+            if (c != null)
+            {
+                LogWindow lw = new LogWindow(c);
+                lw.ShowDialog();
+            }
         }
 
         private void button_ViewBackups_Click(object sender, RoutedEventArgs e)
         {
-            BackupWindow bw = new BackupWindow(this.listView_Clients.SelectedItem as Client);
-            bw.ShowDialog();
+            ClientWPF c = this.listView_Clients.SelectedItem as ClientWPF;
+            if (c != null)
+            {
+                BackupWindow bw = new BackupWindow(c);
+                bw.ShowDialog();
+            }            
         }
 
         private void btn_LoadSett_Click(object sender, RoutedEventArgs e)
@@ -99,18 +117,13 @@ namespace ES_BackupManager
 
         private void listView_Clients_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Client c = this.listView_Clients.SelectedItem as Client;
+            ClientWPF c = this.listView_Clients.SelectedItem as ClientWPF;
 
             this.label_Client.Content = c.Name;
 
             //TEST
             try
             {
-                if (c.Logins.FirstOrDefault().Active)
-                    this.label_Status.Content = "Online";
-                else
-                    this.label_Status.Content = "Offline";
-
                 if (c.Verified)
                     this.label_Verification.Content = "Verified";
                 else
@@ -118,7 +131,7 @@ namespace ES_BackupManager
             }
             catch (Exception)
             {
-                this.label_Status.Content = "EXCEPTION";
+                this.label_Status.Content = "REMOVE";
                 this.label_Verification.Content = "EXCEPTION";
             }
         }

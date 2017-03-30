@@ -84,6 +84,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="AppStruct\Components\ClassConvertor.cs" />
+    <Compile Include="AppStruct\Objects\BackupWPF.cs" />
+    <Compile Include="AppStruct\Objects\ClientWPF.cs" />
+    <Compile Include="AppStruct\Objects\LogWPF.cs" />
     <Compile Include="AppStruct\Windows\BackupWindow.xaml.cs">
       <DependentUpon>BackupWindow.xaml</DependentUpon>
     </Compile>
@@ -140,6 +144,9 @@
     <None Include="Connected Services\ESBackupServerAdminService\ESBackupServerAdminService3.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\ESBackupServerAdminService\ESBackupServerAdminService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\ESBackupServerAdminService\ES_BackupManager.ESBackupServerAdminService.Backup.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -160,9 +167,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="AppStruct\Objects\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>

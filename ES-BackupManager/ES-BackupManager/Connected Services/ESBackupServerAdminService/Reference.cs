@@ -32,16 +32,7 @@ namespace ES_BackupManager.ESBackupServerAdminService {
         private int IDField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<long> IDLastDifferentialBackupField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<long> IDLastFullBackupField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private ES_BackupManager.ESBackupServerAdminService.Backup LastDifferentialBackupField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private ES_BackupManager.ESBackupServerAdminService.Backup LastFullBackupField;
+        private System.Nullable<System.DateTime> LastBackupTimeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private ES_BackupManager.ESBackupServerAdminService.Login[] LoginsField;
@@ -51,6 +42,9 @@ namespace ES_BackupManager.ESBackupServerAdminService {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string NameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private ES_BackupManager.ESBackupServerAdminService.BackupTemplate[] TemplatesField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string UsernameField;
@@ -108,53 +102,14 @@ namespace ES_BackupManager.ESBackupServerAdminService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<long> IDLastDifferentialBackup {
+        public System.Nullable<System.DateTime> LastBackupTime {
             get {
-                return this.IDLastDifferentialBackupField;
+                return this.LastBackupTimeField;
             }
             set {
-                if ((this.IDLastDifferentialBackupField.Equals(value) != true)) {
-                    this.IDLastDifferentialBackupField = value;
-                    this.RaisePropertyChanged("IDLastDifferentialBackup");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<long> IDLastFullBackup {
-            get {
-                return this.IDLastFullBackupField;
-            }
-            set {
-                if ((this.IDLastFullBackupField.Equals(value) != true)) {
-                    this.IDLastFullBackupField = value;
-                    this.RaisePropertyChanged("IDLastFullBackup");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public ES_BackupManager.ESBackupServerAdminService.Backup LastDifferentialBackup {
-            get {
-                return this.LastDifferentialBackupField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.LastDifferentialBackupField, value) != true)) {
-                    this.LastDifferentialBackupField = value;
-                    this.RaisePropertyChanged("LastDifferentialBackup");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public ES_BackupManager.ESBackupServerAdminService.Backup LastFullBackup {
-            get {
-                return this.LastFullBackupField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.LastFullBackupField, value) != true)) {
-                    this.LastFullBackupField = value;
-                    this.RaisePropertyChanged("LastFullBackup");
+                if ((this.LastBackupTimeField.Equals(value) != true)) {
+                    this.LastBackupTimeField = value;
+                    this.RaisePropertyChanged("LastBackupTime");
                 }
             }
         }
@@ -194,6 +149,19 @@ namespace ES_BackupManager.ESBackupServerAdminService {
                 if ((object.ReferenceEquals(this.NameField, value) != true)) {
                     this.NameField = value;
                     this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public ES_BackupManager.ESBackupServerAdminService.BackupTemplate[] Templates {
+            get {
+                return this.TemplatesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TemplatesField, value) != true)) {
+                    this.TemplatesField = value;
+                    this.RaisePropertyChanged("Templates");
                 }
             }
         }
@@ -253,7 +221,13 @@ namespace ES_BackupManager.ESBackupServerAdminService {
         private string DescriptionField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<System.DateTime> ExpirationDateField;
+        private string DestinationField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> EndField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> ExpirationField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private long IDField;
@@ -268,10 +242,16 @@ namespace ES_BackupManager.ESBackupServerAdminService {
         private string NameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<System.DateTime> TimeEndField;
+        private string SourceField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.DateTime TimeStartField;
+        private System.DateTime StartField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private ES_BackupManager.ESBackupServerAdminService.Backup.Statuses StatusField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private ES_BackupManager.ESBackupServerAdminService.BackupTypes TypeField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -323,14 +303,40 @@ namespace ES_BackupManager.ESBackupServerAdminService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<System.DateTime> ExpirationDate {
+        public string Destination {
             get {
-                return this.ExpirationDateField;
+                return this.DestinationField;
             }
             set {
-                if ((this.ExpirationDateField.Equals(value) != true)) {
-                    this.ExpirationDateField = value;
-                    this.RaisePropertyChanged("ExpirationDate");
+                if ((object.ReferenceEquals(this.DestinationField, value) != true)) {
+                    this.DestinationField = value;
+                    this.RaisePropertyChanged("Destination");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> End {
+            get {
+                return this.EndField;
+            }
+            set {
+                if ((this.EndField.Equals(value) != true)) {
+                    this.EndField = value;
+                    this.RaisePropertyChanged("End");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> Expiration {
+            get {
+                return this.ExpirationField;
+            }
+            set {
+                if ((this.ExpirationField.Equals(value) != true)) {
+                    this.ExpirationField = value;
+                    this.RaisePropertyChanged("Expiration");
                 }
             }
         }
@@ -388,27 +394,53 @@ namespace ES_BackupManager.ESBackupServerAdminService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<System.DateTime> TimeEnd {
+        public string Source {
             get {
-                return this.TimeEndField;
+                return this.SourceField;
             }
             set {
-                if ((this.TimeEndField.Equals(value) != true)) {
-                    this.TimeEndField = value;
-                    this.RaisePropertyChanged("TimeEnd");
+                if ((object.ReferenceEquals(this.SourceField, value) != true)) {
+                    this.SourceField = value;
+                    this.RaisePropertyChanged("Source");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime TimeStart {
+        public System.DateTime Start {
             get {
-                return this.TimeStartField;
+                return this.StartField;
             }
             set {
-                if ((this.TimeStartField.Equals(value) != true)) {
-                    this.TimeStartField = value;
-                    this.RaisePropertyChanged("TimeStart");
+                if ((this.StartField.Equals(value) != true)) {
+                    this.StartField = value;
+                    this.RaisePropertyChanged("Start");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public ES_BackupManager.ESBackupServerAdminService.Backup.Statuses Status {
+            get {
+                return this.StatusField;
+            }
+            set {
+                if ((this.StatusField.Equals(value) != true)) {
+                    this.StatusField = value;
+                    this.RaisePropertyChanged("Status");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public ES_BackupManager.ESBackupServerAdminService.BackupTypes Type {
+            get {
+                return this.TypeField;
+            }
+            set {
+                if ((this.TypeField.Equals(value) != true)) {
+                    this.TypeField = value;
+                    this.RaisePropertyChanged("Type");
                 }
             }
         }
@@ -421,6 +453,20 @@ namespace ES_BackupManager.ESBackupServerAdminService {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
             }
         }
+        
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+        [System.Runtime.Serialization.DataContractAttribute(Name="Backup.Statuses", Namespace="http://schemas.datacontract.org/2004/07/ESBackupServer.Database.Objects")]
+        public enum Statuses : int {
+            
+            [System.Runtime.Serialization.EnumMemberAttribute()]
+            Executing = 0,
+            
+            [System.Runtime.Serialization.EnumMemberAttribute()]
+            Completed = 1,
+            
+            [System.Runtime.Serialization.EnumMemberAttribute()]
+            Failed = 2,
+        }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -431,9 +477,6 @@ namespace ES_BackupManager.ESBackupServerAdminService {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool ActiveField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private ES_BackupManager.ESBackupServerAdminService.Client ClientField;
@@ -457,19 +500,6 @@ namespace ES_BackupManager.ESBackupServerAdminService {
             }
             set {
                 this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool Active {
-            get {
-                return this.ActiveField;
-            }
-            set {
-                if ((this.ActiveField.Equals(value) != true)) {
-                    this.ActiveField = value;
-                    this.RaisePropertyChanged("Active");
-                }
             }
         }
         
@@ -723,6 +753,190 @@ namespace ES_BackupManager.ESBackupServerAdminService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="BackupTemplate", Namespace="http://schemas.datacontract.org/2004/07/ESBackupServer.Database.Objects")]
+    [System.SerializableAttribute()]
+    public partial class BackupTemplate : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CompressionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<uint> DaysToExpirationField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DescriptionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DestinationField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long IDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IDClientField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SourceField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private ES_BackupManager.ESBackupServerAdminService.BackupTypes TypeField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+        public string Compression {
+            get {
+                return this.CompressionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CompressionField, value) != true)) {
+                    this.CompressionField = value;
+                    this.RaisePropertyChanged("Compression");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<uint> DaysToExpiration {
+            get {
+                return this.DaysToExpirationField;
+            }
+            set {
+                if ((this.DaysToExpirationField.Equals(value) != true)) {
+                    this.DaysToExpirationField = value;
+                    this.RaisePropertyChanged("DaysToExpiration");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Description {
+            get {
+                return this.DescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
+                    this.DescriptionField = value;
+                    this.RaisePropertyChanged("Description");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Destination {
+            get {
+                return this.DestinationField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DestinationField, value) != true)) {
+                    this.DestinationField = value;
+                    this.RaisePropertyChanged("Destination");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long ID {
+            get {
+                return this.IDField;
+            }
+            set {
+                if ((this.IDField.Equals(value) != true)) {
+                    this.IDField = value;
+                    this.RaisePropertyChanged("ID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int IDClient {
+            get {
+                return this.IDClientField;
+            }
+            set {
+                if ((this.IDClientField.Equals(value) != true)) {
+                    this.IDClientField = value;
+                    this.RaisePropertyChanged("IDClient");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Source {
+            get {
+                return this.SourceField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SourceField, value) != true)) {
+                    this.SourceField = value;
+                    this.RaisePropertyChanged("Source");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public ES_BackupManager.ESBackupServerAdminService.BackupTypes Type {
+            get {
+                return this.TypeField;
+            }
+            set {
+                if ((this.TypeField.Equals(value) != true)) {
+                    this.TypeField = value;
+                    this.RaisePropertyChanged("Type");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="BackupTypes", Namespace="http://schemas.datacontract.org/2004/07/ESBackupServer.Database.Objects")]
+    public enum BackupTypes : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Full = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Differential = 1,
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="LogType", Namespace="http://schemas.datacontract.org/2004/07/ESBackupServer.Database.Objects")]
     [System.SerializableAttribute()]
     public partial class LogType : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -817,6 +1031,208 @@ namespace ES_BackupManager.ESBackupServerAdminService {
     [System.Runtime.Serialization.DataContractAttribute(Name="Configuration", Namespace="http://schemas.datacontract.org/2004/07/ESBackupServer.App.Objects")]
     [System.SerializableAttribute()]
     public partial class Configuration : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private ES_BackupManager.ESBackupServerAdminService.Client ClientField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private ES_BackupManager.ESBackupServerAdminService.EventDefinition[] EventsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private ES_BackupManager.ESBackupServerAdminService.BackupTemplate[] TemplatesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private ES_BackupManager.ESBackupServerAdminService.TimeActionDefinition[] TimeActionsField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public ES_BackupManager.ESBackupServerAdminService.Client Client {
+            get {
+                return this.ClientField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ClientField, value) != true)) {
+                    this.ClientField = value;
+                    this.RaisePropertyChanged("Client");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public ES_BackupManager.ESBackupServerAdminService.EventDefinition[] Events {
+            get {
+                return this.EventsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EventsField, value) != true)) {
+                    this.EventsField = value;
+                    this.RaisePropertyChanged("Events");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public ES_BackupManager.ESBackupServerAdminService.BackupTemplate[] Templates {
+            get {
+                return this.TemplatesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TemplatesField, value) != true)) {
+                    this.TemplatesField = value;
+                    this.RaisePropertyChanged("Templates");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public ES_BackupManager.ESBackupServerAdminService.TimeActionDefinition[] TimeActions {
+            get {
+                return this.TimeActionsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TimeActionsField, value) != true)) {
+                    this.TimeActionsField = value;
+                    this.RaisePropertyChanged("TimeActions");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="EventDefinition", Namespace="http://schemas.datacontract.org/2004/07/ESBackupServer.App.Objects.Config")]
+    [System.SerializableAttribute()]
+    public partial class EventDefinition : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsAfterEventField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsBeforeEventField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ValueField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool _IsAfterField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool _IsBeforeField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsAfterEvent {
+            get {
+                return this.IsAfterEventField;
+            }
+            set {
+                if ((this.IsAfterEventField.Equals(value) != true)) {
+                    this.IsAfterEventField = value;
+                    this.RaisePropertyChanged("IsAfterEvent");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsBeforeEvent {
+            get {
+                return this.IsBeforeEventField;
+            }
+            set {
+                if ((this.IsBeforeEventField.Equals(value) != true)) {
+                    this.IsBeforeEventField = value;
+                    this.RaisePropertyChanged("IsBeforeEvent");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Value {
+            get {
+                return this.ValueField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ValueField, value) != true)) {
+                    this.ValueField = value;
+                    this.RaisePropertyChanged("Value");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool _IsAfter {
+            get {
+                return this._IsAfterField;
+            }
+            set {
+                if ((this._IsAfterField.Equals(value) != true)) {
+                    this._IsAfterField = value;
+                    this.RaisePropertyChanged("_IsAfter");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool _IsBefore {
+            get {
+                return this._IsBeforeField;
+            }
+            set {
+                if ((this._IsBeforeField.Equals(value) != true)) {
+                    this._IsBeforeField = value;
+                    this.RaisePropertyChanged("_IsBefore");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="TimeActionDefinition", Namespace="http://schemas.datacontract.org/2004/07/ESBackupServer.App.Objects.Config")]
+    [System.SerializableAttribute()]
+    public partial class TimeActionDefinition : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
