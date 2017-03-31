@@ -22,13 +22,9 @@
                     </Grid>
                 </GroupBox>
                 <GroupBox Header="List of Logs" HorizontalAlignment="Left" Height="316" Margin="10,0,0,0" VerticalAlignment="Top" Width="163">
-                    <ListView x:Name="listView_Logs" Margin="5,5,5,5">
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
+                    <DataGrid Name="dataGrid_Logs">
+                        
+                    </DataGrid>                    
                 </GroupBox>
             </Grid>
         </GroupBox>

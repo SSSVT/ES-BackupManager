@@ -20,13 +20,12 @@
         </DockPanel>
         <GroupBox Header="List of Clients
 " Height="530" Margin="10,28,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="282">
-            <ListView x:Name="listView_Clients" Margin="10" SelectionChanged="listView_Clients_SelectionChanged">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn/>
-                    </GridView>
-                </ListView.View>
-            </ListView>
+            <DataGrid Name="dataGrid_ListClients" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="dataGrid_ListClients_SelectionChanged" >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
+                    <DataGridCheckBoxColumn Header="Verified" Binding="{Binding Verified}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
         </GroupBox>
         <GroupBox Header="Client Informations:" Height="198" Margin="297,28,10,0" VerticalAlignment="Top">
             <Grid x:Name="Main_Grid_ClientInfo" Margin="0,10,0,0">

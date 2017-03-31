@@ -84,10 +84,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="AppStruct\Components\ClassConvertor.cs" />
-    <Compile Include="AppStruct\Objects\BackupWPF.cs" />
-    <Compile Include="AppStruct\Objects\ClientWPF.cs" />
-    <Compile Include="AppStruct\Objects\LogWPF.cs" />
     <Compile Include="AppStruct\Windows\BackupWindow.xaml.cs">
       <DependentUpon>BackupWindow.xaml</DependentUpon>
     </Compile>
@@ -167,7 +163,10 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="AppStruct\Components\" />
+    <Folder Include="AppStruct\Objects\" />
+  </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>

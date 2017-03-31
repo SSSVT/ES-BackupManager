@@ -1,9 +1,8 @@
-﻿using ES_BackupManager.AppStruct.Components;
-using ES_BackupManager.AppStruct.Objects;
-using ES_BackupManager.AppStruct.Windows;
+﻿using ES_BackupManager.AppStruct.Windows;
 using ES_BackupManager.ESBackupServerAdminService;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,7 +22,8 @@ namespace ES_BackupManager
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
-    {
+    {        
+        private BindingList<Client> list { get; set; }
         public MainWindow()
         {
             InitializeComponent();
@@ -37,19 +37,20 @@ namespace ES_BackupManager
 
             //TODO:Implementovat načítání komponentů, které jsou potřeba
             ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
-
+            list = new BindingList<Client>();
             foreach (Client item in client.GetClients())
             {                
-                ClientWPF cWPF = new ClientWPF();
+                Client cWPF = new Client();
                 cWPF.ID = item.ID;
                 cWPF.Name = item.Name;
                 cWPF.Description = item.Description;
                 cWPF.Verified = item.Verified;
-                cWPF.LogWPF = ClassConvertor.ToLogWPF(item.Logs);
+                cWPF.Logs = item.Logs;
                 //cWPF.Backups = item.Backups;
                 cWPF.Templates = item.Templates;
-                this.listView_Clients.Items.Add(cWPF);              
-            }            
+                list.Add(cWPF);              
+            }
+            this.dataGrid_ListClients.ItemsSource = list;
 
             client.Close();
         }
@@ -66,8 +67,8 @@ namespace ES_BackupManager
         }
 
         private void button_ViewLogs_Click(object sender, RoutedEventArgs e)
-        {        
-            ClientWPF c = this.listView_Clients.SelectedItem as ClientWPF;
+        {
+            Client c = this.dataGrid_ListClients.SelectedItem as Client;
             if (c != null)
             {
                 LogWindow lw = new LogWindow(c);
@@ -77,7 +78,7 @@ namespace ES_BackupManager
 
         private void button_ViewBackups_Click(object sender, RoutedEventArgs e)
         {
-            ClientWPF c = this.listView_Clients.SelectedItem as ClientWPF;
+            Client c = this.dataGrid_ListClients.SelectedItem as Client;
             if (c != null)
             {
                 BackupWindow bw = new BackupWindow(c);
@@ -115,9 +116,9 @@ namespace ES_BackupManager
             }
         }
 
-        private void listView_Clients_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void dataGrid_ListClients_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ClientWPF c = this.listView_Clients.SelectedItem as ClientWPF;
+            Client c = this.dataGrid_ListClients.SelectedItem as Client;
 
             this.label_Client.Content = c.Name;
 

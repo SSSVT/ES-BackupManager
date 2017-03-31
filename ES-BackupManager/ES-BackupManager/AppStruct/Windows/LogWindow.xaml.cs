@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using ES_BackupManager.ESBackupServerAdminService;
-using ES_BackupManager.AppStruct.Objects;
+using System.ComponentModel;
 
 namespace ES_BackupManager.AppStruct.Windows
 {
@@ -21,18 +21,20 @@ namespace ES_BackupManager.AppStruct.Windows
     /// </summary>
     public partial class LogWindow : Window
     {
+        private BindingList<Log> list { get; set; }
         //TODO: Implementovat do kontruktoru parametry (Client...)
-        public LogWindow(ClientWPF c)
+        public LogWindow(Client c)
         {
             InitializeComponent();
 
             this.LoadList(c);
         }
-        private void LoadList(ClientWPF c)
+        private void LoadList(Client c)
         {
-            foreach (LogWPF item in c.LogWPF)
+            list = new BindingList<Log>();
+            foreach (Log item in c.Logs)
             {
-                this.listView_Logs.Items.Add(item);
+                this.list.Add(item);
             }
         }
     }
