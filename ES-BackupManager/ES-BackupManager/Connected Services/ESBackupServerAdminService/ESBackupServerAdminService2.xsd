@@ -20,6 +20,8 @@
       <xs:element minOccurs="0" name="Username" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Verified" type="xs:boolean" />
     </xs:sequence>
+    <xs:attribute ref="ser:Id" />
+    <xs:attribute ref="ser:Ref" />
   </xs:complexType>
   <xs:element name="Client" nillable="true" type="tns:Client" />
   <xs:complexType name="ArrayOfBackup">
@@ -37,7 +39,7 @@
       <xs:element minOccurs="0" name="End" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Expiration" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="ID" type="xs:long" />
-      <xs:element minOccurs="0" name="IDClient" nillable="true" type="tns:Client" />
+      <xs:element minOccurs="0" name="IDClient" type="xs:int" />
       <xs:element minOccurs="0" name="Logs" nillable="true" type="tns:ArrayOfLog" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Source" nillable="true" type="xs:string" />
@@ -45,6 +47,8 @@
       <xs:element minOccurs="0" name="Status" type="tns:Backup.Statuses" />
       <xs:element minOccurs="0" name="Type" type="tns:BackupTypes" />
     </xs:sequence>
+    <xs:attribute ref="ser:Id" />
+    <xs:attribute ref="ser:Ref" />
   </xs:complexType>
   <xs:element name="Backup" nillable="true" type="tns:Backup" />
   <xs:complexType name="ArrayOfLog">
@@ -65,6 +69,8 @@
       <xs:element minOccurs="0" name="UTCTime" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Value" nillable="true" type="xs:string" />
     </xs:sequence>
+    <xs:attribute ref="ser:Id" />
+    <xs:attribute ref="ser:Ref" />
   </xs:complexType>
   <xs:element name="Log" nillable="true" type="tns:Log" />
   <xs:complexType name="LogType">
@@ -73,6 +79,8 @@
       <xs:element minOccurs="0" name="Logs" nillable="true" type="tns:ArrayOfLog" />
       <xs:element minOccurs="0" name="Name" type="tns:LogTypeNames" />
     </xs:sequence>
+    <xs:attribute ref="ser:Id" />
+    <xs:attribute ref="ser:Ref" />
   </xs:complexType>
   <xs:element name="LogType" nillable="true" type="tns:LogType" />
   <xs:simpleType name="LogTypeNames">
@@ -130,6 +138,8 @@
       <xs:element minOccurs="0" name="IP" nillable="true" type="xs:base64Binary" />
       <xs:element minOccurs="0" name="UTCTime" type="xs:dateTime" />
     </xs:sequence>
+    <xs:attribute ref="ser:Id" />
+    <xs:attribute ref="ser:Ref" />
   </xs:complexType>
   <xs:element name="Login" nillable="true" type="tns:Login" />
   <xs:complexType name="ArrayOfBackupTemplate">
@@ -150,6 +160,8 @@
       <xs:element minOccurs="0" name="Source" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Type" type="tns:BackupTypes" />
     </xs:sequence>
+    <xs:attribute ref="ser:Id" />
+    <xs:attribute ref="ser:Ref" />
   </xs:complexType>
   <xs:element name="BackupTemplate" nillable="true" type="tns:BackupTemplate" />
   <xs:simpleType name="Compression">

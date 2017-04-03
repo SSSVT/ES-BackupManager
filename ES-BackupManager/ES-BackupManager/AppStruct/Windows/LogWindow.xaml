@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ES_BackupManager.AppStruct.Windows"
         mc:Ignorable="d"
-        Title="LogWindow" Height="384" Width="562">
+        Title="LogWindow" Height="250" Width="550">
     <Grid>
         <GroupBox Header="Logs" Margin="10,0,10,5">
             <Grid>
@@ -21,13 +21,11 @@
                         <Label x:Name="label_LogType" Content="LOG TYPE" HorizontalAlignment="Left" Margin="100,105,0,0" VerticalAlignment="Top"/>
                     </Grid>
                 </GroupBox>
-                <GroupBox Header="List of Logs" HorizontalAlignment="Left" Height="316" Margin="10,0,0,0" VerticalAlignment="Top" Width="163">
-                    <DataGrid Name="dataGrid_Logs" SelectionChanged="dataGrid_Logs_SelectionChanged" AutoGenerateColumns="False"  IsReadOnly="True">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Log time" Binding="{Binding UTCTime}" Width="*"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </GroupBox>
+                <DataGrid x:Name="dataGrid_Logs" SelectionChanged="dataGrid_Logs_SelectionChanged" AutoGenerateColumns="False"  IsReadOnly="True" Margin="10,10,337,10">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Log time" Binding="{Binding UTCTime}" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
             </Grid>
         </GroupBox>
     </Grid>

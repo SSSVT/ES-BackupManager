@@ -140,9 +140,6 @@
     <None Include="Connected Services\ESBackupServerAdminService\ESBackupServerAdminService3.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\ESBackupServerAdminService\ESBackupServerAdminService4.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Connected Services\ESBackupServerAdminService\ES_BackupManager.ESBackupServerAdminService.Backup.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
