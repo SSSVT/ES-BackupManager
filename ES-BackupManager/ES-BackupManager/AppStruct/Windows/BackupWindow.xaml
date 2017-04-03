@@ -5,8 +5,35 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ES_BackupManager.AppStruct.Windows"
         mc:Ignorable="d"
-        Title="BackupWindow" Height="384" Width="562">
-    <Grid>
-        <DataGrid x:Name="dataGrid_Backups" HorizontalAlignment="Left" Height="333" Margin="10,10,0,0" VerticalAlignment="Top" Width="534"/>
+        Title="BackupWindow" Height="490" Width="573">
+    <Grid Margin="0,0,2,0" Height="354" VerticalAlignment="Top">
+        <GroupBox Header="Information" Margin="178,10,42,0" Height="317" VerticalAlignment="Top">
+            <Grid x:Name="grid_BackupInfo">
+                <Label x:Name="label_Name_Static" Content="Name:" HorizontalAlignment="Left" Margin="44,12,0,0" VerticalAlignment="Top"/>
+                <Label Content="Description:" HorizontalAlignment="Left" Margin="15,43,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="label_Name" Content="NAME" HorizontalAlignment="Left" Margin="100,12,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="label_Description" Content="DESCRIPTION" HorizontalAlignment="Left" Margin="100,43,0,0" VerticalAlignment="Top"/>
+                <Label Content="Source:" HorizontalAlignment="Left" Margin="39,105,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="label_Source" Content="SOURCE" HorizontalAlignment="Left" Margin="100,105,0,0" VerticalAlignment="Top"/>
+                <Label Content="Destination:" HorizontalAlignment="Left" Margin="15,136,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="label_Destination" Content="DESTINATION" HorizontalAlignment="Left" Margin="100,136,0,0" VerticalAlignment="Top"/>
+                <Label Content="Backup type:" HorizontalAlignment="Left" Margin="11,74,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="label_Type" Content="TYPE" HorizontalAlignment="Left" Margin="100,74,0,0" VerticalAlignment="Top"/>
+                <Label Content="Begin time:" HorizontalAlignment="Left" Margin="19,167,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="label_BeginTime" Content="BEGIN_TIME" HorizontalAlignment="Left" Margin="100,167,0,0" VerticalAlignment="Top"/>
+                <Label Content="End time:" HorizontalAlignment="Left" Margin="29,198,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="label_EndTime" Content="END_TIME" HorizontalAlignment="Left" Margin="100,198,0,0" VerticalAlignment="Top"/>
+                <Label Content="Expiration date:" HorizontalAlignment="Left" Margin="-4,229,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="label_ExpireDate" Content="EXPIRE DATE" HorizontalAlignment="Left" Margin="100,229,0,0" VerticalAlignment="Top"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="List of backups" HorizontalAlignment="Left" Height="316" Margin="10,10,0,0" VerticalAlignment="Top" Width="163">
+            <DataGrid x:Name="dataGrid_Backups" AutoGenerateColumns="False"  IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Backup name" Binding="{Binding Name}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </GroupBox>
+        <Separator Height="15" Margin="0,331,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>
