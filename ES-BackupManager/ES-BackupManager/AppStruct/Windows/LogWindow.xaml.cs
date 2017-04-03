@@ -22,7 +22,6 @@ namespace ES_BackupManager.AppStruct.Windows
     public partial class LogWindow : Window
     {
         private BindingList<Log> list { get; set; }
-        //TODO: Implementovat do kontruktoru parametry (Client...)
         public LogWindow(Client c)
         {
             InitializeComponent();
@@ -31,10 +30,53 @@ namespace ES_BackupManager.AppStruct.Windows
         }
         private void LoadList(Client c)
         {
-            list = new BindingList<Log>();
-            foreach (Log item in c.Logs)
+            if (c.Logs != null)
             {
-                this.list.Add(item);
+                list = new BindingList<Log>();
+                foreach (Log item in c.Logs)
+                {
+                    this.list.Add(item);
+                }
+                this.dataGrid_Logs.ItemsSource = list;
+                this.dataGrid_Logs.SelectedIndex = 0;
+            }    
+            
+        }
+
+        private void dataGrid_Logs_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Log log = this.dataGrid_Logs.SelectedItem as Log;
+
+            if (log.Backup != null)
+            {
+                this.label_Backup_Static.IsEnabled = true;                
+                this.label_Backup.IsEnabled = true;
+                this.label_Backup.Content = log.Backup.Name;
+            }                
+            else
+            {                
+                this.label_Backup_Static.IsEnabled = false;
+                this.label_Backup.IsEnabled = false;
+                this.label_Backup.Content = "NONE";
+            }
+
+            this.label_Time.Content = log.UTCTime.ToString();
+            this.label_Value.Content = log.Value;
+
+            switch (log.IDLogType)
+            {
+                case 1:
+                    this.label_LogType.Content = LogTypeNames.Error.ToString();
+                    break;
+                case 2:
+                    this.label_LogType.Content = LogTypeNames.Warning.ToString();
+                    break;
+                case 3:
+                    this.label_LogType.Content = LogTypeNames.Message.ToString();
+                    break;
+                default:
+                    this.label_LogType.Content = "No log type.";
+                    break;
             }
         }
     }

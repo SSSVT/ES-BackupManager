@@ -22,7 +22,6 @@ namespace ES_BackupManager.AppStruct.Windows
     public partial class BackupWindow : Window
     {
         private BindingList<Backup> list { get; set; }
-        //TODO: Implementovat do kontruktoru parametry (Client...)
         public BackupWindow(Client c)
         {
             InitializeComponent();

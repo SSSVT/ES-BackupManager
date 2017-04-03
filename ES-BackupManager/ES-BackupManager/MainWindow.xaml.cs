@@ -35,20 +35,11 @@ namespace ES_BackupManager
         {
             this.radioButton_ExpireAfter.IsChecked = true;
 
-            //TODO:Implementovat načítání komponentů, které jsou potřeba
             ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
             list = new BindingList<Client>();
             foreach (Client item in client.GetClients())
             {                
-                Client cWPF = new Client();
-                cWPF.ID = item.ID;
-                cWPF.Name = item.Name;
-                cWPF.Description = item.Description;
-                cWPF.Verified = item.Verified;
-                cWPF.Logs = item.Logs;
-                //cWPF.Backups = item.Backups;
-                cWPF.Templates = item.Templates;
-                list.Add(cWPF);              
+                list.Add(item);              
             }
             this.dataGrid_ListClients.ItemsSource = list;
 
@@ -132,7 +123,6 @@ namespace ES_BackupManager
             }
             catch (Exception)
             {
-                this.label_Status.Content = "REMOVE";
                 this.label_Verification.Content = "EXCEPTION";
             }
         }
