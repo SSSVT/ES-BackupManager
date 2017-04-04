@@ -20,17 +20,35 @@
   <wsdl:message name="IESBackupServerAdminService_GetBackups_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetBackupsResponse" />
   </wsdl:message>
-  <wsdl:message name="IESBackupServerAdminService_GetLogs_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetLogs" />
+  <wsdl:message name="IESBackupServerAdminService_GetLogsByClient_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLogsByClient" />
   </wsdl:message>
-  <wsdl:message name="IESBackupServerAdminService_GetLogs_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetLogsResponse" />
+  <wsdl:message name="IESBackupServerAdminService_GetLogsByClient_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLogsByClientResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_GetLogsByBackup_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLogsByBackup" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_GetLogsByBackup_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLogsByBackupResponse" />
   </wsdl:message>
   <wsdl:message name="IESBackupServerAdminService_GetConfiguration_InputMessage">
     <wsdl:part name="parameters" element="tns:GetConfiguration" />
   </wsdl:message>
   <wsdl:message name="IESBackupServerAdminService_GetConfiguration_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetConfigurationResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_GetBackupsAll_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBackupsAll" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_GetBackupsAll_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBackupsAllResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_GetLogByClientID_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLogByClientID" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_GetLogByClientID_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLogByClientIDResponse" />
   </wsdl:message>
   <wsdl:message name="IESBackupServerAdminService_SaveConfiguration_InputMessage">
     <wsdl:part name="parameters" element="tns:SaveConfiguration" />
@@ -47,13 +65,25 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetBackups" message="tns:IESBackupServerAdminService_GetBackups_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetBackupsResponse" message="tns:IESBackupServerAdminService_GetBackups_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetLogs">
-      <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetLogs" message="tns:IESBackupServerAdminService_GetLogs_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetLogsResponse" message="tns:IESBackupServerAdminService_GetLogs_OutputMessage" />
+    <wsdl:operation name="GetLogsByClient">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetLogsByClient" message="tns:IESBackupServerAdminService_GetLogsByClient_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetLogsByClientResponse" message="tns:IESBackupServerAdminService_GetLogsByClient_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLogsByBackup">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetLogsByBackup" message="tns:IESBackupServerAdminService_GetLogsByBackup_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetLogsByBackupResponse" message="tns:IESBackupServerAdminService_GetLogsByBackup_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetConfiguration">
       <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetConfiguration" message="tns:IESBackupServerAdminService_GetConfiguration_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetConfigurationResponse" message="tns:IESBackupServerAdminService_GetConfiguration_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBackupsAll">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetBackupsAll" message="tns:IESBackupServerAdminService_GetBackupsAll_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetBackupsAllResponse" message="tns:IESBackupServerAdminService_GetBackupsAll_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLogByClientID">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetLogByClientID" message="tns:IESBackupServerAdminService_GetLogByClientID_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetLogByClientIDResponse" message="tns:IESBackupServerAdminService_GetLogByClientID_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="SaveConfiguration">
       <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/SaveConfiguration" message="tns:IESBackupServerAdminService_SaveConfiguration_InputMessage" />
@@ -80,8 +110,17 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetLogs">
-      <soap:operation soapAction="http://tempuri.org/IESBackupServerAdminService/GetLogs" style="document" />
+    <wsdl:operation name="GetLogsByClient">
+      <soap:operation soapAction="http://tempuri.org/IESBackupServerAdminService/GetLogsByClient" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLogsByBackup">
+      <soap:operation soapAction="http://tempuri.org/IESBackupServerAdminService/GetLogsByBackup" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -91,6 +130,24 @@
     </wsdl:operation>
     <wsdl:operation name="GetConfiguration">
       <soap:operation soapAction="http://tempuri.org/IESBackupServerAdminService/GetConfiguration" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBackupsAll">
+      <soap:operation soapAction="http://tempuri.org/IESBackupServerAdminService/GetBackupsAll" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLogByClientID">
+      <soap:operation soapAction="http://tempuri.org/IESBackupServerAdminService/GetLogByClientID" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

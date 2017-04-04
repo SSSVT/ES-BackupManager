@@ -22,109 +22,68 @@ namespace ES_BackupManager
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
-    {        
-        private BindingList<Client> list { get; set; }
+    {
+        private BindingList<Client> _gridClients { get; set; } = new BindingList<Client>();
+        private BindingList<Backup> _gridBackups { get; set; } = new BindingList<Backup>();
+        private BindingList<Log> _gridLogs { get; set; } = new BindingList<Log>();
         public MainWindow()
         {
             InitializeComponent();
 
-            this.LoadComponents();
+            this._loadGrid();
         }
-
-        private void LoadComponents()
+        private void _loadGrid()
         {
-            this.radioButton_ExpireAfter.IsChecked = true;
-
             ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
-            list = new BindingList<Client>();
+
             foreach (Client item in client.GetClients())
-            {                
-                list.Add(item);              
+            {
+                this._gridClients.Add(item);
             }
-            this.dataGrid_ListClients.ItemsSource = list;
+            this.dataGrid_Clients.ItemsSource = this._gridClients;
 
             client.Close();
         }
-        private void radioButton_ExpireAfter_Checked(object sender, RoutedEventArgs e)
+        private void _loadComponents(Client c)
         {
-            this.textBox_ExpireDate_After.IsEnabled = true;
-            this.DatePicker_ExpireOn.IsEnabled = false;
-        }
+            this._gridBackups.Clear();
+            this._gridLogs.Clear();
 
-        private void radioButton_ExpireOn_Checked(object sender, RoutedEventArgs e)
-        {
-            this.textBox_ExpireDate_After.IsEnabled = false;
-            this.DatePicker_ExpireOn.IsEnabled = true;
-        }
+            ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
+            #region AboutClient_Tab
 
-        private void button_ViewLogs_Click(object sender, RoutedEventArgs e)
-        {
-            Client c = this.dataGrid_ListClients.SelectedItem as Client;
-            if (c != null)
+            #endregion
+            #region Backups_Tab
+            foreach (Backup item in client.GetBackups(c))
             {
-                LogWindow lw = new LogWindow(c);
-                lw.ShowDialog();
+                this._gridBackups.Add(item);
             }
+            this.dataGrid_Backups.ItemsSource = this._gridBackups;
+            #endregion
+            #region BackupTemplates_Tab
+
+            #endregion
+            #region Logs_Tab
+            foreach (Log item in client.GetLogByClientID(c))
+            {
+                this._gridLogs.Add(item);
+            }
+            this.dataGrid_Logs.ItemsSource = this._gridLogs;
+            #endregion
+            #region Logins_Tab
+
+            #endregion
+            #region Settings_Tab
+
+            #endregion
+            client.Close();
         }
 
-        private void button_ViewBackups_Click(object sender, RoutedEventArgs e)
+        private void dataGrid_Clients_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Client c = this.dataGrid_ListClients.SelectedItem as Client;
-            if (c != null)
-            {
-                BackupWindow bw = new BackupWindow(c);
-                bw.ShowDialog();
-            }            
-        }
-
-        private void btn_LoadSett_Click(object sender, RoutedEventArgs e)
-        {
-            LoadSettingsWindow lsw = new LoadSettingsWindow();
-
-            if (lsw.ShowDialog() == true)
-            {
-
-            }
-        }
-
-        private void btn_SaveSett_Click(object sender, RoutedEventArgs e)
-        {
-            SaveSettingsWindows ssw = new SaveSettingsWindows();
-
-            if (ssw.ShowDialog() == true)
-            {
-
-            }
-        }
-
-        private void button_MoreSettings_Click(object sender, RoutedEventArgs e)
-        {
-            MoreSettingsWindow msw = new MoreSettingsWindow();
-
-            if (msw.ShowDialog() == true)
-            {
-
-            }
-        }
-
-        private void dataGrid_ListClients_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            Client c = this.dataGrid_ListClients.SelectedItem as Client;
-
-            this.label_Client.Content = c.Name;
-
-            //TEST
-            try
-            {
-                if (c.Verified)
-                    this.label_Verification.Content = "Verified";
-                else
-                    this.label_Verification.Content = "Unknown";
-            }
-            catch (Exception)
-            {
-                this.label_Verification.Content = "EXCEPTION";
-            }
+            Client c = this.dataGrid_Clients.SelectedItem as Client;            
+            this._loadComponents(c);
+            this.TabControl_Main.SelectedIndex = 0;
         }
     }
 }

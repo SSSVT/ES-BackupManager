@@ -5,64 +5,74 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ES_BackupManager"
         mc:Ignorable="d"
-        Title="MainWindow" Height="605" Width="979.5">
-    <Grid HorizontalAlignment="Stretch" Margin="0,0,0,-20" Width="auto">
-        <DockPanel HorizontalAlignment="Stretch" Height="23" LastChildFill="False" Margin="0,0,0,0" VerticalAlignment="Top" Width="auto" >
-            <Menu Height="23" VerticalAlignment="Top" Width="auto" DockPanel.Dock="Top">
-                <MenuItem Header="Test">
-                </MenuItem>
-                <MenuItem Header="Test">
-                </MenuItem>
+        Title="MainWindow" Height="600" Width="1000">
+    <Grid>
+        <DataGrid Name="dataGrid_Clients" HorizontalAlignment="Left" Margin="10,10,0,10" Width="200" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="dataGrid_Clients_SelectionChanged">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Client Name" Binding="{Binding Name}" Width="*"/>
+                <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <TabControl Name="TabControl_Main" Margin="215,10,10,10">
+            <TabItem Header="Information" Height="24" VerticalAlignment="Top">
+                <Grid>
+                    <GroupBox Header="Client Details" Margin="5,0,5,250">
+                        <Grid>
+                            <Label Content="Name:" HorizontalAlignment="Left" Margin="69,10,0,0" VerticalAlignment="Top"/>
+                            <Label Name="lbl_Name" Content="NAME" HorizontalAlignment="Left" Margin="180,10,0,0" VerticalAlignment="Top"/>
+                            <Label Content="Description:" HorizontalAlignment="Left" Margin="40,40,0,0" VerticalAlignment="Top"/>
+                            <Label x:Name="lbl_Description" Content="DESCRIPTION" HorizontalAlignment="Left" Margin="180,40,0,0" VerticalAlignment="Top"/>
+                            <Label Content="Verified:" HorizontalAlignment="Left" Margin="60,70,0,0" VerticalAlignment="Top"/>
+                            <Label x:Name="lbl_Verified" Content="VERIFIED" HorizontalAlignment="Left" Margin="180,70,0,0" VerticalAlignment="Top"/>
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox Header="Client Status" Margin="5,277,5,10">
 
-                <MenuItem Header="Test">
-                </MenuItem>
-            </Menu>
-        </DockPanel>
-        <GroupBox Header="List of Clients
-" Height="530" Margin="10,28,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="282">
-            <DataGrid Name="dataGrid_ListClients" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="dataGrid_ListClients_SelectionChanged" >
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
-                    <DataGridCheckBoxColumn Header="Verified" Binding="{Binding Verified}" Width="*"/>
-                </DataGrid.Columns>
-            </DataGrid>
-        </GroupBox>
-        <GroupBox Header="Client Informations:" Height="198" Margin="297,28,10,0" VerticalAlignment="Top">
-            <Grid x:Name="Main_Grid_ClientInfo" Margin="0,10,0,0">
-                <Label Content="Client:" VerticalAlignment="Top" HorizontalAlignment="Left" Width="45" Margin="21,1,0,0"/>
-                <Label Content="Verified:" HorizontalAlignment="Left" Margin="13,32,0,0" VerticalAlignment="Top"/>
-                <Button x:Name="button_ViewBackups" Content="View backups" HorizontalAlignment="Left" Margin="31,135,0,0" VerticalAlignment="Top" Width="100" Click="button_ViewBackups_Click"/>
-                <Button x:Name="button_ViewLogs" Content="View logs" HorizontalAlignment="Left" Margin="136,135,0,0" VerticalAlignment="Top" Width="100" Click="button_ViewLogs_Click"/>
-                <Label x:Name="label_Client" Content="CLIENT" VerticalAlignment="Top" HorizontalAlignment="Left" Width="350" Margin="100,1,0,0"/>
-                <Label x:Name="label_Verification" Content="VERIFICATION" HorizontalAlignment="Left" Margin="100,32,0,0" VerticalAlignment="Top" Width="350"/>
-            </Grid>
-        </GroupBox>
-        <GroupBox Header="Backup Settings:" Height="332" Margin="297,226,10,0" VerticalAlignment="Top">
-            <Grid x:Name="Main_Grid_ClientSettings" Margin="0 10 0 0">
-                <Label Content="Backup Type:" VerticalAlignment="Top" HorizontalAlignment="Left" Width="100" Margin="10,0,0,0"/>
-                <Button x:Name="btn_LoadSett" Content="Load Settings" HorizontalAlignment="Left" Margin="545,10,0,0" VerticalAlignment="Top" Width="100" Click="btn_LoadSett_Click"/>
-                <Button x:Name="btn_SaveSett" Content="Save Settings" HorizontalAlignment="Left" Margin="545,35,0,0" VerticalAlignment="Top" Width="100" Click="btn_SaveSett_Click"/>
-                <ComboBox x:Name="comboBox_BackupType" HorizontalAlignment="Left" Margin="160,4,0,0" VerticalAlignment="Top" Width="370" SelectedIndex="0">
-                    <ComboBoxItem Content="Full"/>
-                    <ComboBoxItem Content="Differencial"/>
-                </ComboBox>
-                <Label x:Name="label_PathSource" Content="Path Source:" HorizontalAlignment="Left" Margin="10,31,0,0" VerticalAlignment="Top"/>
-                <TextBox x:Name="textBox_PathSource" HorizontalAlignment="Left" Height="23" Margin="160,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="370"/>
-                <Label x:Name="label_PathDestination" Content="Path Destination:" HorizontalAlignment="Left" Margin="10,59,0,0" VerticalAlignment="Top"/>
-                <TextBox x:Name="textBox_PathDestination" HorizontalAlignment="Left" Height="23" Margin="160,63,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="370"/>
-                <GroupBox x:Name="groupBox_Expire" Header="Expiration Date:" HorizontalAlignment="Left" Margin="10,91,0,0" VerticalAlignment="Top" Height="106" Width="520">
-                    <Grid>
-                        <RadioButton x:Name="radioButton_ExpireAfter" Content="After:" HorizontalAlignment="Left" Margin="10,14,0,0" VerticalAlignment="Top" Checked="radioButton_ExpireAfter_Checked"/>
-                        <RadioButton x:Name="radioButton_ExpireOn" Content="On:" HorizontalAlignment="Left" Margin="10,43,0,0" VerticalAlignment="Top" Checked="radioButton_ExpireOn_Checked"/>
-                        <DatePicker x:Name="DatePicker_ExpireOn" HorizontalAlignment="Left" Margin="148,39,0,0" VerticalAlignment="Top" Width="350" SelectedDateFormat="Long"/>
-                        <TextBox x:Name="textBox_ExpireDate_After" HorizontalAlignment="Left" Height="23" Margin="148,11,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="300"/>
-                        <Label x:Name="label_ExpireDate_Days" Content="Days" HorizontalAlignment="Left" Margin="453,8,0,0" VerticalAlignment="Top" Width="45"/>
-                    </Grid>
-                </GroupBox>
-                <Button x:Name="button_Backup" Content="Backup
-" HorizontalAlignment="Left" Margin="545,268,0,0" VerticalAlignment="Top" Width="100"/>
-                <Button x:Name="button_MoreSettings" Content="More Settings" HorizontalAlignment="Left" Margin="10,202,0,0" VerticalAlignment="Top" Width="100" Click="button_MoreSettings_Click"/>
-            </Grid>
-        </GroupBox>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Backups" Height="22" VerticalAlignment="Top">
+                <Grid x:Name="Backup_Grid">
+                    <DataGrid x:Name="dataGrid_Backups" HorizontalAlignment="Left" Height="506" Margin="10,10,0,0" VerticalAlignment="Top" Width="200" IsReadOnly="True" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Backup Name" Binding="{Binding Name}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <GroupBox Header="Backup Info" Margin="225,10,10,10">
+
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Backup Templates">
+                <Grid>
+                    <DataGrid x:Name="dataGrid_BackupTemplates" HorizontalAlignment="Left" Height="506" Margin="10,10,0,0" VerticalAlignment="Top" Width="200" IsReadOnly="True" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Template Name" Binding="{Binding Name}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <GroupBox Header="Backup Template Info" Margin="225,10,10,10">
+
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Logs">
+                <Grid>
+                    <DataGrid x:Name="dataGrid_Logs" HorizontalAlignment="Left" Height="506" Margin="10,10,0,0" VerticalAlignment="Top" Width="200" IsReadOnly="True" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Log Time" Binding="{Binding UTCTime}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <GroupBox Header="Log Info" Margin="225,10,10,263">
+
+                    </GroupBox>
+                    <GroupBox Header="Log Configuration" Margin="225,263,10,10">
+
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Logins"></TabItem>
+            <TabItem Header="Settings"></TabItem>
+
+        </TabControl>
     </Grid>
 </Window>

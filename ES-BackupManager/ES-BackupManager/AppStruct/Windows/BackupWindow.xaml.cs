@@ -92,17 +92,6 @@ namespace ES_BackupManager.AppStruct.Windows
 
             this.label_Name.Content = b.Name;
             this.label_Description.Content = b.Description;
-            switch (b.Type)
-            {
-                case BackupTypes.Full:
-                    this.label_Type.Content = "Full";
-                    break;
-                case BackupTypes.Differential:
-                    this.label_Type.Content = "Differencial";
-                    break;
-                default:
-                    break;
-            }
             this.label_Source.Content = b.Source;
             this.label_Destination.Content = b.Destination;
             this.label_BeginTime.Content = b.Start.ToString();

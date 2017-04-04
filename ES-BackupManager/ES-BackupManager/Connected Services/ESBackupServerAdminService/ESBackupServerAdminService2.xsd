@@ -13,9 +13,12 @@
       <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ID" type="xs:int" />
       <xs:element minOccurs="0" name="LastBackupTime" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="LastReportTime" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Logins" nillable="true" type="tns:ArrayOfLogin" />
       <xs:element minOccurs="0" name="Logs" nillable="true" type="tns:ArrayOfLog" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReportInterval" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="StatusReportEnabled" type="xs:boolean" />
       <xs:element minOccurs="0" name="Templates" nillable="true" type="tns:ArrayOfBackupTemplate" />
       <xs:element minOccurs="0" name="Username" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Verified" type="xs:boolean" />
@@ -33,19 +36,19 @@
   <xs:complexType name="Backup">
     <xs:sequence>
       <xs:element minOccurs="0" name="Client" nillable="true" type="tns:Client" />
+      <xs:element minOccurs="0" name="ClientID" type="xs:int" />
       <xs:element minOccurs="0" name="Compressed" type="xs:boolean" />
       <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Destination" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="End" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Expiration" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="ID" type="xs:long" />
-      <xs:element minOccurs="0" name="IDClient" type="xs:int" />
       <xs:element minOccurs="0" name="Logs" nillable="true" type="tns:ArrayOfLog" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Source" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Start" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="Status" type="tns:Backup.Statuses" />
-      <xs:element minOccurs="0" name="Type" type="tns:BackupTypes" />
+      <xs:element minOccurs="0" name="Status" type="xs:unsignedByte" />
+      <xs:element minOccurs="0" name="Type" type="xs:boolean" />
     </xs:sequence>
     <xs:attribute ref="ser:Id" />
     <xs:attribute ref="ser:Ref" />
@@ -60,12 +63,12 @@
   <xs:complexType name="Log">
     <xs:sequence>
       <xs:element minOccurs="0" name="Backup" nillable="true" type="tns:Backup" />
+      <xs:element minOccurs="0" name="BackupID" nillable="true" type="xs:long" />
       <xs:element minOccurs="0" name="Client" nillable="true" type="tns:Client" />
+      <xs:element minOccurs="0" name="ClientID" type="xs:int" />
       <xs:element minOccurs="0" name="ID" type="ser:guid" />
-      <xs:element minOccurs="0" name="IDBackup" nillable="true" type="xs:long" />
-      <xs:element minOccurs="0" name="IDClient" type="xs:int" />
-      <xs:element minOccurs="0" name="IDLogType" type="xs:unsignedByte" />
       <xs:element minOccurs="0" name="LogType" nillable="true" type="tns:LogType" />
+      <xs:element minOccurs="0" name="LogTypeID" type="xs:unsignedByte" />
       <xs:element minOccurs="0" name="UTCTime" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Value" nillable="true" type="xs:string" />
     </xs:sequence>
@@ -76,7 +79,6 @@
   <xs:complexType name="LogType">
     <xs:sequence>
       <xs:element minOccurs="0" name="ID" type="xs:unsignedByte" />
-      <xs:element minOccurs="0" name="Logs" nillable="true" type="tns:ArrayOfLog" />
       <xs:element minOccurs="0" name="Name" type="tns:LogTypeNames" />
     </xs:sequence>
     <xs:attribute ref="ser:Id" />
@@ -109,21 +111,6 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="LogTypeNames" nillable="true" type="tns:LogTypeNames" />
-  <xs:simpleType name="Backup.Statuses">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="Executing" />
-      <xs:enumeration value="Completed" />
-      <xs:enumeration value="Failed" />
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:element name="Backup.Statuses" nillable="true" type="tns:Backup.Statuses" />
-  <xs:simpleType name="BackupTypes">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="Full" />
-      <xs:enumeration value="Differential" />
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:element name="BackupTypes" nillable="true" type="tns:BackupTypes" />
   <xs:complexType name="ArrayOfLogin">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Login" nillable="true" type="tns:Login" />
@@ -133,8 +120,8 @@
   <xs:complexType name="Login">
     <xs:sequence>
       <xs:element minOccurs="0" name="Client" nillable="true" type="tns:Client" />
+      <xs:element minOccurs="0" name="ClientID" type="xs:int" />
       <xs:element minOccurs="0" name="ID" type="ser:guid" />
-      <xs:element minOccurs="0" name="IDClient" type="xs:int" />
       <xs:element minOccurs="0" name="IP" nillable="true" type="xs:base64Binary" />
       <xs:element minOccurs="0" name="UTCTime" type="xs:dateTime" />
     </xs:sequence>
@@ -150,22 +137,20 @@
   <xs:element name="ArrayOfBackupTemplate" nillable="true" type="tns:ArrayOfBackupTemplate" />
   <xs:complexType name="BackupTemplate">
     <xs:sequence>
-      <xs:element minOccurs="0" name="Compression" type="tns:Compression" />
+      <xs:element minOccurs="0" name="Client" nillable="true" type="tns:Client" />
+      <xs:element minOccurs="0" name="Compression" type="xs:boolean" />
       <xs:element minOccurs="0" name="DaysToExpiration" nillable="true" type="xs:unsignedInt" />
       <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Destination" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Enabled" type="xs:boolean" />
       <xs:element minOccurs="0" name="ID" type="xs:long" />
       <xs:element minOccurs="0" name="IDClient" type="xs:int" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Source" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Type" type="tns:BackupTypes" />
+      <xs:element minOccurs="0" name="Type" type="xs:boolean" />
     </xs:sequence>
     <xs:attribute ref="ser:Id" />
     <xs:attribute ref="ser:Ref" />
   </xs:complexType>
   <xs:element name="BackupTemplate" nillable="true" type="tns:BackupTemplate" />
-  <xs:simpleType name="Compression">
-    <xs:restriction base="xs:string" />
-  </xs:simpleType>
-  <xs:element name="Compression" nillable="true" type="tns:Compression" />
 </xs:schema>

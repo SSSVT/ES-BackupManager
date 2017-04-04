@@ -62,22 +62,6 @@ namespace ES_BackupManager.AppStruct.Windows
 
             this.label_Time.Content = log.UTCTime.ToString();
             this.label_Value.Content = log.Value;
-
-            switch (log.IDLogType)
-            {
-                case 1:
-                    this.label_LogType.Content = LogTypeNames.Error.ToString();
-                    break;
-                case 2:
-                    this.label_LogType.Content = LogTypeNames.Warning.ToString();
-                    break;
-                case 3:
-                    this.label_LogType.Content = LogTypeNames.Message.ToString();
-                    break;
-                default:
-                    this.label_LogType.Content = "No log type.";
-                    break;
-            }
         }
     }
 }
