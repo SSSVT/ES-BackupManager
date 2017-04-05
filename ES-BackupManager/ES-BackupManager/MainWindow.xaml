@@ -3,17 +3,17 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:ES_BackupManager"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="1000">
+        Title="MainWindow" Height="598.5" Width="1000">
     <Grid>
         <DataGrid Name="dataGrid_Clients" HorizontalAlignment="Left" Margin="10,10,0,10" Width="200" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="dataGrid_Clients_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Client Name" Binding="{Binding Name}" Width="*"/>
-                <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
-        <TabControl Name="TabControl_Main" Margin="215,10,10,10">
+        <TabControl Name="TabControl_Main" Margin="215,10,10,10" IsEnabled="False">
             <TabItem Header="Information" Height="24" VerticalAlignment="Top">
                 <Grid>
                     <GroupBox Header="Client Details" Margin="5,0,5,250">
@@ -33,19 +33,60 @@
             </TabItem>
             <TabItem Header="Backups" Height="22" VerticalAlignment="Top">
                 <Grid x:Name="Backup_Grid">
-                    <DataGrid x:Name="dataGrid_Backups" HorizontalAlignment="Left" Height="506" Margin="10,10,0,0" VerticalAlignment="Top" Width="200" IsReadOnly="True" AutoGenerateColumns="False">
+                    <DataGrid x:Name="dataGrid_Backups" HorizontalAlignment="Left" Margin="10,10,0,10" Width="200" IsReadOnly="True" AutoGenerateColumns="False" SelectionChanged="dataGrid_Backups_SelectionChanged">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Backup Name" Binding="{Binding Name}"/>
+                            <DataGridTextColumn Header="Backup Name" Binding="{Binding Name}" Width="*"/>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <GroupBox Header="Backup Info" Margin="225,10,10,10">
+                    <GroupBox Header="Backup Info" Margin="225,10,10,10" Grid.ColumnSpan="11">
+                        <Grid>
+                            <Label Content="Name:" HorizontalAlignment="Left" Margin="99,10,0,0" VerticalAlignment="Top"/>
+                            <TextBox x:Name="textBox_Backup_Name" HorizontalAlignment="Left" Height="23" Margin="192,13,0,0" TextWrapping="Wrap" Text="Backup name" VerticalAlignment="Top" Width="250" />
+                            <Label Content="Description:" HorizontalAlignment="Left" Margin="70,38,0,0" VerticalAlignment="Top"/>
+                            <TextBox x:Name="textBox_Backup_Description" HorizontalAlignment="Left" Height="23" Margin="192,42,0,0" TextWrapping="Wrap" Text="Backup description" VerticalAlignment="Top" Width="250" />
+                            <GroupBox Header="Type Settings" HorizontalAlignment="Left" Height="62" Margin="10,69,0,0" VerticalAlignment="Top" Width="494">
+                                <Grid>
+                                    <Label Content="Backup Type:" HorizontalAlignment="Left" Margin="48,4,0,0" VerticalAlignment="Top"/>
+                                    <RadioButton Name="radioBtn_Backup_Full" Content="Full" HorizontalAlignment="Left" Margin="179,10,0,0" Height="21" VerticalAlignment="Top"/>
+                                    <RadioButton Name="radioBtn_Backup_Diff" Content="Differencial" HorizontalAlignment="Left" Margin="263,10,0,0" Height="21" VerticalAlignment="Top" IsChecked="True"/>
+                                </Grid>
+                            </GroupBox>
+                            <GroupBox Header="Path Settings" HorizontalAlignment="Left" Height="90" Margin="10,203,0,0" VerticalAlignment="Top" Width="494" >
+                                <Grid>
+                                    <Label Content="Source:" HorizontalAlignment="Left" Margin="79,5,0,0" VerticalAlignment="Top"/>
+                                    <TextBox x:Name="textBox_Backup_Source" HorizontalAlignment="Left" Height="23" Margin="175,9,0,0" TextWrapping="Wrap" Text="Backup source path" VerticalAlignment="Top" Width="250"/>
+                                    <Label Content="Destination:" HorizontalAlignment="Left" Margin="55,33,0,0" VerticalAlignment="Top"/>
+                                    <TextBox x:Name="textBox_Backup_Dest" HorizontalAlignment="Left" Height="23" Margin="175,37,0,0" TextWrapping="Wrap" Text="Backup destination path" VerticalAlignment="Top" Width="250"/>
 
+                                </Grid>
+                            </GroupBox>
+                            <GroupBox Header="Time Settings" Margin="10,298,10,44">
+                                <Grid>
+                                    <Label Content="Expiration Date:" HorizontalAlignment="Left" Margin="36,9,0,0" VerticalAlignment="Top"/>
+                                    <Label Content="Start Time:" HorizontalAlignment="Left" Margin="63,38,0,0" VerticalAlignment="Top"/>
+                                    <Label Content="End Time:" HorizontalAlignment="Left" Margin="67,67,0,0" VerticalAlignment="Top"/>
+                                    <xctk:DateTimePicker Name="dateTimePicker_Backup_Expire" Margin="178,11,54,0" Height="24" VerticalAlignment="Top"/>
+                                    <xctk:DateTimePicker x:Name="dateTimePicker_Backup_Start" Margin="178,40,54,0" Height="24" VerticalAlignment="Top"/>
+                                    <xctk:DateTimePicker x:Name="dateTimePicker_Backup_End" Margin="178,69,54,0" Height="24" VerticalAlignment="Top"/>
+                                </Grid>
+                            </GroupBox>
+                            <GroupBox Header="Compression Settings" HorizontalAlignment="Left" Height="62" Margin="10,136,0,0" VerticalAlignment="Top" Width="494">
+                                <Grid>
+                                    <Label Content="Compression Type:" HorizontalAlignment="Left" Margin="19,4,0,0" VerticalAlignment="Top"/>
+                                    <RadioButton x:Name="radioBtn_Backup_Compress" Content="Compress" HorizontalAlignment="Left" Margin="179,10,0,0" Height="21" VerticalAlignment="Top"/>
+                                    <RadioButton x:Name="radioBtn_Backup_NoCompress" Content="No Compress" HorizontalAlignment="Left" Margin="263,10,0,0" Height="21" VerticalAlignment="Top" IsChecked="True"/>
+                                </Grid>
+                            </GroupBox>
+                            <Button Name="btn_Backup_Edit" Content="Edit" Margin="0,0,10,10" HorizontalAlignment="Right" Width="75" Height="20" VerticalAlignment="Bottom"/>
+                            <Button Name="btn_Backup_Save" Content="Save" HorizontalAlignment="Left" Margin="10,0,0,10" Width="75" Height="20" VerticalAlignment="Bottom"/>
+                            <Button Name ="btn_Backup_Cancel" Content="Cancel" HorizontalAlignment="Left" Margin="90,0,0,10" VerticalAlignment="Bottom" Width="75"/>
+                        </Grid>
                     </GroupBox>
                 </Grid>
             </TabItem>
             <TabItem Header="Backup Templates">
                 <Grid>
-                    <DataGrid x:Name="dataGrid_BackupTemplates" HorizontalAlignment="Left" Height="506" Margin="10,10,0,0" VerticalAlignment="Top" Width="200" IsReadOnly="True" AutoGenerateColumns="False">
+                    <DataGrid x:Name="dataGrid_BackupTemplates" HorizontalAlignment="Left" Margin="10,10,0,10" Width="200" IsReadOnly="True" AutoGenerateColumns="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Template Name" Binding="{Binding Name}"/>
                         </DataGrid.Columns>
@@ -57,7 +98,7 @@
             </TabItem>
             <TabItem Header="Logs">
                 <Grid>
-                    <DataGrid x:Name="dataGrid_Logs" HorizontalAlignment="Left" Height="506" Margin="10,10,0,0" VerticalAlignment="Top" Width="200" IsReadOnly="True" AutoGenerateColumns="False">
+                    <DataGrid x:Name="dataGrid_Logs" HorizontalAlignment="Left" Margin="10,10,0,10" Width="200" IsReadOnly="True" AutoGenerateColumns="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Log Time" Binding="{Binding UTCTime}"/>
                         </DataGrid.Columns>

@@ -263,9 +263,6 @@ namespace ES_BackupManager.ESBackupServerAdminService {
         private ES_BackupManager.ESBackupServerAdminService.Client ClientField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int ClientIDField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool CompressedField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -282,6 +279,9 @@ namespace ES_BackupManager.ESBackupServerAdminService {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private long IDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IDClientField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private ES_BackupManager.ESBackupServerAdminService.Log[] LogsField;
@@ -320,19 +320,6 @@ namespace ES_BackupManager.ESBackupServerAdminService {
                 if ((object.ReferenceEquals(this.ClientField, value) != true)) {
                     this.ClientField = value;
                     this.RaisePropertyChanged("Client");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int ClientID {
-            get {
-                return this.ClientIDField;
-            }
-            set {
-                if ((this.ClientIDField.Equals(value) != true)) {
-                    this.ClientIDField = value;
-                    this.RaisePropertyChanged("ClientID");
                 }
             }
         }
@@ -411,6 +398,19 @@ namespace ES_BackupManager.ESBackupServerAdminService {
                 if ((this.IDField.Equals(value) != true)) {
                     this.IDField = value;
                     this.RaisePropertyChanged("ID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int IDClient {
+            get {
+                return this.IDClientField;
+            }
+            set {
+                if ((this.IDClientField.Equals(value) != true)) {
+                    this.IDClientField = value;
+                    this.RaisePropertyChanged("IDClient");
                 }
             }
         }
@@ -516,10 +516,10 @@ namespace ES_BackupManager.ESBackupServerAdminService {
         private ES_BackupManager.ESBackupServerAdminService.Client ClientField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int ClientIDField;
+        private System.Guid IDField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Guid IDField;
+        private int IDClientField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private byte[] IPField;
@@ -551,19 +551,6 @@ namespace ES_BackupManager.ESBackupServerAdminService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int ClientID {
-            get {
-                return this.ClientIDField;
-            }
-            set {
-                if ((this.ClientIDField.Equals(value) != true)) {
-                    this.ClientIDField = value;
-                    this.RaisePropertyChanged("ClientID");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.Guid ID {
             get {
                 return this.IDField;
@@ -572,6 +559,19 @@ namespace ES_BackupManager.ESBackupServerAdminService {
                 if ((this.IDField.Equals(value) != true)) {
                     this.IDField = value;
                     this.RaisePropertyChanged("ID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int IDClient {
+            get {
+                return this.IDClientField;
+            }
+            set {
+                if ((this.IDClientField.Equals(value) != true)) {
+                    this.IDClientField = value;
+                    this.RaisePropertyChanged("IDClient");
                 }
             }
         }
@@ -625,22 +625,22 @@ namespace ES_BackupManager.ESBackupServerAdminService {
         private ES_BackupManager.ESBackupServerAdminService.Backup BackupField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<long> BackupIDField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private ES_BackupManager.ESBackupServerAdminService.Client ClientField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int ClientIDField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Guid IDField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private ES_BackupManager.ESBackupServerAdminService.LogType LogTypeField;
+        private System.Nullable<long> IDBackupField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private byte LogTypeIDField;
+        private int IDClientField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private byte IDLogTypeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private ES_BackupManager.ESBackupServerAdminService.LogType LogTypeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.DateTime UTCTimeField;
@@ -672,19 +672,6 @@ namespace ES_BackupManager.ESBackupServerAdminService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<long> BackupID {
-            get {
-                return this.BackupIDField;
-            }
-            set {
-                if ((this.BackupIDField.Equals(value) != true)) {
-                    this.BackupIDField = value;
-                    this.RaisePropertyChanged("BackupID");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
         public ES_BackupManager.ESBackupServerAdminService.Client Client {
             get {
                 return this.ClientField;
@@ -693,19 +680,6 @@ namespace ES_BackupManager.ESBackupServerAdminService {
                 if ((object.ReferenceEquals(this.ClientField, value) != true)) {
                     this.ClientField = value;
                     this.RaisePropertyChanged("Client");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int ClientID {
-            get {
-                return this.ClientIDField;
-            }
-            set {
-                if ((this.ClientIDField.Equals(value) != true)) {
-                    this.ClientIDField = value;
-                    this.RaisePropertyChanged("ClientID");
                 }
             }
         }
@@ -724,6 +698,45 @@ namespace ES_BackupManager.ESBackupServerAdminService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<long> IDBackup {
+            get {
+                return this.IDBackupField;
+            }
+            set {
+                if ((this.IDBackupField.Equals(value) != true)) {
+                    this.IDBackupField = value;
+                    this.RaisePropertyChanged("IDBackup");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int IDClient {
+            get {
+                return this.IDClientField;
+            }
+            set {
+                if ((this.IDClientField.Equals(value) != true)) {
+                    this.IDClientField = value;
+                    this.RaisePropertyChanged("IDClient");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public byte IDLogType {
+            get {
+                return this.IDLogTypeField;
+            }
+            set {
+                if ((this.IDLogTypeField.Equals(value) != true)) {
+                    this.IDLogTypeField = value;
+                    this.RaisePropertyChanged("IDLogType");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public ES_BackupManager.ESBackupServerAdminService.LogType LogType {
             get {
                 return this.LogTypeField;
@@ -732,19 +745,6 @@ namespace ES_BackupManager.ESBackupServerAdminService {
                 if ((object.ReferenceEquals(this.LogTypeField, value) != true)) {
                     this.LogTypeField = value;
                     this.RaisePropertyChanged("LogType");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public byte LogTypeID {
-            get {
-                return this.LogTypeIDField;
-            }
-            set {
-                if ((this.LogTypeIDField.Equals(value) != true)) {
-                    this.LogTypeIDField = value;
-                    this.RaisePropertyChanged("LogTypeID");
                 }
             }
         }
@@ -1176,18 +1176,6 @@ namespace ES_BackupManager.ESBackupServerAdminService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/GetConfiguration", ReplyAction="http://tempuri.org/IESBackupServerAdminService/GetConfigurationResponse")]
         System.Threading.Tasks.Task<ES_BackupManager.ESBackupServerAdminService.Configuration> GetConfigurationAsync(ES_BackupManager.ESBackupServerAdminService.Client client);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/GetBackupsAll", ReplyAction="http://tempuri.org/IESBackupServerAdminService/GetBackupsAllResponse")]
-        ES_BackupManager.ESBackupServerAdminService.Backup[] GetBackupsAll();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/GetBackupsAll", ReplyAction="http://tempuri.org/IESBackupServerAdminService/GetBackupsAllResponse")]
-        System.Threading.Tasks.Task<ES_BackupManager.ESBackupServerAdminService.Backup[]> GetBackupsAllAsync();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/GetLogByClientID", ReplyAction="http://tempuri.org/IESBackupServerAdminService/GetLogByClientIDResponse")]
-        ES_BackupManager.ESBackupServerAdminService.Log[] GetLogByClientID(ES_BackupManager.ESBackupServerAdminService.Client c);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/GetLogByClientID", ReplyAction="http://tempuri.org/IESBackupServerAdminService/GetLogByClientIDResponse")]
-        System.Threading.Tasks.Task<ES_BackupManager.ESBackupServerAdminService.Log[]> GetLogByClientIDAsync(ES_BackupManager.ESBackupServerAdminService.Client c);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/SaveConfiguration", ReplyAction="http://tempuri.org/IESBackupServerAdminService/SaveConfigurationResponse")]
         bool SaveConfiguration(ES_BackupManager.ESBackupServerAdminService.Configuration config);
         
@@ -1260,22 +1248,6 @@ namespace ES_BackupManager.ESBackupServerAdminService {
         
         public System.Threading.Tasks.Task<ES_BackupManager.ESBackupServerAdminService.Configuration> GetConfigurationAsync(ES_BackupManager.ESBackupServerAdminService.Client client) {
             return base.Channel.GetConfigurationAsync(client);
-        }
-        
-        public ES_BackupManager.ESBackupServerAdminService.Backup[] GetBackupsAll() {
-            return base.Channel.GetBackupsAll();
-        }
-        
-        public System.Threading.Tasks.Task<ES_BackupManager.ESBackupServerAdminService.Backup[]> GetBackupsAllAsync() {
-            return base.Channel.GetBackupsAllAsync();
-        }
-        
-        public ES_BackupManager.ESBackupServerAdminService.Log[] GetLogByClientID(ES_BackupManager.ESBackupServerAdminService.Client c) {
-            return base.Channel.GetLogByClientID(c);
-        }
-        
-        public System.Threading.Tasks.Task<ES_BackupManager.ESBackupServerAdminService.Log[]> GetLogByClientIDAsync(ES_BackupManager.ESBackupServerAdminService.Client c) {
-            return base.Channel.GetLogByClientIDAsync(c);
         }
         
         public bool SaveConfiguration(ES_BackupManager.ESBackupServerAdminService.Configuration config) {

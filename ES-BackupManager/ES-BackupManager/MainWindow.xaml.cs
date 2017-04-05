@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Xceed.Wpf.Toolkit;
 
 namespace ES_BackupManager
 {
@@ -23,15 +24,20 @@ namespace ES_BackupManager
     /// </summary>
     public partial class MainWindow : Window
     {
-        private BindingList<Client> _gridClients { get; set; } = new BindingList<Client>();
-        private BindingList<Backup> _gridBackups { get; set; } = new BindingList<Backup>();
-        private BindingList<Log> _gridLogs { get; set; } = new BindingList<Log>();
         public MainWindow()
         {
             InitializeComponent();
 
             this._loadGrid();
         }
+
+        #region BindingLists for DataGrids
+        private BindingList<Client> _gridClients { get; set; } = new BindingList<Client>();
+        private BindingList<Backup> _gridBackups { get; set; } = new BindingList<Backup>();
+        private BindingList<Log> _gridLogs { get; set; } = new BindingList<Log>();
+        #endregion
+
+        #region Setup Controls
         private void _loadGrid()
         {
             ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
@@ -46,6 +52,9 @@ namespace ES_BackupManager
         }
         private void _loadComponents(Client c)
         {
+            if (!this.TabControl_Main.IsEnabled)
+                this.TabControl_Main.IsEnabled = true;
+
             this._gridBackups.Clear();
             this._gridLogs.Clear();
 
@@ -64,7 +73,7 @@ namespace ES_BackupManager
 
             #endregion
             #region Logs_Tab
-            foreach (Log item in client.GetLogByClientID(c))
+            foreach (Log item in client.GetLogsByClient(c))
             {
                 this._gridLogs.Add(item);
             }
@@ -78,12 +87,70 @@ namespace ES_BackupManager
             #endregion
             client.Close();
         }
+        #endregion
 
+        #region Client Controls        
         private void dataGrid_Clients_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (!this.TabControl_Main.IsEnabled)
+                this.TabControl_Main.IsEnabled = true;
+
             Client c = this.dataGrid_Clients.SelectedItem as Client;            
             this._loadComponents(c);
             this.TabControl_Main.SelectedIndex = 0;
         }
+        #endregion
+        #region Backup Controls
+        private void _loadBackupInfo(Backup b)
+        {
+            #region Disable Compomnents
+            this.textBox_Backup_Name.IsEnabled = false;
+            this.textBox_Backup_Description.IsEnabled = false;
+            this.radioBtn_Backup_Full.IsEnabled = false;
+            this.radioBtn_Backup_Diff.IsEnabled = false;
+            this.radioBtn_Backup_Compress.IsEnabled = false;
+            this.radioBtn_Backup_NoCompress.IsEnabled = false;
+            this.textBox_Backup_Source.IsEnabled = false;
+            this.textBox_Backup_Dest.IsEnabled = false;
+            this.dateTimePicker_Backup_Expire.IsEnabled = false;
+            this.dateTimePicker_Backup_Start.IsEnabled = false;
+            this.dateTimePicker_Backup_End.IsEnabled = false;
+            this.btn_Backup_Save.IsEnabled = false;
+            this.btn_Backup_Cancel.IsEnabled = false;
+            #endregion
+
+            this.textBox_Backup_Name.Text = b.Name;
+            this.textBox_Backup_Description.Text = b.Description;
+
+            if (b.Compressed)
+                this.radioBtn_Backup_Compress.IsChecked = true;
+
+            if (b.Type)
+                this.radioBtn_Backup_Full.IsChecked = true;
+
+            this.textBox_Backup_Source.Text = b.Source;
+            this.textBox_Backup_Dest.Text = b.Destination;
+
+            if (b.Expiration == null)
+                this.dateTimePicker_Backup_Expire.Watermark = "Expire date is not set.";
+            else
+                this.dateTimePicker_Backup_Expire.Value = b.Expiration;
+
+            this.dateTimePicker_Backup_Start.Value = b.Start;
+
+            if (b.End == null)
+                this.dateTimePicker_Backup_End.Watermark = "End time is not set.";
+            else
+                this.dateTimePicker_Backup_End.Value = b.End;
+
+
+        }
+        private void dataGrid_Backups_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Backup b = this.dataGrid_Backups.SelectedItem as Backup;
+            this._loadBackupInfo(b);
+        }
+        #endregion
+
     }
 }

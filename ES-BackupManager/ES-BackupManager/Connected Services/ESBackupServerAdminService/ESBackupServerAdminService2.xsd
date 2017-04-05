@@ -36,13 +36,13 @@
   <xs:complexType name="Backup">
     <xs:sequence>
       <xs:element minOccurs="0" name="Client" nillable="true" type="tns:Client" />
-      <xs:element minOccurs="0" name="ClientID" type="xs:int" />
       <xs:element minOccurs="0" name="Compressed" type="xs:boolean" />
       <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Destination" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="End" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Expiration" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="ID" type="xs:long" />
+      <xs:element minOccurs="0" name="IDClient" type="xs:int" />
       <xs:element minOccurs="0" name="Logs" nillable="true" type="tns:ArrayOfLog" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Source" nillable="true" type="xs:string" />
@@ -63,12 +63,12 @@
   <xs:complexType name="Log">
     <xs:sequence>
       <xs:element minOccurs="0" name="Backup" nillable="true" type="tns:Backup" />
-      <xs:element minOccurs="0" name="BackupID" nillable="true" type="xs:long" />
       <xs:element minOccurs="0" name="Client" nillable="true" type="tns:Client" />
-      <xs:element minOccurs="0" name="ClientID" type="xs:int" />
       <xs:element minOccurs="0" name="ID" type="ser:guid" />
+      <xs:element minOccurs="0" name="IDBackup" nillable="true" type="xs:long" />
+      <xs:element minOccurs="0" name="IDClient" type="xs:int" />
+      <xs:element minOccurs="0" name="IDLogType" type="xs:unsignedByte" />
       <xs:element minOccurs="0" name="LogType" nillable="true" type="tns:LogType" />
-      <xs:element minOccurs="0" name="LogTypeID" type="xs:unsignedByte" />
       <xs:element minOccurs="0" name="UTCTime" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Value" nillable="true" type="xs:string" />
     </xs:sequence>
@@ -120,8 +120,8 @@
   <xs:complexType name="Login">
     <xs:sequence>
       <xs:element minOccurs="0" name="Client" nillable="true" type="tns:Client" />
-      <xs:element minOccurs="0" name="ClientID" type="xs:int" />
       <xs:element minOccurs="0" name="ID" type="ser:guid" />
+      <xs:element minOccurs="0" name="IDClient" type="xs:int" />
       <xs:element minOccurs="0" name="IP" nillable="true" type="xs:base64Binary" />
       <xs:element minOccurs="0" name="UTCTime" type="xs:dateTime" />
     </xs:sequence>
