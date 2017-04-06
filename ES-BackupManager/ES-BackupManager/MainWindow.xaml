@@ -77,9 +77,9 @@
                                     <RadioButton x:Name="radioBtn_Backup_NoCompress" Content="No Compress" HorizontalAlignment="Left" Margin="263,10,0,0" Height="21" VerticalAlignment="Top" IsChecked="True"/>
                                 </Grid>
                             </GroupBox>
-                            <Button Name="btn_Backup_Edit" Content="Edit" Margin="0,0,10,10" HorizontalAlignment="Right" Width="75" Height="20" VerticalAlignment="Bottom"/>
-                            <Button Name="btn_Backup_Save" Content="Save" HorizontalAlignment="Left" Margin="10,0,0,10" Width="75" Height="20" VerticalAlignment="Bottom"/>
-                            <Button Name ="btn_Backup_Cancel" Content="Cancel" HorizontalAlignment="Left" Margin="90,0,0,10" VerticalAlignment="Bottom" Width="75"/>
+                            <Button Name="btn_Backup_Edit" Content="Edit" Margin="0,0,10,10" HorizontalAlignment="Right" Width="75" Height="22" VerticalAlignment="Bottom" Click="btn_Backup_Edit_Click"/>
+                            <Button Name="btn_Backup_Save" Content="Save" HorizontalAlignment="Left" Margin="10,0,0,10" Width="75" Height="22" VerticalAlignment="Bottom"/>
+                            <Button Name ="btn_Backup_Cancel" Content="Cancel" HorizontalAlignment="Left" Margin="90,0,0,10" VerticalAlignment="Bottom" Width="75" Click="btn_Backup_Cancel_Click"/>
                         </Grid>
                     </GroupBox>
                 </Grid>
