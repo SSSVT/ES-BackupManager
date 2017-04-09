@@ -67,10 +67,20 @@ namespace ES_BackupManager
             foreach (Backup item in client.GetBackups(c))
             {
                 this._gridBackups.Add(item);
-            }
-            this.dataGrid_Backups.SelectedIndex = this._gridBackups.Count == 0 ? -1: 0;
+            }            
             this.dataGrid_Backups.ItemsSource = this._gridBackups;
             this._backupTab_DisableComponents();
+
+            if (this._gridBackups.Count == 0)
+            {
+                this.dataGrid_Backups.SelectedIndex = -1;
+                this.btn_Backup_Edit.IsEnabled = false;
+            }
+            else
+            {
+                this.dataGrid_Backups.SelectedIndex = 0;
+                this.btn_Backup_Edit.IsEnabled = true;
+            }
             #endregion
             #region BackupTemplates_Tab
 
@@ -100,42 +110,46 @@ namespace ES_BackupManager
 
             Client c = this.dataGrid_Clients.SelectedItem as Client;            
             this._loadComponents(c);
-            this.TabControl_Main.SelectedIndex = 0;
         }
         #endregion
         #region Backup Controls
         private void _loadBackupInfo(Backup b)
         {
             this._backupTab_DisableComponents();
-
-            this.textBox_Backup_Name.Text = b.Name;
-            this.textBox_Backup_Description.Text = b.Description;
-
-            if (b.Compressed)
-                this.radioBtn_Backup_Compress.IsChecked = true;
-
-            if (b.Type)
-                this.radioBtn_Backup_Full.IsChecked = true;
-
-            this.textBox_Backup_Source.Text = b.Source;
-            this.textBox_Backup_Dest.Text = b.Destination;
-
-            if (b.Expiration == null)
+            if (b != null)
             {
-                this.dateTimePicker_Backup_Expire.Watermark = "Expire date is not set.";
-                this.dateTimePicker_Backup_Expire.Value = null;
-            }                
+                this.textBox_Backup_Name.Text = b.Name;
+                this.textBox_Backup_Description.Text = b.Description;
+
+                if (b.Compressed)
+                    this.radioBtn_Backup_Compress.IsChecked = true;
+
+                if (b.Type)
+                    this.radioBtn_Backup_Full.IsChecked = true;
+
+                this.textBox_Backup_Source.Text = b.Source;
+                this.textBox_Backup_Dest.Text = b.Destination;
+
+                if (b.Expiration == null)
+                {
+                    this.dateTimePicker_Backup_Expire.Watermark = "Expire date is not set.";
+                    this.dateTimePicker_Backup_Expire.Value = null;
+                }
+                else
+                    this.dateTimePicker_Backup_Expire.Value = b.Expiration;
+
+                this.dateTimePicker_Backup_Start.Value = b.Start;
+
+                if (b.End == null)
+                    this.dateTimePicker_Backup_End.Watermark = "End time is not set.";
+                else
+                    this.dateTimePicker_Backup_End.Value = b.End;
+
+                if (this.btn_Backup_Edit.IsEnabled == false)
+                    this.btn_Backup_Edit.IsEnabled = true;
+            }
             else
-                this.dateTimePicker_Backup_Expire.Value = b.Expiration;
-
-            this.dateTimePicker_Backup_Start.Value = b.Start;
-
-            if (b.End == null)
-                this.dateTimePicker_Backup_End.Watermark = "End time is not set.";
-            else
-                this.dateTimePicker_Backup_End.Value = b.End;
-
-
+                this._backupTab_SetDefaultValues();
         }
         private void dataGrid_Backups_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -157,22 +171,55 @@ namespace ES_BackupManager
             this.dateTimePicker_Backup_End.IsEnabled = false;
             this.btn_Backup_Save.IsEnabled = false;
             this.btn_Backup_Cancel.IsEnabled = false;
+            this.btn_Backup_Edit.IsEnabled = false;
+        }
+        private void _backupTab_SetDefaultValues()
+        {
+            this.textBox_Backup_Name.Text = "Backup name";
+            this.textBox_Backup_Description.Text = "Backup description";
+            this.radioBtn_Backup_NoCompress.IsChecked = true;
+            this.radioBtn_Backup_Diff.IsChecked = true;
+
+            this.textBox_Backup_Source.Text = "Backup source path";
+            this.textBox_Backup_Dest.Text = "Backup destination path";
+
+
+            this.dateTimePicker_Backup_Expire.Value = null;
+            this.dateTimePicker_Backup_Expire.Watermark = "Backup expiration date";
+
+            this.dateTimePicker_Backup_Start.Watermark = "Backup start time";
+            this.dateTimePicker_Backup_Start.Value = null;
+
+            this.dateTimePicker_Backup_End.Watermark = "Backup end time";
+            this.dateTimePicker_Backup_End.Value = null;
         }
         private void btn_Backup_Edit_Click(object sender, RoutedEventArgs e)
         {
-            this.btn_Backup_Save.IsEnabled = true;
-            this.btn_Backup_Cancel.IsEnabled = true;
+            if(this.dataGrid_Backups.SelectedIndex != -1)
+            {
+                this.btn_Backup_Save.IsEnabled = true;
+                this.btn_Backup_Cancel.IsEnabled = true;
 
-            this.textBox_Backup_Name.IsEnabled = true;
-            this.textBox_Backup_Description.IsEnabled = true;
-            this.dateTimePicker_Backup_Expire.IsEnabled = true;
+                this.textBox_Backup_Name.IsEnabled = true;
+                this.textBox_Backup_Description.IsEnabled = true;
+                this.dateTimePicker_Backup_Expire.IsEnabled = true;
+            }            
         }
-        #endregion
-
         private void btn_Backup_Cancel_Click(object sender, RoutedEventArgs e)
         {
             Backup backup = this.dataGrid_Backups.SelectedItem as Backup;
             this._loadBackupInfo(backup);
         }
+        private void btn_Backup_Save_Click(object sender, RoutedEventArgs e)
+        {
+            Backup backup = this.dataGrid_Backups.SelectedItem as Backup;
+
+            backup.Name = this.textBox_Backup_Name.Text;
+            backup.Description = this.textBox_Backup_Dest.Text;
+            backup.Expiration = this.dateTimePicker_Backup_Expire.Value;
+
+            //TODO: Send data to server and update database
+        }
+        #endregion
     }
 }
