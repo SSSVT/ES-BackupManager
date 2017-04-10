@@ -16,12 +16,10 @@
             <ComboBoxItem Content="Banned"/>
         </ComboBox>
         <Label Content="Sort by:" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top"/>
-        <ComboBox HorizontalAlignment="Left" Margin="65,39,0,0" VerticalAlignment="Top" Width="140" SelectedIndex="0">
+        <ComboBox HorizontalAlignment="Left" Margin="65,40,0,0" VerticalAlignment="Top" Width="140" SelectedIndex="0">
             <ComboBoxItem Content="None"/>
-            <ComboBoxItem Content="Active ↑"/>
-            <ComboBoxItem Content="Active ↓"/>
-            <ComboBoxItem Content="Status ↑"/>
-            <ComboBoxItem Content="Status ↓"/>
+            <ComboBoxItem Content="Active ↑ (ASC)"/>
+            <ComboBoxItem Content="Active ↓ (DESC)"/>
         </ComboBox>
         <Button Content="Apply" HorizontalAlignment="Left" Margin="65,66,0,0" VerticalAlignment="Top" Width="75"/>
         <DataGrid Name="dataGrid_Clients" HorizontalAlignment="Left" Margin="10,91,0,10" Width="200" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="dataGrid_Clients_SelectionChanged">
@@ -37,7 +35,7 @@
                             <Label Content="Name:" HorizontalAlignment="Left" Margin="99,10,0,0" VerticalAlignment="Top"/>
                             <TextBox x:Name="textBox_Client_Name" HorizontalAlignment="Left" Height="23" Margin="192,13,0,0" TextWrapping="Wrap" Text="Client name" VerticalAlignment="Top" Width="250" />
                             <Label Content="Description:" HorizontalAlignment="Left" Margin="70,38,0,0" VerticalAlignment="Top"/>
-                            <TextBox x:Name="textBox_Client_Description" HorizontalAlignment="Left" Height="23" Margin="192,42,0,0" TextWrapping="Wrap" Text="Client description" VerticalAlignment="Top" Width="250" />
+                            <TextBox x:Name="textBox_Client_Description" HorizontalAlignment="Left" Height="23" Margin="192,42,0,0" TextWrapping="Wrap" Text="Client description" VerticalAlignment="Top" Width="250"/>
                         </Grid>
                     </GroupBox>
                     <GroupBox Header="Client Settings" Margin="5,135,5,10">
@@ -84,7 +82,7 @@
                                     <Label Content="End Time:" HorizontalAlignment="Left" Margin="67,67,0,0" VerticalAlignment="Top"/>
                                     <xctk:DateTimePicker Name="dateTimePicker_Backup_Expire" Margin="178,11,54,0" Height="24" VerticalAlignment="Top"/>
                                     <xctk:DateTimePicker x:Name="dateTimePicker_Backup_Start" Margin="178,40,54,0" Height="24" VerticalAlignment="Top"/>
-                                    <xctk:DateTimePicker x:Name="dateTimePicker_Backup_End" Margin="178,69,54,0" Height="24" VerticalAlignment="Top"/>
+                                    <xctk:DateTimePicker x:Name="dateTimePicker_Backup_End" Margin="178,69,54,11"/>
                                 </Grid>
                             </GroupBox>
                             <GroupBox Header="Compression Settings" HorizontalAlignment="Left" Height="62" Margin="10,136,0,0" VerticalAlignment="Top" Width="494">
@@ -117,11 +115,16 @@
                 <Grid>
                     <DataGrid x:Name="dataGrid_Logs" HorizontalAlignment="Left" Margin="10,10,0,10" Width="200" IsReadOnly="True" AutoGenerateColumns="False">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Log Time" Binding="{Binding UTCTime}"/>
+                            <DataGridTextColumn Header="Log Time" Binding="{Binding UTCTime}" Width="*"/>
                         </DataGrid.Columns>
                     </DataGrid>
                     <GroupBox Header="Log Info" Margin="225,10,10,263">
-
+                        <Grid>
+                            <Label Content="Backup:" HorizontalAlignment="Left" Margin="99,10,0,0" VerticalAlignment="Top"/>
+                            <Label Content="Log Type:" HorizontalAlignment="Left" Margin="89,41,0,0" VerticalAlignment="Top"/>
+                            <Label Content="UTC Time:" HorizontalAlignment="Left" Margin="86,72,0,0" VerticalAlignment="Top"/>
+                            <xctk:DateTimePicker Margin="176,74,0,117" HorizontalAlignment="Left" Width="246"/>
+                        </Grid>
                     </GroupBox>
                     <GroupBox Header="Log Configuration" Margin="225,263,10,10">
 

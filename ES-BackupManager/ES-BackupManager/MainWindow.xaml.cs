@@ -35,6 +35,7 @@ namespace ES_BackupManager
         private BindingList<Client> _gridClients { get; set; } = new BindingList<Client>();
         private BindingList<Backup> _gridBackups { get; set; } = new BindingList<Backup>();
         private BindingList<Log> _gridLogs { get; set; } = new BindingList<Log>();
+        private BindingList<BackupTemplate> _gridTemplates { get; set; } = new BindingList<BackupTemplate>();
         #endregion
 
         #region Setup Controls
@@ -57,6 +58,7 @@ namespace ES_BackupManager
                 this.TabControl_Main.IsEnabled = true;
 
             this._gridBackups.Clear();
+            this._gridTemplates.Clear();
             this._gridLogs.Clear();
 
             ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
@@ -83,7 +85,12 @@ namespace ES_BackupManager
             }
             #endregion
             #region BackupTemplates_Tab
-
+            //TODO: Implement
+            //foreach (BackupTemplate item in client.GetTemplates(c))
+            //{
+            //    this._gridTemplates.Add(item);
+            //}
+            //this.dataGrid_BackupTemplates.ItemsSource = this._gridTemplates;
             #endregion
             #region Logs_Tab
             foreach (Log item in client.GetLogsByClient(c))
@@ -91,6 +98,8 @@ namespace ES_BackupManager
                 this._gridLogs.Add(item);
             }
             this.dataGrid_Logs.ItemsSource = this._gridLogs;
+
+            this._logTab_DisableComponents();
             #endregion
             #region Logins_Tab
 
@@ -110,6 +119,20 @@ namespace ES_BackupManager
 
             Client c = this.dataGrid_Clients.SelectedItem as Client;            
             this._loadComponents(c);
+            this._loadClientInfo(c);
+        }
+
+        private void _clientTab_DisableComponents()
+        {
+            this.textBox_Client_Name.IsEnabled = false;
+            this.textBox_Client_Description.IsEnabled = false;
+        }
+        private void _loadClientInfo(Client c)
+        {
+            this._clientTab_DisableComponents();
+
+            this.textBox_Client_Name.Text = c.Name;
+            this.textBox_Client_Description.Text = c.Description;
         }
         #endregion
         #region Backup Controls
@@ -219,6 +242,12 @@ namespace ES_BackupManager
             backup.Expiration = this.dateTimePicker_Backup_Expire.Value;
 
             //TODO: Send data to server and update database
+        }
+        #endregion
+        #region Log Controls
+        private void _logTab_DisableComponents()
+        {
+
         }
         #endregion
     }
