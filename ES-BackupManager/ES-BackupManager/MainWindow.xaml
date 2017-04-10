@@ -3,20 +3,19 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-        xmlns:local="clr-namespace:ES_BackupManager"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"        
         mc:Ignorable="d"
         Title="Evolution Studio | Backup Administrator" Height="596.5" Width="1000">
     <Grid>
         <Label Content="Filter:" HorizontalAlignment="Left" Margin="21,9,0,0" VerticalAlignment="Top"/>
-        <ComboBox HorizontalAlignment="Left" Margin="65,12,0,0" VerticalAlignment="Top" Width="140" SelectedIndex="0">
+        <ComboBox x:Name="comboBox_Main_Filter" HorizontalAlignment="Left" Margin="65,12,0,0" VerticalAlignment="Top" Width="140" SelectedIndex="0">
             <ComboBoxItem Content="None" Cursor="None"/>
             <ComboBoxItem Content="Verified"/>
             <ComboBoxItem Content="Unverified"/>
             <ComboBoxItem Content="Banned"/>
         </ComboBox>
         <Label Content="Sort by:" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top"/>
-        <ComboBox HorizontalAlignment="Left" Margin="65,40,0,0" VerticalAlignment="Top" Width="140" SelectedIndex="0">
+        <ComboBox x:Name="comboBox_Main_Sort" HorizontalAlignment="Left" Margin="65,40,0,0" VerticalAlignment="Top" Width="140" SelectedIndex="0">
             <ComboBoxItem Content="None"/>
             <ComboBoxItem Content="Active ↑ (ASC)"/>
             <ComboBoxItem Content="Active ↓ (DESC)"/>
@@ -123,7 +122,13 @@
                             <Label Content="Backup:" HorizontalAlignment="Left" Margin="99,10,0,0" VerticalAlignment="Top"/>
                             <Label Content="Log Type:" HorizontalAlignment="Left" Margin="89,41,0,0" VerticalAlignment="Top"/>
                             <Label Content="UTC Time:" HorizontalAlignment="Left" Margin="86,72,0,0" VerticalAlignment="Top"/>
-                            <xctk:DateTimePicker Margin="176,74,0,117" HorizontalAlignment="Left" Width="246"/>
+                            <xctk:DateTimePicker Name="dateTimePicker_Log_Time" Margin="176,74,0,117" HorizontalAlignment="Left" Width="246"/>
+                            <TextBox x:Name="textBox_Log_BackupName" HorizontalAlignment="Left" Height="23" Margin="176,13,0,0" TextWrapping="Wrap" Text="Backup name" VerticalAlignment="Top" Width="246"/>
+                            <ComboBox x:Name="comboBox_Log_LogType" HorizontalAlignment="Left" Margin="176,45,0,0" VerticalAlignment="Top" Width="246">
+                                <ComboBoxItem Content="Error"/>
+                                <ComboBoxItem Content="Warning"/>
+                                <ComboBoxItem Content="Message"/>
+                            </ComboBox>
                         </Grid>
                     </GroupBox>
                     <GroupBox Header="Log Configuration" Margin="225,263,10,10">

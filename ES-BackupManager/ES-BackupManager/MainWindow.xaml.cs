@@ -43,7 +43,18 @@ namespace ES_BackupManager
         {
             ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
 
-            foreach (Client item in client.GetClients())
+            Filter f;
+
+            switch (this.comboBox_Main_Filter.SelectedIndex)
+            {
+                case 0:
+                    f = Filter.All;
+                    break;
+                default:
+                    break;
+            }
+
+            foreach (Client item in client.GetClients(f,Sort.Asc)
             {
                 this._gridClients.Add(item);
             }
@@ -66,7 +77,7 @@ namespace ES_BackupManager
 
             #endregion
             #region Backups_Tab
-            foreach (Backup item in client.GetBackups(c))
+            foreach (Backup item in client.GetBackupsByClientID(c.ID))
             {
                 this._gridBackups.Add(item);
             }            
@@ -93,7 +104,7 @@ namespace ES_BackupManager
             //this.dataGrid_BackupTemplates.ItemsSource = this._gridTemplates;
             #endregion
             #region Logs_Tab
-            foreach (Log item in client.GetLogsByClient(c))
+            foreach (Log item in client.GetLogsByClientID(c.ID))
             {
                 this._gridLogs.Add(item);
             }
@@ -247,7 +258,9 @@ namespace ES_BackupManager
         #region Log Controls
         private void _logTab_DisableComponents()
         {
-
+            this.textBox_Log_BackupName.IsEnabled = false;
+            this.comboBox_Log_LogType.IsEnabled = false;
+            this.dateTimePicker_Log_Time.IsEnabled = false;
         }
         #endregion
     }

@@ -24,6 +24,7 @@
   <Metadata>
     <MetadataFile FileName="ESBackupServerAdminService2.xsd" MetadataType="Schema" ID="c6142433-40e8-4bf0-9b28-c1c5cdcb15a4" SourceId="1" SourceUrl="http://localhost:53095/ESBackupServerAdminService.svc?xsd=xsd2" />
     <MetadataFile FileName="ESBackupServerAdminService.disco" MetadataType="Disco" ID="d525021e-7950-4a5b-b33a-b15c8d75ca5e" SourceId="1" SourceUrl="http://localhost:53095/ESBackupServerAdminService.svc?disco" />
+    <MetadataFile FileName="ESBackupServerAdminService4.xsd" MetadataType="Schema" ID="71c30252-7a46-48b8-bba7-bc1cb02a4b21" SourceId="1" SourceUrl="http://localhost:53095/ESBackupServerAdminService.svc?xsd=xsd4" />
     <MetadataFile FileName="ESBackupServerAdminService.wsdl" MetadataType="Wsdl" ID="1398dcaf-cb7f-40f3-b72a-8e41902832ca" SourceId="1" SourceUrl="http://localhost:53095/ESBackupServerAdminService.svc?wsdl" />
     <MetadataFile FileName="ESBackupServerAdminService.xsd" MetadataType="Schema" ID="73a56e88-ab1f-4041-9f38-7d63087834fc" SourceId="1" SourceUrl="http://localhost:53095/ESBackupServerAdminService.svc?xsd=xsd1" />
     <MetadataFile FileName="ESBackupServerAdminService1.xsd" MetadataType="Schema" ID="834d7bc5-2d1c-4e09-9f62-681af84f98ec" SourceId="1" SourceUrl="http://localhost:53095/ESBackupServerAdminService.svc?xsd=xsd0" />
