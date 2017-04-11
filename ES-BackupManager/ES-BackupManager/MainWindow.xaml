@@ -9,7 +9,7 @@
     <Grid>
         <Label Content="Filter:" HorizontalAlignment="Left" Margin="21,9,0,0" VerticalAlignment="Top"/>
         <ComboBox x:Name="comboBox_Main_Filter" HorizontalAlignment="Left" Margin="65,12,0,0" VerticalAlignment="Top" Width="140" SelectedIndex="0">
-            <ComboBoxItem Content="None" Cursor="None"/>
+            <ComboBoxItem Content="None"/>
             <ComboBoxItem Content="Verified"/>
             <ComboBoxItem Content="Unverified"/>
             <ComboBoxItem Content="Banned"/>
@@ -20,7 +20,7 @@
             <ComboBoxItem Content="Active ↑ (ASC)"/>
             <ComboBoxItem Content="Active ↓ (DESC)"/>
         </ComboBox>
-        <Button Content="Apply" HorizontalAlignment="Left" Margin="65,66,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="btn_Main_ApplyFilter" Content="Apply" HorizontalAlignment="Left" Margin="65,66,0,0" VerticalAlignment="Top" Width="75" Click="btn_Main_ApplyFilter_Click"/>
         <DataGrid Name="dataGrid_Clients" HorizontalAlignment="Left" Margin="10,91,0,10" Width="200" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="dataGrid_Clients_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Client Name" Binding="{Binding Name}" Width="*"/>
@@ -81,7 +81,7 @@
                                     <Label Content="End Time:" HorizontalAlignment="Left" Margin="67,67,0,0" VerticalAlignment="Top"/>
                                     <xctk:DateTimePicker Name="dateTimePicker_Backup_Expire" Margin="178,11,54,0" Height="24" VerticalAlignment="Top"/>
                                     <xctk:DateTimePicker x:Name="dateTimePicker_Backup_Start" Margin="178,40,54,0" Height="24" VerticalAlignment="Top"/>
-                                    <xctk:DateTimePicker x:Name="dateTimePicker_Backup_End" Margin="178,69,54,11"/>
+                                    <xctk:DateTimePicker x:Name="dateTimePicker_Backup_End" Margin="178,69,54,0" Height="24" VerticalAlignment="Top"/>
                                 </Grid>
                             </GroupBox>
                             <GroupBox Header="Compression Settings" HorizontalAlignment="Left" Height="62" Margin="10,136,0,0" VerticalAlignment="Top" Width="494">

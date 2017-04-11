@@ -18,66 +18,80 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetBackups">
+  <xs:element name="GetBackupsByClientID">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/ESBackupServer.Database.Objects" minOccurs="0" name="client" nillable="true" type="q4:Client" />
+        <xs:element minOccurs="0" name="id" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetBackupsResponse">
+  <xs:element name="GetBackupsByClientIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/ESBackupServer.Database.Objects" minOccurs="0" name="GetBackupsResult" nillable="true" type="q5:ArrayOfBackup" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/ESBackupServer.Database.Objects" minOccurs="0" name="GetBackupsByClientIDResult" nillable="true" type="q4:ArrayOfBackup" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetLogsByClient">
+  <xs:element name="GetBackupByID">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/ESBackupServer.Database.Objects" minOccurs="0" name="client" nillable="true" type="q6:Client" />
+        <xs:element minOccurs="0" name="id" type="xs:long" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetLogsByClientResponse">
+  <xs:element name="GetBackupByIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/ESBackupServer.Database.Objects" minOccurs="0" name="GetLogsByClientResult" nillable="true" type="q7:ArrayOfLog" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/ESBackupServer.Database.Objects" minOccurs="0" name="GetBackupByIDResult" nillable="true" type="q5:Backup" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetLogsByBackup">
+  <xs:element name="GetLogsByClientID">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/ESBackupServer.Database.Objects" minOccurs="0" name="backup" nillable="true" type="q8:Backup" />
+        <xs:element minOccurs="0" name="id" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetLogsByBackupResponse">
+  <xs:element name="GetLogsByClientIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/ESBackupServer.Database.Objects" minOccurs="0" name="GetLogsByBackupResult" nillable="true" type="q9:ArrayOfLog" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/ESBackupServer.Database.Objects" minOccurs="0" name="GetLogsByClientIDResult" nillable="true" type="q6:ArrayOfLog" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetLogsByBackupID">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="id" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetLogsByBackupIDResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/ESBackupServer.Database.Objects" minOccurs="0" name="GetLogsByBackupIDResult" nillable="true" type="q7:ArrayOfLog" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetConfiguration">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/ESBackupServer.Database.Objects" minOccurs="0" name="client" nillable="true" type="q10:Client" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/ESBackupServer.Database.Objects" minOccurs="0" name="client" nillable="true" type="q8:Client" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetConfigurationResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/ESBackupServer.App.Objects" minOccurs="0" name="GetConfigurationResult" nillable="true" type="q11:Configuration" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/ESBackupServer.App.Objects" minOccurs="0" name="GetConfigurationResult" nillable="true" type="q9:Configuration" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SaveConfiguration">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/ESBackupServer.App.Objects" minOccurs="0" name="config" nillable="true" type="q12:Configuration" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/ESBackupServer.App.Objects" minOccurs="0" name="config" nillable="true" type="q10:Configuration" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

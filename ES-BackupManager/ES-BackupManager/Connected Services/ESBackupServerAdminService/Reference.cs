@@ -18,16 +18,16 @@ namespace ES_BackupManager.ESBackupServerAdminService {
     public enum Filter : int {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        All = 0,
+        Verified = 0,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        Verified = 1,
+        Unverified = 1,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        Unverified = 2,
+        Banned = 2,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        Banned = 3,
+        All = 3,
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
@@ -1228,23 +1228,29 @@ namespace ES_BackupManager.ESBackupServerAdminService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/GetClients", ReplyAction="http://tempuri.org/IESBackupServerAdminService/GetClientsResponse")]
         System.Threading.Tasks.Task<ES_BackupManager.ESBackupServerAdminService.Client[]> GetClientsAsync(ES_BackupManager.ESBackupServerAdminService.Filter filter, ES_BackupManager.ESBackupServerAdminService.Sort sort);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/GetBackups", ReplyAction="http://tempuri.org/IESBackupServerAdminService/GetBackupsResponse")]
-        ES_BackupManager.ESBackupServerAdminService.Backup[] GetBackups(ES_BackupManager.ESBackupServerAdminService.Client client);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/GetBackupsByClientID", ReplyAction="http://tempuri.org/IESBackupServerAdminService/GetBackupsByClientIDResponse")]
+        ES_BackupManager.ESBackupServerAdminService.Backup[] GetBackupsByClientID(int id);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/GetBackups", ReplyAction="http://tempuri.org/IESBackupServerAdminService/GetBackupsResponse")]
-        System.Threading.Tasks.Task<ES_BackupManager.ESBackupServerAdminService.Backup[]> GetBackupsAsync(ES_BackupManager.ESBackupServerAdminService.Client client);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/GetBackupsByClientID", ReplyAction="http://tempuri.org/IESBackupServerAdminService/GetBackupsByClientIDResponse")]
+        System.Threading.Tasks.Task<ES_BackupManager.ESBackupServerAdminService.Backup[]> GetBackupsByClientIDAsync(int id);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/GetLogsByClient", ReplyAction="http://tempuri.org/IESBackupServerAdminService/GetLogsByClientResponse")]
-        ES_BackupManager.ESBackupServerAdminService.Log[] GetLogsByClient(ES_BackupManager.ESBackupServerAdminService.Client client);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/GetBackupByID", ReplyAction="http://tempuri.org/IESBackupServerAdminService/GetBackupByIDResponse")]
+        ES_BackupManager.ESBackupServerAdminService.Backup GetBackupByID(long id);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/GetLogsByClient", ReplyAction="http://tempuri.org/IESBackupServerAdminService/GetLogsByClientResponse")]
-        System.Threading.Tasks.Task<ES_BackupManager.ESBackupServerAdminService.Log[]> GetLogsByClientAsync(ES_BackupManager.ESBackupServerAdminService.Client client);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/GetBackupByID", ReplyAction="http://tempuri.org/IESBackupServerAdminService/GetBackupByIDResponse")]
+        System.Threading.Tasks.Task<ES_BackupManager.ESBackupServerAdminService.Backup> GetBackupByIDAsync(long id);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/GetLogsByBackup", ReplyAction="http://tempuri.org/IESBackupServerAdminService/GetLogsByBackupResponse")]
-        ES_BackupManager.ESBackupServerAdminService.Log[] GetLogsByBackup(ES_BackupManager.ESBackupServerAdminService.Backup backup);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/GetLogsByClientID", ReplyAction="http://tempuri.org/IESBackupServerAdminService/GetLogsByClientIDResponse")]
+        ES_BackupManager.ESBackupServerAdminService.Log[] GetLogsByClientID(int id);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/GetLogsByBackup", ReplyAction="http://tempuri.org/IESBackupServerAdminService/GetLogsByBackupResponse")]
-        System.Threading.Tasks.Task<ES_BackupManager.ESBackupServerAdminService.Log[]> GetLogsByBackupAsync(ES_BackupManager.ESBackupServerAdminService.Backup backup);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/GetLogsByClientID", ReplyAction="http://tempuri.org/IESBackupServerAdminService/GetLogsByClientIDResponse")]
+        System.Threading.Tasks.Task<ES_BackupManager.ESBackupServerAdminService.Log[]> GetLogsByClientIDAsync(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/GetLogsByBackupID", ReplyAction="http://tempuri.org/IESBackupServerAdminService/GetLogsByBackupIDResponse")]
+        ES_BackupManager.ESBackupServerAdminService.Log[] GetLogsByBackupID(long id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/GetLogsByBackupID", ReplyAction="http://tempuri.org/IESBackupServerAdminService/GetLogsByBackupIDResponse")]
+        System.Threading.Tasks.Task<ES_BackupManager.ESBackupServerAdminService.Log[]> GetLogsByBackupIDAsync(long id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/GetConfiguration", ReplyAction="http://tempuri.org/IESBackupServerAdminService/GetConfigurationResponse")]
         ES_BackupManager.ESBackupServerAdminService.Configuration GetConfiguration(ES_BackupManager.ESBackupServerAdminService.Client client);
@@ -1294,28 +1300,36 @@ namespace ES_BackupManager.ESBackupServerAdminService {
             return base.Channel.GetClientsAsync(filter, sort);
         }
         
-        public ES_BackupManager.ESBackupServerAdminService.Backup[] GetBackups(ES_BackupManager.ESBackupServerAdminService.Client client) {
-            return base.Channel.GetBackups(client);
+        public ES_BackupManager.ESBackupServerAdminService.Backup[] GetBackupsByClientID(int id) {
+            return base.Channel.GetBackupsByClientID(id);
         }
         
-        public System.Threading.Tasks.Task<ES_BackupManager.ESBackupServerAdminService.Backup[]> GetBackupsAsync(ES_BackupManager.ESBackupServerAdminService.Client client) {
-            return base.Channel.GetBackupsAsync(client);
+        public System.Threading.Tasks.Task<ES_BackupManager.ESBackupServerAdminService.Backup[]> GetBackupsByClientIDAsync(int id) {
+            return base.Channel.GetBackupsByClientIDAsync(id);
         }
         
-        public ES_BackupManager.ESBackupServerAdminService.Log[] GetLogsByClient(ES_BackupManager.ESBackupServerAdminService.Client client) {
-            return base.Channel.GetLogsByClient(client);
+        public ES_BackupManager.ESBackupServerAdminService.Backup GetBackupByID(long id) {
+            return base.Channel.GetBackupByID(id);
         }
         
-        public System.Threading.Tasks.Task<ES_BackupManager.ESBackupServerAdminService.Log[]> GetLogsByClientAsync(ES_BackupManager.ESBackupServerAdminService.Client client) {
-            return base.Channel.GetLogsByClientAsync(client);
+        public System.Threading.Tasks.Task<ES_BackupManager.ESBackupServerAdminService.Backup> GetBackupByIDAsync(long id) {
+            return base.Channel.GetBackupByIDAsync(id);
         }
         
-        public ES_BackupManager.ESBackupServerAdminService.Log[] GetLogsByBackup(ES_BackupManager.ESBackupServerAdminService.Backup backup) {
-            return base.Channel.GetLogsByBackup(backup);
+        public ES_BackupManager.ESBackupServerAdminService.Log[] GetLogsByClientID(int id) {
+            return base.Channel.GetLogsByClientID(id);
         }
         
-        public System.Threading.Tasks.Task<ES_BackupManager.ESBackupServerAdminService.Log[]> GetLogsByBackupAsync(ES_BackupManager.ESBackupServerAdminService.Backup backup) {
-            return base.Channel.GetLogsByBackupAsync(backup);
+        public System.Threading.Tasks.Task<ES_BackupManager.ESBackupServerAdminService.Log[]> GetLogsByClientIDAsync(int id) {
+            return base.Channel.GetLogsByClientIDAsync(id);
+        }
+        
+        public ES_BackupManager.ESBackupServerAdminService.Log[] GetLogsByBackupID(long id) {
+            return base.Channel.GetLogsByBackupID(id);
+        }
+        
+        public System.Threading.Tasks.Task<ES_BackupManager.ESBackupServerAdminService.Log[]> GetLogsByBackupIDAsync(long id) {
+            return base.Channel.GetLogsByBackupIDAsync(id);
         }
         
         public ES_BackupManager.ESBackupServerAdminService.Configuration GetConfiguration(ES_BackupManager.ESBackupServerAdminService.Client client) {

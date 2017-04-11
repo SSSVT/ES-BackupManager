@@ -28,7 +28,7 @@ namespace ES_BackupManager
         {
             InitializeComponent();
 
-            this._loadGrid();
+            this._loadGrid(Filter.All,Sort.Asc);
         }
 
         #region BindingLists for DataGrids
@@ -39,26 +39,18 @@ namespace ES_BackupManager
         #endregion
 
         #region Setup Controls
-        private void _loadGrid()
-        {
+        private void _loadGrid(Filter f,Sort s)
+        {           
             ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
-
-            Filter f;
-
-            switch (this.comboBox_Main_Filter.SelectedIndex)
-            {
-                case 0:
-                    f = Filter.All;
-                    break;
-                default:
-                    break;
-            }
-
-            foreach (Client item in client.GetClients(f,Sort.Asc)
+            
+            foreach (Client item in client.GetClients(f,s))
             {
                 this._gridClients.Add(item);
             }
-            this.dataGrid_Clients.SelectedIndex = this._gridClients.Count == 0 ? -1 : 0;
+
+            if (this._gridClients.Count > 0)
+                this.dataGrid_Clients.SelectedIndex = 0;
+
             this.dataGrid_Clients.ItemsSource = this._gridClients;
 
             client.Close();
@@ -96,12 +88,13 @@ namespace ES_BackupManager
             }
             #endregion
             #region BackupTemplates_Tab
-            //TODO: Implement
-            //foreach (BackupTemplate item in client.GetTemplates(c))
-            //{
-            //    this._gridTemplates.Add(item);
-            //}
-            //this.dataGrid_BackupTemplates.ItemsSource = this._gridTemplates;
+            //TODO: Implement            
+            
+            foreach (BackupTemplate item in client.GetConfiguration(c).Templates)
+            {
+                this._gridTemplates.Add(item);
+            }
+            this.dataGrid_BackupTemplates.ItemsSource = this._gridTemplates;
             #endregion
             #region Logs_Tab
             foreach (Log item in client.GetLogsByClientID(c.ID))
@@ -128,9 +121,12 @@ namespace ES_BackupManager
             if (!this.TabControl_Main.IsEnabled)
                 this.TabControl_Main.IsEnabled = true;
 
-            Client c = this.dataGrid_Clients.SelectedItem as Client;            
-            this._loadComponents(c);
-            this._loadClientInfo(c);
+            Client c = this.dataGrid_Clients.SelectedItem as Client;  
+            if(c != null)
+            {
+                this._loadComponents(c);
+                this._loadClientInfo(c);
+            }                      
         }
 
         private void _clientTab_DisableComponents()
@@ -249,8 +245,11 @@ namespace ES_BackupManager
             Backup backup = this.dataGrid_Backups.SelectedItem as Backup;
 
             backup.Name = this.textBox_Backup_Name.Text;
-            backup.Description = this.textBox_Backup_Dest.Text;
+            backup.Description = this.textBox_Backup_Description.Text;
             backup.Expiration = this.dateTimePicker_Backup_Expire.Value;
+
+            this._backupTab_DisableComponents();
+            this.btn_Backup_Edit.IsEnabled = true;                
 
             //TODO: Send data to server and update database
         }
@@ -263,5 +262,33 @@ namespace ES_BackupManager
             this.dateTimePicker_Log_Time.IsEnabled = false;
         }
         #endregion
+
+        private void btn_Main_ApplyFilter_Click(object sender, RoutedEventArgs e)
+        {
+            Filter filter;
+            Sort sort;
+
+            switch (this.comboBox_Main_Filter.SelectedIndex)
+            {
+                case 0:
+                    filter = Filter.All;
+                    break;
+                case 1:
+                    filter = Filter.Verified;
+                    break;
+                case 2:
+                    filter = Filter.Unverified;
+                    break;
+                case 3:
+                    filter = Filter.Banned;
+                    break;
+                default:
+                    filter = Filter.All;
+                    break;
+            }
+            sort = this.comboBox_Main_Sort.SelectedIndex == 0 ? Sort.Asc : Sort.Desc;
+            this._gridClients.Clear();
+            this._loadGrid(filter,sort);
+        }
     }
 }
