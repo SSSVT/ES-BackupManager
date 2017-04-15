@@ -11,6 +11,7 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="Backups" nillable="true" type="tns:ArrayOfBackup" />
       <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Emails" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ID" type="xs:int" />
       <xs:element minOccurs="0" name="LastBackupTime" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="LastReportTime" nillable="true" type="xs:dateTime" />
@@ -35,6 +36,8 @@
   <xs:element name="ArrayOfBackup" nillable="true" type="tns:ArrayOfBackup" />
   <xs:complexType name="Backup">
     <xs:sequence>
+      <xs:element minOccurs="0" name="BaseFullBackup" nillable="true" type="tns:Backup" />
+      <xs:element minOccurs="0" name="BaseFullBackupID" nillable="true" type="xs:long" />
       <xs:element minOccurs="0" name="Client" nillable="true" type="tns:Client" />
       <xs:element minOccurs="0" name="Compressed" type="xs:boolean" />
       <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
@@ -44,13 +47,13 @@
       <xs:element minOccurs="0" name="ID" type="xs:long" />
       <xs:element minOccurs="0" name="IDBackupTemplate" type="xs:long" />
       <xs:element minOccurs="0" name="IDClient" type="xs:int" />
+      <xs:element minOccurs="0" name="IsDifferential" type="xs:boolean" />
       <xs:element minOccurs="0" name="Logs" nillable="true" type="tns:ArrayOfLog" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Source" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Start" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Status" type="xs:unsignedByte" />
       <xs:element minOccurs="0" name="Template" nillable="true" type="tns:BackupTemplate" />
-      <xs:element minOccurs="0" name="Type" type="xs:boolean" />
     </xs:sequence>
     <xs:attribute ref="ser:Id" />
     <xs:attribute ref="ser:Ref" />

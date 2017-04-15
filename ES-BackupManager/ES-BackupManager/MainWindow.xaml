@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"        
         mc:Ignorable="d"
-        Title="Evolution Studio | Backup Administrator" Height="596.5" Width="1000">
+        Title="Backup Administrator | Evolution Studio" Height="600" Width="970">
     <Grid>
         <Label Content="Filter:" HorizontalAlignment="Left" Margin="21,9,0,0" VerticalAlignment="Top"/>
         <ComboBox x:Name="comboBox_Main_Filter" HorizontalAlignment="Left" Margin="65,12,0,0" VerticalAlignment="Top" Width="140" SelectedIndex="0">
@@ -21,7 +21,7 @@
             <ComboBoxItem Content="Active ↓ (DESC)"/>
         </ComboBox>
         <Button x:Name="btn_Main_ApplyFilter" Content="Apply" HorizontalAlignment="Left" Margin="65,66,0,0" VerticalAlignment="Top" Width="75" Click="btn_Main_ApplyFilter_Click"/>
-        <DataGrid Name="dataGrid_Clients" HorizontalAlignment="Left" Margin="10,91,0,10" Width="200" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="dataGrid_Clients_SelectionChanged">
+        <DataGrid Name="dataGrid_Clients" HorizontalAlignment="Left" Margin="10,91,0,10" Width="200" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="dataGrid_Clients_SelectionChanged" SelectionMode="Single">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Client Name" Binding="{Binding Name}" Width="*"/>
             </DataGrid.Columns>
@@ -29,25 +29,38 @@
         <TabControl Name="TabControl_Main" Margin="215,10,10,10" IsEnabled="False">
             <TabItem Header="Information" Height="24" VerticalAlignment="Top">
                 <Grid>
-                    <GroupBox Header="Client Details" Margin="5,0,5,385">
+                    <GroupBox Header="Client Details" Margin="5,0,5,268">
                         <Grid>
                             <Label Content="Name:" HorizontalAlignment="Left" Margin="99,10,0,0" VerticalAlignment="Top"/>
                             <TextBox x:Name="textBox_Client_Name" HorizontalAlignment="Left" Height="23" Margin="192,13,0,0" TextWrapping="Wrap" Text="Client name" VerticalAlignment="Top" Width="250" />
                             <Label Content="Description:" HorizontalAlignment="Left" Margin="70,38,0,0" VerticalAlignment="Top"/>
                             <TextBox x:Name="textBox_Client_Description" HorizontalAlignment="Left" Height="23" Margin="192,42,0,0" TextWrapping="Wrap" Text="Client description" VerticalAlignment="Top" Width="250"/>
+                            <GroupBox Header="Client Emails" Height="146" Margin="10,70,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="689">
+                                <Grid>
+                                    <ListBox x:Name="listBox_Client_Emails" HorizontalAlignment="Left" Margin="273,10,0,10" Width="394" SelectionChanged="listBox_Client_Emails_SelectionChanged"/>
+                                    <TextBox x:Name="textBox_Client_Email" HorizontalAlignment="Left" Height="23" Margin="10,35,0,0" TextWrapping="Wrap" Text="Client email" VerticalAlignment="Top" Width="240" TextChanged="textBox_Client_Email_TextChanged"/>
+                                    <Button x:Name="btn_Client_EmailAdd" Content="Add" HorizontalAlignment="Left" Margin="10,94,0,0" VerticalAlignment="Top" Width="75" Click="btn_Client_EmailAdd_Click"/>
+                                    <Button x:Name="btn_Client_EmailEdit" Content="Edit" HorizontalAlignment="Left" Margin="90,94,0,0" VerticalAlignment="Top" Width="75" Click="btn_Client_EmailEdit_Click"/>
+                                    <Button x:Name="btn_Client_EmailRemove" Content="Remove" HorizontalAlignment="Left" Margin="170,94,0,0" VerticalAlignment="Top" Width="75" Click="btn_Client_EmailRemove_Click"/>
+
+                                </Grid>
+                            </GroupBox>
                         </Grid>
                     </GroupBox>
-                    <GroupBox Header="Client Settings" Margin="5,135,5,10">
+                    <GroupBox Header="Client Settings" Margin="5,254,5,54">
                         <Grid>
                             <Label Content="Status:" HorizontalAlignment="Left" Margin="96,22,0,0" VerticalAlignment="Top"/>
 
                         </Grid>
                     </GroupBox>
+                    <Button x:Name="btn_Client_Edit" Content="Edit" Margin="646,475,0,0" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left" Width="75" Click="btn_Client_Edit_Click"/>
+                    <Button x:Name="btn_Client_Save" Content="Save" HorizontalAlignment="Left" Margin="10,475,0,0" Width="75" Height="22" VerticalAlignment="Top" Click="btn_Client_Save_Click"/>
+                    <Button x:Name="btn_Client_Cancel" Content="Cancel" HorizontalAlignment="Left" Margin="90,475,0,0" Width="75" Height="22" VerticalAlignment="Top" Click="btn_Client_Cancel_Click"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Backups" Height="22" VerticalAlignment="Top">
                 <Grid x:Name="Backup_Grid">
-                    <DataGrid x:Name="dataGrid_Backups" HorizontalAlignment="Left" Margin="10,10,0,10" Width="200" IsReadOnly="True" AutoGenerateColumns="False" SelectionChanged="dataGrid_Backups_SelectionChanged">
+                    <DataGrid x:Name="dataGrid_Backups" HorizontalAlignment="Left" Margin="10,10,0,10" Width="200" IsReadOnly="True" AutoGenerateColumns="False" SelectionChanged="dataGrid_Backups_SelectionChanged" SelectionMode="Single">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Backup Name" Binding="{Binding Name}" Width="*"/>
                         </DataGrid.Columns>
@@ -79,9 +92,9 @@
                                     <Label Content="Expiration Date:" HorizontalAlignment="Left" Margin="36,9,0,0" VerticalAlignment="Top"/>
                                     <Label Content="Start Time:" HorizontalAlignment="Left" Margin="63,38,0,0" VerticalAlignment="Top"/>
                                     <Label Content="End Time:" HorizontalAlignment="Left" Margin="67,67,0,0" VerticalAlignment="Top"/>
-                                    <xctk:DateTimePicker Name="dateTimePicker_Backup_Expire" Margin="178,11,54,0" Height="24" VerticalAlignment="Top"/>
-                                    <xctk:DateTimePicker x:Name="dateTimePicker_Backup_Start" Margin="178,40,54,0" Height="24" VerticalAlignment="Top"/>
-                                    <xctk:DateTimePicker x:Name="dateTimePicker_Backup_End" Margin="178,69,54,0" Height="24" VerticalAlignment="Top"/>
+                                    <xctk:DateTimePicker Name="dateTimePicker_Backup_Expire" Margin="178,11,34,0" Height="24" VerticalAlignment="Top"/>
+                                    <xctk:DateTimePicker x:Name="dateTimePicker_Backup_Start" Margin="178,40,34,0" Height="24" VerticalAlignment="Top"/>
+                                    <xctk:DateTimePicker x:Name="dateTimePicker_Backup_End" Margin="178,69,34,0" Height="24" VerticalAlignment="Top"/>
                                 </Grid>
                             </GroupBox>
                             <GroupBox Header="Compression Settings" HorizontalAlignment="Left" Height="62" Margin="10,136,0,0" VerticalAlignment="Top" Width="494">
@@ -93,14 +106,14 @@
                             </GroupBox>
                             <Button Name="btn_Backup_Edit" Content="Edit" Margin="0,0,10,10" HorizontalAlignment="Right" Width="75" Height="22" VerticalAlignment="Bottom" Click="btn_Backup_Edit_Click"/>
                             <Button Name="btn_Backup_Save" Content="Save" HorizontalAlignment="Left" Margin="10,0,0,10" Width="75" Height="22" VerticalAlignment="Bottom" Click="btn_Backup_Save_Click"/>
-                            <Button Name ="btn_Backup_Cancel" Content="Cancel" HorizontalAlignment="Left" Margin="90,0,0,10" VerticalAlignment="Bottom" Width="75" Click="btn_Backup_Cancel_Click"/>
+                            <Button Name ="btn_Backup_Cancel" Content="Cancel" HorizontalAlignment="Left" Margin="90,0,0,10" VerticalAlignment="Bottom" Width="75" Click="btn_Backup_Cancel_Click" Height="22"/>
                         </Grid>
                     </GroupBox>
                 </Grid>
             </TabItem>
             <TabItem Header="Backup Templates">
                 <Grid>
-                    <DataGrid x:Name="dataGrid_BackupTemplates" HorizontalAlignment="Left" Margin="10,10,0,10" Width="200" IsReadOnly="True" AutoGenerateColumns="False">
+                    <DataGrid x:Name="dataGrid_BackupTemplates" HorizontalAlignment="Left" Margin="10,10,0,10" Width="200" IsReadOnly="True" AutoGenerateColumns="False" SelectionMode="Single">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Template Name" Binding="{Binding Name}"/>
                         </DataGrid.Columns>
@@ -112,7 +125,7 @@
             </TabItem>
             <TabItem Header="Logs">
                 <Grid>
-                    <DataGrid x:Name="dataGrid_Logs" HorizontalAlignment="Left" Margin="10,10,0,10" Width="200" IsReadOnly="True" AutoGenerateColumns="False">
+                    <DataGrid x:Name="dataGrid_Logs" HorizontalAlignment="Left" Margin="10,10,0,10" Width="200" IsReadOnly="True" AutoGenerateColumns="False" SelectionMode="Single">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Log Time" Binding="{Binding UTCTime}" Width="*"/>
                         </DataGrid.Columns>

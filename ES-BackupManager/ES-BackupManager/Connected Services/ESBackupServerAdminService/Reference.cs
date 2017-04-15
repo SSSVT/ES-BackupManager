@@ -57,6 +57,9 @@ namespace ES_BackupManager.ESBackupServerAdminService {
         private string DescriptionField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string EmailsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int IDField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -121,6 +124,19 @@ namespace ES_BackupManager.ESBackupServerAdminService {
                 if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
                     this.DescriptionField = value;
                     this.RaisePropertyChanged("Description");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Emails {
+            get {
+                return this.EmailsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EmailsField, value) != true)) {
+                    this.EmailsField = value;
+                    this.RaisePropertyChanged("Emails");
                 }
             }
         }
@@ -288,6 +304,12 @@ namespace ES_BackupManager.ESBackupServerAdminService {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private ES_BackupManager.ESBackupServerAdminService.Backup BaseFullBackupField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<long> BaseFullBackupIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private ES_BackupManager.ESBackupServerAdminService.Client ClientField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -315,6 +337,9 @@ namespace ES_BackupManager.ESBackupServerAdminService {
         private int IDClientField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsDifferentialField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private ES_BackupManager.ESBackupServerAdminService.Log[] LogsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -332,9 +357,6 @@ namespace ES_BackupManager.ESBackupServerAdminService {
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private ES_BackupManager.ESBackupServerAdminService.BackupTemplate TemplateField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool TypeField;
-        
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
@@ -342,6 +364,32 @@ namespace ES_BackupManager.ESBackupServerAdminService {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public ES_BackupManager.ESBackupServerAdminService.Backup BaseFullBackup {
+            get {
+                return this.BaseFullBackupField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BaseFullBackupField, value) != true)) {
+                    this.BaseFullBackupField = value;
+                    this.RaisePropertyChanged("BaseFullBackup");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<long> BaseFullBackupID {
+            get {
+                return this.BaseFullBackupIDField;
+            }
+            set {
+                if ((this.BaseFullBackupIDField.Equals(value) != true)) {
+                    this.BaseFullBackupIDField = value;
+                    this.RaisePropertyChanged("BaseFullBackupID");
+                }
             }
         }
         
@@ -463,6 +511,19 @@ namespace ES_BackupManager.ESBackupServerAdminService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsDifferential {
+            get {
+                return this.IsDifferentialField;
+            }
+            set {
+                if ((this.IsDifferentialField.Equals(value) != true)) {
+                    this.IsDifferentialField = value;
+                    this.RaisePropertyChanged("IsDifferential");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public ES_BackupManager.ESBackupServerAdminService.Log[] Logs {
             get {
                 return this.LogsField;
@@ -536,19 +597,6 @@ namespace ES_BackupManager.ESBackupServerAdminService {
                 if ((object.ReferenceEquals(this.TemplateField, value) != true)) {
                     this.TemplateField = value;
                     this.RaisePropertyChanged("Template");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool Type {
-            get {
-                return this.TypeField;
-            }
-            set {
-                if ((this.TypeField.Equals(value) != true)) {
-                    this.TypeField = value;
-                    this.RaisePropertyChanged("Type");
                 }
             }
         }
@@ -1141,83 +1189,6 @@ namespace ES_BackupManager.ESBackupServerAdminService {
         Message = 3,
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Configuration", Namespace="http://schemas.datacontract.org/2004/07/ESBackupServer.App.Objects")]
-    [System.SerializableAttribute()]
-    public partial class Configuration : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private ES_BackupManager.ESBackupServerAdminService.Client ClientField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.DateTime GeneratedField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private ES_BackupManager.ESBackupServerAdminService.BackupTemplate[] TemplatesField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public ES_BackupManager.ESBackupServerAdminService.Client Client {
-            get {
-                return this.ClientField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ClientField, value) != true)) {
-                    this.ClientField = value;
-                    this.RaisePropertyChanged("Client");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime Generated {
-            get {
-                return this.GeneratedField;
-            }
-            set {
-                if ((this.GeneratedField.Equals(value) != true)) {
-                    this.GeneratedField = value;
-                    this.RaisePropertyChanged("Generated");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public ES_BackupManager.ESBackupServerAdminService.BackupTemplate[] Templates {
-            get {
-                return this.TemplatesField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.TemplatesField, value) != true)) {
-                    this.TemplatesField = value;
-                    this.RaisePropertyChanged("Templates");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ESBackupServerAdminService.IESBackupServerAdminService")]
     public interface IESBackupServerAdminService {
@@ -1252,17 +1223,23 @@ namespace ES_BackupManager.ESBackupServerAdminService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/GetLogsByBackupID", ReplyAction="http://tempuri.org/IESBackupServerAdminService/GetLogsByBackupIDResponse")]
         System.Threading.Tasks.Task<ES_BackupManager.ESBackupServerAdminService.Log[]> GetLogsByBackupIDAsync(long id);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/GetConfiguration", ReplyAction="http://tempuri.org/IESBackupServerAdminService/GetConfigurationResponse")]
-        ES_BackupManager.ESBackupServerAdminService.Configuration GetConfiguration(ES_BackupManager.ESBackupServerAdminService.Client client);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/UpdateBackup", ReplyAction="http://tempuri.org/IESBackupServerAdminService/UpdateBackupResponse")]
+        void UpdateBackup(ES_BackupManager.ESBackupServerAdminService.Backup backup);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/GetConfiguration", ReplyAction="http://tempuri.org/IESBackupServerAdminService/GetConfigurationResponse")]
-        System.Threading.Tasks.Task<ES_BackupManager.ESBackupServerAdminService.Configuration> GetConfigurationAsync(ES_BackupManager.ESBackupServerAdminService.Client client);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/UpdateBackup", ReplyAction="http://tempuri.org/IESBackupServerAdminService/UpdateBackupResponse")]
+        System.Threading.Tasks.Task UpdateBackupAsync(ES_BackupManager.ESBackupServerAdminService.Backup backup);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/SaveConfiguration", ReplyAction="http://tempuri.org/IESBackupServerAdminService/SaveConfigurationResponse")]
-        bool SaveConfiguration(ES_BackupManager.ESBackupServerAdminService.Configuration config);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/UpdateClient", ReplyAction="http://tempuri.org/IESBackupServerAdminService/UpdateClientResponse")]
+        void UpdateClient(ES_BackupManager.ESBackupServerAdminService.Client client);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/SaveConfiguration", ReplyAction="http://tempuri.org/IESBackupServerAdminService/SaveConfigurationResponse")]
-        System.Threading.Tasks.Task<bool> SaveConfigurationAsync(ES_BackupManager.ESBackupServerAdminService.Configuration config);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/UpdateClient", ReplyAction="http://tempuri.org/IESBackupServerAdminService/UpdateClientResponse")]
+        System.Threading.Tasks.Task UpdateClientAsync(ES_BackupManager.ESBackupServerAdminService.Client client);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/RemoveBackup", ReplyAction="http://tempuri.org/IESBackupServerAdminService/RemoveBackupResponse")]
+        void RemoveBackup(long id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/RemoveBackup", ReplyAction="http://tempuri.org/IESBackupServerAdminService/RemoveBackupResponse")]
+        System.Threading.Tasks.Task RemoveBackupAsync(long id);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1332,20 +1309,28 @@ namespace ES_BackupManager.ESBackupServerAdminService {
             return base.Channel.GetLogsByBackupIDAsync(id);
         }
         
-        public ES_BackupManager.ESBackupServerAdminService.Configuration GetConfiguration(ES_BackupManager.ESBackupServerAdminService.Client client) {
-            return base.Channel.GetConfiguration(client);
+        public void UpdateBackup(ES_BackupManager.ESBackupServerAdminService.Backup backup) {
+            base.Channel.UpdateBackup(backup);
         }
         
-        public System.Threading.Tasks.Task<ES_BackupManager.ESBackupServerAdminService.Configuration> GetConfigurationAsync(ES_BackupManager.ESBackupServerAdminService.Client client) {
-            return base.Channel.GetConfigurationAsync(client);
+        public System.Threading.Tasks.Task UpdateBackupAsync(ES_BackupManager.ESBackupServerAdminService.Backup backup) {
+            return base.Channel.UpdateBackupAsync(backup);
         }
         
-        public bool SaveConfiguration(ES_BackupManager.ESBackupServerAdminService.Configuration config) {
-            return base.Channel.SaveConfiguration(config);
+        public void UpdateClient(ES_BackupManager.ESBackupServerAdminService.Client client) {
+            base.Channel.UpdateClient(client);
         }
         
-        public System.Threading.Tasks.Task<bool> SaveConfigurationAsync(ES_BackupManager.ESBackupServerAdminService.Configuration config) {
-            return base.Channel.SaveConfigurationAsync(config);
+        public System.Threading.Tasks.Task UpdateClientAsync(ES_BackupManager.ESBackupServerAdminService.Client client) {
+            return base.Channel.UpdateClientAsync(client);
+        }
+        
+        public void RemoveBackup(long id) {
+            base.Channel.RemoveBackup(id);
+        }
+        
+        public System.Threading.Tasks.Task RemoveBackupAsync(long id) {
+            return base.Channel.RemoveBackupAsync(id);
         }
     }
 }
