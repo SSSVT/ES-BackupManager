@@ -3,7 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -169,6 +171,8 @@ namespace ES_BackupManager
             this.btn_Client_Cancel.IsEnabled = false;
             this.btn_Client_Save.IsEnabled = false;
             this.listBox_Client_Emails.IsEnabled = false;
+            this.label_Client_EmailError.Visibility = Visibility.Hidden;
+            this.textBox_Client_Email.Text = "";
         }
         private void _loadClientInfo(Client c)
         {
@@ -215,6 +219,7 @@ namespace ES_BackupManager
             this.textBox_Client_Name.IsEnabled = true;
             this.textBox_Client_Description.IsEnabled = true;
             this.textBox_Client_Email.IsEnabled = true;
+            this.listBox_Client_Emails.IsEnabled = true;
 
             this.btn_Client_Save.IsEnabled = true;
             this.btn_Client_Cancel.IsEnabled = true;
@@ -242,41 +247,124 @@ namespace ES_BackupManager
         }
         private void btn_Client_EmailAdd_Click(object sender, RoutedEventArgs e)
         {
+            if (!this._emailChangeMode)
+            {
+                string emailAddress = this.textBox_Client_Email.Text;
 
+                if (this._isEmailValid(emailAddress))
+                {
+                    this._listBoxEmailsList.Add(emailAddress);
+                    this._emailChangeState(2);
+                    this.btn_Client_EmailAdd.IsEnabled = false;
+                }
+            }
+            else if (this._emailChangeMode)
+            {
+                this._listBoxEmailsList[this.listBox_Client_Emails.SelectedIndex] = this.textBox_Client_Email.Text;
+
+                this._emailChangeState(2);
+                this.btn_Client_EmailAdd.IsEnabled = false;
+                this.btn_Client_EmailEdit.IsEnabled = false;
+                this.btn_Client_EmailRemove.IsEnabled = false;
+            }
         }
 
         private void btn_Client_EmailEdit_Click(object sender, RoutedEventArgs e)
         {
-
+            if(this.listBox_Client_Emails.SelectedIndex >= 0)
+            {
+                if (!this._emailChangeMode)
+                {
+                    this._emailChangeState(1);
+                    this.textBox_Client_Email.Text = this.listBox_Client_Emails.SelectedItem as string;
+                }
+                else if (this._emailChangeMode)
+                {
+                    this._emailChangeState(2);
+                }
+            }
+        }        
+        
+        private void _emailChangeState(int code)
+        {
+            if(code == 1)
+            {
+                this._emailChangeMode = true;
+                this.btn_Client_EmailAdd.Content = "Save";
+                this.btn_Client_EmailAdd.IsEnabled = true;
+                this.btn_Client_EmailEdit.Content = "Cancel";
+                this.btn_Client_EmailRemove.IsEnabled = false;
+            }
+            else if (code == 2)
+            {
+                this._emailChangeMode = false;
+                this.btn_Client_EmailAdd.Content = "Add";
+                this.btn_Client_EmailEdit.Content = "Edit";                
+                this.btn_Client_EmailRemove.IsEnabled = true;
+                this.textBox_Client_Email.Text = "";
+                this.textBox_Client_Email.Watermark = "Client email";
+            }
         }
-
         private void btn_Client_EmailRemove_Click(object sender, RoutedEventArgs e)
         {
+            int index = this.listBox_Client_Emails.SelectedIndex;
+            //TODO: Fix remove
+            if (index >= 0)
+                this.listBox_Client_Emails.SelectedIndex++;
 
+            this._listBoxEmailsList.RemoveAt(index);            
         }
         private void textBox_Client_Email_TextChanged(object sender, TextChangedEventArgs e)
         {
-            //if (!this.btn_Client_EmailAdd.IsEnabled)
-            //     this.btn_Client_EmailAdd.IsEnabled = true;
+            //TODO: Implement + Check
 
-            //if (this.btn_Client_EmailEdit.IsEnabled)
-            //    this.btn_Client_EmailEdit.IsEnabled = false;
+            if(!this._emailChangeMode)
+            {
+                if (!this.btn_Client_EmailAdd.IsEnabled)
+                    this.btn_Client_EmailAdd.IsEnabled = true;
 
-            //if (this.btn_Client_EmailRemove.IsEnabled)
-            //    this.btn_Client_EmailRemove.IsEnabled = false;
+                this.btn_Client_EmailEdit.IsEnabled = false;
+                this.btn_Client_EmailRemove.IsEnabled = false;
 
+                this.listBox_Client_Emails.SelectedIndex = -1;
+            }
         }
         private void listBox_Client_Emails_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (!this.btn_Client_EmailAdd.IsEnabled)
-                this.btn_Client_EmailAdd.IsEnabled = true;
+            if(this.listBox_Client_Emails.SelectedIndex >= 0)
+            {
+                if (this._emailChangeMode)
+                {
+                    this._emailChangeMode = false;
+                    this.btn_Client_EmailAdd.Content = "Add";
+                    this.btn_Client_EmailEdit.Content = "Edit";
+                    this.btn_Client_EmailRemove.IsEnabled = true;
+                }
 
-            if (this.btn_Client_EmailEdit.IsEnabled)
-                this.btn_Client_EmailEdit.IsEnabled = false;
+                if (this.btn_Client_EmailAdd.IsEnabled)
+                    this.btn_Client_EmailAdd.IsEnabled = false;
 
-            if (this.btn_Client_EmailRemove.IsEnabled)
-                this.btn_Client_EmailRemove.IsEnabled = false;
+                if (!this.btn_Client_EmailEdit.IsEnabled)
+                    this.btn_Client_EmailEdit.IsEnabled = true;
+
+                if (!this.btn_Client_EmailRemove.IsEnabled)
+                    this.btn_Client_EmailRemove.IsEnabled = true;
+            }            
         }
+        private bool _isEmailValid(string emailAddress)
+        {
+            if (Regex.IsMatch(emailAddress, @"^[a-z0-9]+(\.?[a-z0-9]+)*@([a-z0-9]+\.)+[a-z]{2,}$"))
+            { 
+                this.label_Client_EmailError.Visibility = Visibility.Hidden;
+                return true;
+            }
+            else
+            {
+                this.label_Client_EmailError.Visibility = Visibility.Visible;
+                return false;
+            }
+        }
+
         #endregion
 
         #endregion

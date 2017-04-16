@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"        
         mc:Ignorable="d"
-        Title="Backup Administrator | Evolution Studio" Height="600" Width="970">
+        Title="Backup Administrator | Evolution Studio" Height="600" Width="970"
+        ResizeMode="NoResize">
     <Grid>
         <Label Content="Filter:" HorizontalAlignment="Left" Margin="21,9,0,0" VerticalAlignment="Top"/>
         <ComboBox x:Name="comboBox_Main_Filter" HorizontalAlignment="Left" Margin="65,12,0,0" VerticalAlignment="Top" Width="140" SelectedIndex="0">
@@ -34,14 +35,15 @@
                             <Label Content="Name:" HorizontalAlignment="Left" Margin="99,10,0,0" VerticalAlignment="Top"/>
                             <TextBox x:Name="textBox_Client_Name" HorizontalAlignment="Left" Height="23" Margin="192,13,0,0" TextWrapping="Wrap" Text="Client name" VerticalAlignment="Top" Width="250" />
                             <Label Content="Description:" HorizontalAlignment="Left" Margin="70,38,0,0" VerticalAlignment="Top"/>
-                            <TextBox x:Name="textBox_Client_Description" HorizontalAlignment="Left" Height="23" Margin="192,42,0,0" TextWrapping="Wrap" Text="Client description" VerticalAlignment="Top" Width="250"/>
+                            <xctk:WatermarkTextBox x:Name="textBox_Client_Description" HorizontalAlignment="Left" Height="23" Margin="192,42,0,0" TextWrapping="Wrap" Watermark="Description not set" VerticalAlignment="Top" Width="250"/>
                             <GroupBox Header="Client Emails" Height="146" Margin="10,70,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="689">
                                 <Grid>
                                     <ListBox x:Name="listBox_Client_Emails" HorizontalAlignment="Left" Margin="273,10,0,10" Width="394" SelectionChanged="listBox_Client_Emails_SelectionChanged"/>
-                                    <TextBox x:Name="textBox_Client_Email" HorizontalAlignment="Left" Height="23" Margin="10,35,0,0" TextWrapping="Wrap" Text="Client email" VerticalAlignment="Top" Width="240" TextChanged="textBox_Client_Email_TextChanged"/>
+                                    <xctk:WatermarkTextBox x:Name="textBox_Client_Email" HorizontalAlignment="Left" Height="23" Margin="10,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="240" TextChanged="textBox_Client_Email_TextChanged" Watermark="Client email"/>
                                     <Button x:Name="btn_Client_EmailAdd" Content="Add" HorizontalAlignment="Left" Margin="10,94,0,0" VerticalAlignment="Top" Width="75" Click="btn_Client_EmailAdd_Click"/>
                                     <Button x:Name="btn_Client_EmailEdit" Content="Edit" HorizontalAlignment="Left" Margin="90,94,0,0" VerticalAlignment="Top" Width="75" Click="btn_Client_EmailEdit_Click"/>
                                     <Button x:Name="btn_Client_EmailRemove" Content="Remove" HorizontalAlignment="Left" Margin="170,94,0,0" VerticalAlignment="Top" Width="75" Click="btn_Client_EmailRemove_Click"/>
+                                    <Label x:Name="label_Client_EmailError" Content="*Email is not in valid format" HorizontalAlignment="Left" Margin="10,58,0,0" VerticalAlignment="Top" FontSize="10" Foreground="#FFC31616" Visibility="Hidden"/>
 
                                 </Grid>
                             </GroupBox>
