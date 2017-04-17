@@ -141,6 +141,10 @@ namespace ES_BackupManager
             #endregion
             client.Close();
         }
+        private void comboBox_Main_Filter_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            this.comboBox_Main_Sort.IsEnabled = (this.comboBox_Main_Filter.SelectedIndex == 0) ? false : true;
+        }
         #endregion
 
         #region Client Controls        
@@ -173,6 +177,7 @@ namespace ES_BackupManager
             this.listBox_Client_Emails.IsEnabled = false;
             this.label_Client_EmailError.Visibility = Visibility.Hidden;
             this.textBox_Client_Email.Text = "";
+            this.comboBox_Client_Status.IsEnabled = false;            
         }
         private void _loadClientInfo(Client c)
         {
@@ -188,6 +193,22 @@ namespace ES_BackupManager
             }
             this.listBox_Client_Emails.ItemsSource = this._listBoxEmailsList;
 
+            switch (c.Status)
+            {
+                case 0:
+                    this.comboBox_Client_Status.SelectedIndex = 0;
+                    break;
+                case 1:
+                    this.comboBox_Client_Status.SelectedIndex = 1;
+                    break;
+                case 2:
+                    this.comboBox_Client_Status.SelectedIndex = 2;
+                    break;
+                default:
+                    this.comboBox_Client_Status.SelectedIndex = 1;
+                    break;
+            }
+
             client.Close();
         }
         private void btn_Client_Save_Click(object sender, RoutedEventArgs e)
@@ -198,6 +219,7 @@ namespace ES_BackupManager
             c.Name = this.textBox_Client_Name.Text;
             c.Description = this.textBox_Client_Description.Text;
             c.Emails = this._convertEmailsFromListBox(this._listBoxEmailsList);
+            c.Status = Convert.ToByte(this.comboBox_Client_Status.SelectedIndex);
 
             this._clientTab_DisableComponents();
             this.btn_Client_Edit.IsEnabled = true;
@@ -220,6 +242,7 @@ namespace ES_BackupManager
             this.textBox_Client_Description.IsEnabled = true;
             this.textBox_Client_Email.IsEnabled = true;
             this.listBox_Client_Emails.IsEnabled = true;
+            this.comboBox_Client_Status.IsEnabled = true;
 
             this.btn_Client_Save.IsEnabled = true;
             this.btn_Client_Cancel.IsEnabled = true;
@@ -411,6 +434,8 @@ namespace ES_BackupManager
 
                 if (this.btn_Backup_Edit.IsEnabled == false)
                     this.btn_Backup_Edit.IsEnabled = true;
+
+                this.label_Backup_ExpireError.Visibility = Visibility.Hidden;
             }
             else
                 this._backupTab_SetDefaultValues();
@@ -436,6 +461,7 @@ namespace ES_BackupManager
             this.btn_Backup_Save.IsEnabled = false;
             this.btn_Backup_Cancel.IsEnabled = false;
             this.btn_Backup_Edit.IsEnabled = false;
+            this.label_Backup_ExpireError.Visibility = Visibility.Hidden;
         }
         private void _backupTab_SetDefaultValues()
         {
@@ -456,10 +482,11 @@ namespace ES_BackupManager
 
             this.dateTimePicker_Backup_End.Watermark = "Backup end time";
             this.dateTimePicker_Backup_End.Value = null;
+            this.label_Backup_ExpireError.Visibility = Visibility.Hidden;
         }
         private void btn_Backup_Edit_Click(object sender, RoutedEventArgs e)
-        {
-            if(this.dataGrid_Backups.SelectedIndex >= 0)
+        {        
+            if (this.dataGrid_Backups.SelectedIndex >= 0)
             {
                 this.btn_Backup_Save.IsEnabled = true;
                 this.btn_Backup_Cancel.IsEnabled = true;
@@ -477,19 +504,28 @@ namespace ES_BackupManager
         }
         private void btn_Backup_Save_Click(object sender, RoutedEventArgs e)
         {
-            ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
-            Backup backup = this.dataGrid_Backups.SelectedItem as Backup;
+            if (this._isBackupExpireDateValid(this.dateTimePicker_Backup_Expire.Value))
+            {
+                ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
+                Backup backup = this.dataGrid_Backups.SelectedItem as Backup;
 
-            backup.Name = this.textBox_Backup_Name.Text;
-            backup.Description = this.textBox_Backup_Description.Text;
-            backup.Expiration = this.dateTimePicker_Backup_Expire.Value;
+                backup.Name = this.textBox_Backup_Name.Text;
+                backup.Description = this.textBox_Backup_Description.Text;
+                backup.Expiration = this.dateTimePicker_Backup_Expire.Value;
 
-            this._backupTab_DisableComponents();
-            this.btn_Backup_Edit.IsEnabled = true;
-            
-            client.UpdateBackup(backup);
-            client.Close();
+                this._backupTab_DisableComponents();
+                this.btn_Backup_Edit.IsEnabled = true;                
+
+                client.UpdateBackup(backup);
+                client.Close();
+            }
+            else
+                this.label_Backup_ExpireError.Visibility = Visibility.Visible;
         }
+        private bool _isBackupExpireDateValid(DateTime? date)
+        {
+            return date.Value > DateTime.Now.Date ? true : false;
+        } 
         #endregion
         #region Log Controls
         private void _logTab_DisableComponents()
@@ -499,10 +535,5 @@ namespace ES_BackupManager
             this.dateTimePicker_Log_Time.IsEnabled = false;
         }
         #endregion
-
-        private void comboBox_Main_Filter_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            comboBox_Main_Sort.IsEnabled = (this.comboBox_Main_Filter.SelectedIndex == 0) ? false : true;
-        }
     }
 }

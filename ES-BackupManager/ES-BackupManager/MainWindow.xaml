@@ -59,7 +59,7 @@
                                     <Button x:Name="btn_Client_EmailAdd" Content="Add" HorizontalAlignment="Left" Margin="10,94,0,0" VerticalAlignment="Top" Width="75" Click="btn_Client_EmailAdd_Click"/>
                                     <Button x:Name="btn_Client_EmailEdit" Content="Edit" HorizontalAlignment="Left" Margin="90,94,0,0" VerticalAlignment="Top" Width="75" Click="btn_Client_EmailEdit_Click"/>
                                     <Button x:Name="btn_Client_EmailRemove" Content="Remove" HorizontalAlignment="Left" Margin="170,94,0,0" VerticalAlignment="Top" Width="75" Click="btn_Client_EmailRemove_Click"/>
-                                    <Label x:Name="label_Client_EmailError" Content="*Email is not in valid format" HorizontalAlignment="Left" Margin="10,58,0,0" VerticalAlignment="Top" FontSize="10" Foreground="#FFC31616" Visibility="Hidden"/>
+                                    <Label x:Name="label_Client_EmailError" Content="*Email is not in valid format" ToolTip="Example: evostudio@evostudio.com or evo.studio@evostudio.co.uk" HorizontalAlignment="Left" Margin="10,58,0,0" VerticalAlignment="Top" FontSize="10" Foreground="#FFC31616" Visibility="Hidden"/>
 
                                 </Grid>
                             </GroupBox>
@@ -68,7 +68,7 @@
                     <GroupBox Header="Client Settings" Margin="5,254,5,54">
                         <Grid>
                             <Label Content="Status:" HorizontalAlignment="Left" Margin="99,10,0,0" VerticalAlignment="Top"/>
-                            <ComboBox HorizontalAlignment="Left" Margin="192,14,0,0" VerticalAlignment="Top" Width="250">
+                            <ComboBox x:Name="comboBox_Client_Status" HorizontalAlignment="Left" Margin="192,14,0,0" VerticalAlignment="Top" Width="250" IsReadOnly="True">
                                 <ComboBoxItem Content="Verified"/>
                                 <ComboBoxItem Content="Unverified"/>
                                 <ComboBoxItem Content="Banned"/>
@@ -76,7 +76,7 @@
 
                         </Grid>
                     </GroupBox>
-                    <Button x:Name="btn_Client_Edit" Content="Edit" Margin="646,475,0,0" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left" Width="75" Click="btn_Client_Edit_Click"/>
+                    <Button x:Name="btn_Client_Edit" Content="Edit" Margin="0,475,12,0" Height="22" VerticalAlignment="Top" Click="btn_Client_Edit_Click" HorizontalAlignment="Right" Width="75"/>
                     <Button x:Name="btn_Client_Save" Content="Save" HorizontalAlignment="Left" Margin="10,475,0,0" Width="75" Height="22" VerticalAlignment="Top" Click="btn_Client_Save_Click"/>
                     <Button x:Name="btn_Client_Cancel" Content="Cancel" HorizontalAlignment="Left" Margin="90,475,0,0" Width="75" Height="22" VerticalAlignment="Top" Click="btn_Client_Cancel_Click"/>
                 </Grid>
@@ -107,7 +107,6 @@
                                     <TextBox x:Name="textBox_Backup_Source" HorizontalAlignment="Left" Height="23" Margin="175,9,0,0" TextWrapping="Wrap" Text="Backup source path" VerticalAlignment="Top" Width="250"/>
                                     <Label Content="Destination:" HorizontalAlignment="Left" Margin="55,33,0,0" VerticalAlignment="Top"/>
                                     <TextBox x:Name="textBox_Backup_Dest" HorizontalAlignment="Left" Height="23" Margin="175,37,0,0" TextWrapping="Wrap" Text="Backup destination path" VerticalAlignment="Top" Width="250"/>
-
                                 </Grid>
                             </GroupBox>
                             <GroupBox Header="Time Settings" Margin="10,298,10,44">
@@ -118,6 +117,7 @@
                                     <xctk:DateTimePicker Name="dateTimePicker_Backup_Expire" Margin="178,11,34,0" Height="24" VerticalAlignment="Top"/>
                                     <xctk:DateTimePicker x:Name="dateTimePicker_Backup_Start" Margin="178,40,34,0" Height="24" VerticalAlignment="Top"/>
                                     <xctk:DateTimePicker x:Name="dateTimePicker_Backup_End" Margin="178,69,34,0" Height="24" VerticalAlignment="Top"/>
+                                    <Label x:Name="label_Backup_ExpireError" Content="*" ToolTip="Date must be higher than current date." Margin="0,11,5,0" VerticalAlignment="Top" Foreground="Red" Visibility="Hidden" HorizontalAlignment="Right" Width="29"/>
                                 </Grid>
                             </GroupBox>
                             <GroupBox Header="Compression Settings" HorizontalAlignment="Left" Height="62" Margin="10,136,0,0" VerticalAlignment="Top" Width="494">
@@ -142,7 +142,6 @@
                         </DataGrid.Columns>
                     </DataGrid>
                     <GroupBox Header="Backup Template Info" Margin="225,10,10,10">
-
                     </GroupBox>
                 </Grid>
             </TabItem>
