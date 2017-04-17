@@ -499,5 +499,10 @@ namespace ES_BackupManager
             this.dateTimePicker_Log_Time.IsEnabled = false;
         }
         #endregion
+
+        private void comboBox_Main_Filter_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            comboBox_Main_Sort.IsEnabled = (this.comboBox_Main_Filter.SelectedIndex == 0) ? false : true;
+        }
     }
 }

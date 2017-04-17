@@ -8,18 +8,19 @@
         Title="Backup Administrator | Evolution Studio" Height="600" Width="970"
         ResizeMode="NoResize">
     <Grid>
+        <!-- Musel jsem to prohodit kvůli null reference exception, instancuje se to jako HTML -->
+        <Label Content="Sort by:" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="comboBox_Main_Sort" HorizontalAlignment="Left" Margin="65,40,0,0" VerticalAlignment="Top" Width="140" SelectedIndex="0" IsEnabled="False">
+            <ComboBoxItem Content="Default"/>
+            <ComboBoxItem Content="Active ↑ (ASC)"/>
+            <ComboBoxItem Content="Active ↓ (DESC)"/>
+        </ComboBox>
         <Label Content="Filter:" HorizontalAlignment="Left" Margin="21,9,0,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="comboBox_Main_Filter" HorizontalAlignment="Left" Margin="65,12,0,0" VerticalAlignment="Top" Width="140" SelectedIndex="0">
+        <ComboBox x:Name="comboBox_Main_Filter" HorizontalAlignment="Left" Margin="65,12,0,0" VerticalAlignment="Top" Width="140" SelectedIndex="0" SelectionChanged="comboBox_Main_Filter_SelectionChanged">
             <ComboBoxItem Content="None"/>
             <ComboBoxItem Content="Verified"/>
             <ComboBoxItem Content="Unverified"/>
             <ComboBoxItem Content="Banned"/>
-        </ComboBox>
-        <Label Content="Sort by:" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="comboBox_Main_Sort" HorizontalAlignment="Left" Margin="65,40,0,0" VerticalAlignment="Top" Width="140" SelectedIndex="0">
-            <ComboBoxItem Content="None"/>
-            <ComboBoxItem Content="Active ↑ (ASC)"/>
-            <ComboBoxItem Content="Active ↓ (DESC)"/>
         </ComboBox>
         <Button x:Name="btn_Main_ApplyFilter" Content="Apply" HorizontalAlignment="Left" Margin="65,66,0,0" VerticalAlignment="Top" Width="75" Click="btn_Main_ApplyFilter_Click"/>
         <DataGrid Name="dataGrid_Clients" HorizontalAlignment="Left" Margin="10,91,0,10" Width="200" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="dataGrid_Clients_SelectionChanged" SelectionMode="Single">
@@ -43,7 +44,7 @@
             </DataGrid.Columns>
         </DataGrid>
         <TabControl Name="TabControl_Main" Margin="215,10,10,10" IsEnabled="False">
-            <TabItem Header="Information" Height="24" VerticalAlignment="Top">
+            <TabItem Header="Information">
                 <Grid>
                     <GroupBox Header="Client Details" Margin="5,0,5,268">
                         <Grid>
@@ -80,7 +81,7 @@
                     <Button x:Name="btn_Client_Cancel" Content="Cancel" HorizontalAlignment="Left" Margin="90,475,0,0" Width="75" Height="22" VerticalAlignment="Top" Click="btn_Client_Cancel_Click"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Backups" Height="22" VerticalAlignment="Top">
+            <TabItem Header="Backups">
                 <Grid x:Name="Backup_Grid">
                     <DataGrid x:Name="dataGrid_Backups" HorizontalAlignment="Left" Margin="10,10,0,10" Width="200" IsReadOnly="True" AutoGenerateColumns="False" SelectionChanged="dataGrid_Backups_SelectionChanged" SelectionMode="Single">
                         <DataGrid.Columns>
@@ -172,7 +173,6 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Logins"></TabItem>
-
         </TabControl>
     </Grid>
 </Window>
