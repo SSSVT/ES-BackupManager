@@ -281,6 +281,7 @@ namespace ES_BackupManager
                 else if (this._emailChangeMode)
                 {
                     this._emailChangeState(2);
+                    this.btn_Client_EmailAdd.IsEnabled = false;
                 }
             }
         }        
@@ -299,7 +300,7 @@ namespace ES_BackupManager
             {
                 this._emailChangeMode = false;
                 this.btn_Client_EmailAdd.Content = "Add";
-                this.btn_Client_EmailEdit.Content = "Edit";                
+                this.btn_Client_EmailEdit.Content = "Edit";                                
                 this.btn_Client_EmailRemove.IsEnabled = true;
                 this.textBox_Client_Email.Text = "";
                 this.textBox_Client_Email.Watermark = "Client email";
@@ -307,17 +308,22 @@ namespace ES_BackupManager
         }
         private void btn_Client_EmailRemove_Click(object sender, RoutedEventArgs e)
         {
-            int index = this.listBox_Client_Emails.SelectedIndex;
-            //TODO: Fix remove
-            if (index >= 0)
-                this.listBox_Client_Emails.SelectedIndex++;
+            int index = this.listBox_Client_Emails.SelectedIndex;            
 
-            this._listBoxEmailsList.RemoveAt(index);            
+            if(this.listBox_Client_Emails.SelectedIndex == 0)
+            {
+                this.btn_Client_EmailEdit.IsEnabled = false;
+                this.btn_Client_EmailRemove.IsEnabled = false;
+            }
+
+            if(this.listBox_Client_Emails.SelectedIndex != -1)
+            {
+                this._listBoxEmailsList.RemoveAt(index);
+                this.listBox_Client_Emails.SelectedIndex = index - 1;
+            }            
         }
         private void textBox_Client_Email_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            //TODO: Implement + Check
-
+        {            
             if(!this._emailChangeMode)
             {
                 if (!this.btn_Client_EmailAdd.IsEnabled)

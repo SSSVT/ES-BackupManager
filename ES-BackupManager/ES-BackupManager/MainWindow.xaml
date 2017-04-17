@@ -23,6 +23,21 @@
         </ComboBox>
         <Button x:Name="btn_Main_ApplyFilter" Content="Apply" HorizontalAlignment="Left" Margin="65,66,0,0" VerticalAlignment="Top" Width="75" Click="btn_Main_ApplyFilter_Click"/>
         <DataGrid Name="dataGrid_Clients" HorizontalAlignment="Left" Margin="10,91,0,10" Width="200" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="dataGrid_Clients_SelectionChanged" SelectionMode="Single">
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Status}" Value="0">
+                            <Setter Property="Background" Value="LightCyan"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Status}" Value="1">
+                            <Setter Property="Background" Value="LightYellow"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Status}" Value="2">
+                            <Setter Property="Background" Value="LightGray"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Client Name" Binding="{Binding Name}" Width="*"/>
             </DataGrid.Columns>
@@ -51,7 +66,12 @@
                     </GroupBox>
                     <GroupBox Header="Client Settings" Margin="5,254,5,54">
                         <Grid>
-                            <Label Content="Status:" HorizontalAlignment="Left" Margin="96,22,0,0" VerticalAlignment="Top"/>
+                            <Label Content="Status:" HorizontalAlignment="Left" Margin="99,10,0,0" VerticalAlignment="Top"/>
+                            <ComboBox HorizontalAlignment="Left" Margin="192,14,0,0" VerticalAlignment="Top" Width="250">
+                                <ComboBoxItem Content="Verified"/>
+                                <ComboBoxItem Content="Unverified"/>
+                                <ComboBoxItem Content="Banned"/>
+                            </ComboBox>
 
                         </Grid>
                     </GroupBox>
