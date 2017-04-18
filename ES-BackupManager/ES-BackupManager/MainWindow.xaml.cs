@@ -449,6 +449,7 @@ namespace ES_BackupManager
         {
             this.textBox_Backup_Name.IsEnabled = false;
             this.textBox_Backup_Description.IsEnabled = false;
+            this.textBox_Backup_Template.IsEnabled = false;
             this.radioBtn_Backup_Full.IsEnabled = false;
             this.radioBtn_Backup_Diff.IsEnabled = false;
             this.radioBtn_Backup_Compress.IsEnabled = false;
@@ -461,7 +462,7 @@ namespace ES_BackupManager
             this.btn_Backup_Save.IsEnabled = false;
             this.btn_Backup_Cancel.IsEnabled = false;
             this.btn_Backup_Edit.IsEnabled = false;
-            this.label_Backup_ExpireError.Visibility = Visibility.Hidden;
+            this.label_Backup_ExpireError.Visibility = Visibility.Hidden;            
         }
         private void _backupTab_SetDefaultValues()
         {
