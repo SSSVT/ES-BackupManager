@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"        
         mc:Ignorable="d"
-        Title="Backup Administrator | Evolution Studio" Height="600" Width="970"
+        Title="Backup Administrator | Evolution Studio" Height="648" Width="970"
         ResizeMode="NoResize">
     <Grid>
         <!-- Musel jsem to prohodit kvůli null reference exception, instancuje se to jako HTML -->
@@ -74,11 +74,12 @@
                                 <ComboBoxItem Content="Banned"/>
                             </ComboBox>
 
+
                         </Grid>
                     </GroupBox>
-                    <Button x:Name="btn_Client_Edit" Content="Edit" Margin="0,475,12,0" Height="22" VerticalAlignment="Top" Click="btn_Client_Edit_Click" HorizontalAlignment="Right" Width="75"/>
-                    <Button x:Name="btn_Client_Save" Content="Save" HorizontalAlignment="Left" Margin="10,475,0,0" Width="75" Height="22" VerticalAlignment="Top" Click="btn_Client_Save_Click"/>
-                    <Button x:Name="btn_Client_Cancel" Content="Cancel" HorizontalAlignment="Left" Margin="90,475,0,0" Width="75" Height="22" VerticalAlignment="Top" Click="btn_Client_Cancel_Click"/>
+                    <Button x:Name="btn_Client_Edit" Content="Edit" Margin="0,0,12,23" Click="btn_Client_Edit_Click" HorizontalAlignment="Right" Width="75" Height="22" VerticalAlignment="Bottom"/>
+                    <Button x:Name="btn_Client_Save" Content="Save" HorizontalAlignment="Left" Margin="10,0,0,23" Width="75" Click="btn_Client_Save_Click" Height="22" VerticalAlignment="Bottom"/>
+                    <Button x:Name="btn_Client_Cancel" Content="Cancel" HorizontalAlignment="Left" Margin="90,0,0,23" Width="75" Click="btn_Client_Cancel_Click" Height="22" VerticalAlignment="Bottom"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Backups">
@@ -94,14 +95,14 @@
                             <TextBox x:Name="textBox_Backup_Name" HorizontalAlignment="Left" Height="23" Margin="192,13,0,0" TextWrapping="Wrap" Text="Backup name" VerticalAlignment="Top" Width="250" />
                             <Label Content="Description:" HorizontalAlignment="Left" Margin="70,38,0,0" VerticalAlignment="Top"/>
                             <TextBox x:Name="textBox_Backup_Description" HorizontalAlignment="Left" Height="23" Margin="192,42,0,0" TextWrapping="Wrap" Text="Backup description" VerticalAlignment="Top" Width="250" />
-                            <GroupBox Header="Type Settings" HorizontalAlignment="Left" Height="62" Margin="10,69,0,0" VerticalAlignment="Top" Width="494">
+                            <GroupBox Header="Type Settings" HorizontalAlignment="Left" Height="62" Margin="10,111,-22,0" VerticalAlignment="Top" Width="494">
                                 <Grid>
                                     <Label Content="Backup Type:" HorizontalAlignment="Left" Margin="48,4,0,0" VerticalAlignment="Top"/>
                                     <RadioButton Name="radioBtn_Backup_Full" Content="Full" HorizontalAlignment="Left" Margin="179,10,0,0" Height="21" VerticalAlignment="Top"/>
                                     <RadioButton Name="radioBtn_Backup_Diff" Content="Differencial" HorizontalAlignment="Left" Margin="263,10,0,0" Height="21" VerticalAlignment="Top" IsChecked="True"/>
                                 </Grid>
                             </GroupBox>
-                            <GroupBox Header="Path Settings" HorizontalAlignment="Left" Height="90" Margin="10,203,0,0" VerticalAlignment="Top" Width="494" >
+                            <GroupBox Header="Path Settings" HorizontalAlignment="Left" Height="90" Margin="10,245,-22,0" VerticalAlignment="Top" Width="494" >
                                 <Grid>
                                     <Label Content="Source:" HorizontalAlignment="Left" Margin="79,5,0,0" VerticalAlignment="Top"/>
                                     <TextBox x:Name="textBox_Backup_Source" HorizontalAlignment="Left" Height="23" Margin="175,9,0,0" TextWrapping="Wrap" Text="Backup source path" VerticalAlignment="Top" Width="250"/>
@@ -109,7 +110,7 @@
                                     <TextBox x:Name="textBox_Backup_Dest" HorizontalAlignment="Left" Height="23" Margin="175,37,0,0" TextWrapping="Wrap" Text="Backup destination path" VerticalAlignment="Top" Width="250"/>
                                 </Grid>
                             </GroupBox>
-                            <GroupBox Header="Time Settings" Margin="10,298,10,44">
+                            <GroupBox Header="Time Settings" Margin="10,340,10,58">
                                 <Grid>
                                     <Label Content="Expiration Date:" HorizontalAlignment="Left" Margin="36,9,0,0" VerticalAlignment="Top"/>
                                     <Label Content="Start Time:" HorizontalAlignment="Left" Margin="63,38,0,0" VerticalAlignment="Top"/>
@@ -120,7 +121,7 @@
                                     <Label x:Name="label_Backup_ExpireError" Content="*" ToolTip="Date must be higher than current date." Margin="0,11,5,0" VerticalAlignment="Top" Foreground="Red" Visibility="Hidden" HorizontalAlignment="Right" Width="29"/>
                                 </Grid>
                             </GroupBox>
-                            <GroupBox Header="Compression Settings" HorizontalAlignment="Left" Height="62" Margin="10,136,0,0" VerticalAlignment="Top" Width="494">
+                            <GroupBox Header="Compression Settings" HorizontalAlignment="Left" Height="62" Margin="10,178,-22,0" VerticalAlignment="Top" Width="494">
                                 <Grid>
                                     <Label Content="Compression Type:" HorizontalAlignment="Left" Margin="19,4,0,0" VerticalAlignment="Top"/>
                                     <RadioButton x:Name="radioBtn_Backup_Compress" Content="Compress" HorizontalAlignment="Left" Margin="179,10,0,0" Height="21" VerticalAlignment="Top"/>
@@ -130,6 +131,9 @@
                             <Button Name="btn_Backup_Edit" Content="Edit" Margin="0,0,10,10" HorizontalAlignment="Right" Width="75" Height="22" VerticalAlignment="Bottom" Click="btn_Backup_Edit_Click"/>
                             <Button Name="btn_Backup_Save" Content="Save" HorizontalAlignment="Left" Margin="10,0,0,10" Width="75" Height="22" VerticalAlignment="Bottom" Click="btn_Backup_Save_Click"/>
                             <Button Name ="btn_Backup_Cancel" Content="Cancel" HorizontalAlignment="Left" Margin="90,0,0,10" VerticalAlignment="Bottom" Width="75" Click="btn_Backup_Cancel_Click" Height="22"/>
+                            <Label Content="Created By Template:" HorizontalAlignment="Left" Margin="20,69,0,0" VerticalAlignment="Top"/>
+                            <TextBox x:Name="textBox_Backup_Template" HorizontalAlignment="Left" Height="23" Margin="192,72,0,0" TextWrapping="Wrap" Text="Backup template" VerticalAlignment="Top" Width="250"/>
+                            <Button x:Name="btn_Backup_TemplateTree" Content="..." HorizontalAlignment="Left" Margin="447,73,0,0" VerticalAlignment="Top" Width="20" ToolTip="Show tree of this template"/>
                         </Grid>
                     </GroupBox>
                 </Grid>
@@ -157,7 +161,7 @@
                             <Label Content="Backup:" HorizontalAlignment="Left" Margin="99,10,0,0" VerticalAlignment="Top"/>
                             <Label Content="Log Type:" HorizontalAlignment="Left" Margin="89,41,0,0" VerticalAlignment="Top"/>
                             <Label Content="UTC Time:" HorizontalAlignment="Left" Margin="86,72,0,0" VerticalAlignment="Top"/>
-                            <xctk:DateTimePicker Name="dateTimePicker_Log_Time" Margin="176,74,0,117" HorizontalAlignment="Left" Width="246"/>
+                            <xctk:DateTimePicker Name="dateTimePicker_Log_Time" Margin="176,74,0,175" HorizontalAlignment="Left" Width="246"/>
                             <TextBox x:Name="textBox_Log_BackupName" HorizontalAlignment="Left" Height="23" Margin="176,13,0,0" TextWrapping="Wrap" Text="Backup name" VerticalAlignment="Top" Width="246"/>
                             <ComboBox x:Name="comboBox_Log_LogType" HorizontalAlignment="Left" Margin="176,45,0,0" VerticalAlignment="Top" Width="246">
                                 <ComboBoxItem Content="Error"/>
@@ -166,12 +170,11 @@
                             </ComboBox>
                         </Grid>
                     </GroupBox>
-                    <GroupBox Header="Log Configuration" Margin="225,263,10,10">
+                    <GroupBox Header="Log Configuration" Margin="225,0,10,10" Height="248" VerticalAlignment="Bottom">
 
                     </GroupBox>
                 </Grid>
             </TabItem>
-            <TabItem Header="Logins"></TabItem>
         </TabControl>
     </Grid>
 </Window>
