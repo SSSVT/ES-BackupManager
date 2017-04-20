@@ -29,7 +29,10 @@ namespace ES_BackupManager
         {
             InitializeComponent();
 
-            this._loadGrid(Filter.All,Sort.Asc);
+            //this._loadGrid(Filter.All,Sort.Asc);
+
+            //TODO: DEBUG
+            this.TabControl_Main.IsEnabled = true;
         }
 
         #region Local Properties

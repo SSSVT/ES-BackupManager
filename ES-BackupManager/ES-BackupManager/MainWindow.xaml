@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"        
         mc:Ignorable="d"
-        Title="Backup Administrator | Evolution Studio" Height="648" Width="1003"
+        Title="Backup Administrator | Evolution Studio" Height="819" Width="1003" 
         ResizeMode="NoResize">
+    <!-- STANDARD HEIGHT: 650 ,STANDARD WIDTH: 1000 -->
     <Grid>
         <!-- Musel jsem to prohodit kvůli null reference exception, instancuje se to jako HTML -->
         <Label Content="Sort by:" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top"/>
@@ -46,7 +47,7 @@
         <TabControl Name="TabControl_Main" Margin="215,10,10,10" IsEnabled="False">
             <TabItem Header="Information">
                 <Grid>
-                    <GroupBox Header="Client Details" Margin="5,0,5,268">
+                    <GroupBox Header="Client Details" Margin="5,0,5,328">
                         <Grid>
                             <Label Content="Name:" HorizontalAlignment="Left" Margin="99,10,0,0" VerticalAlignment="Top"/>
                             <TextBox x:Name="textBox_Client_Name" HorizontalAlignment="Left" Height="23" Margin="192,13,0,0" TextWrapping="Wrap" Text="Client name" VerticalAlignment="Top" Width="250" />
@@ -65,7 +66,7 @@
                             </GroupBox>
                         </Grid>
                     </GroupBox>
-                    <GroupBox Header="Client Settings" Margin="5,254,5,54">
+                    <GroupBox Header="Client Settings" Margin="5,245,5,50">
                         <Grid>
                             <Label Content="Status:" HorizontalAlignment="Left" Margin="99,10,0,0" VerticalAlignment="Top"/>
                             <ComboBox x:Name="comboBox_Client_Status" HorizontalAlignment="Left" Margin="192,14,0,0" VerticalAlignment="Top" Width="250" IsReadOnly="True">
@@ -73,6 +74,15 @@
                                 <ComboBoxItem Content="Unverified"/>
                                 <ComboBoxItem Content="Banned"/>
                             </ComboBox>
+                            <GroupBox x:Name="groupBox_Client_Connection" Header="Connection Info" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Height="132" Width="720">
+                                <Grid>
+                                    <Label x:Name="label" Content="Connection repeat:" HorizontalAlignment="Left" Margin="21,54,0,0" VerticalAlignment="Top"/>
+                                    <xctk:IntegerUpDown x:Name="IntUpDown_Client_StatusRepeat" Margin="179,56,279,0" Height="24" VerticalAlignment="Top"/>
+                                    <Label x:Name="label_Copy" Content="Connection repeat:" HorizontalAlignment="Left" Margin="21,23,0,0" VerticalAlignment="Top"/>
+                                    <RadioButton x:Name="radioButton_Client_ConnDefault" Content="Default" HorizontalAlignment="Left" Margin="179,28,0,0" VerticalAlignment="Top"/>
+                                    <RadioButton x:Name="radioButton_Client_ConnSet" Content="Customize" HorizontalAlignment="Left" Margin="294,28,0,0" VerticalAlignment="Top"/>
+                                </Grid>
+                            </GroupBox>
 
 
                         </Grid>
@@ -90,30 +100,48 @@
                         </DataGrid.Columns>
                     </DataGrid>
                     <GroupBox Header="Backup Template Info" Margin="225,10,10,40">
-                        <Grid>
-                            <Label Content="Name:" HorizontalAlignment="Left" Margin="99,10,0,0" VerticalAlignment="Top"/>
-                            <xctk:WatermarkTextBox x:Name="textBox_Template_Name" Height="23" Margin="192,13,77,0" TextWrapping="Wrap" Watermark="Backup name" VerticalAlignment="Top" />
-                            <Label Content="Description:" HorizontalAlignment="Left" Margin="70,38,0,0" VerticalAlignment="Top"/>
-                            <xctk:WatermarkTextBox x:Name="textBox_Template_Description" Height="23" Margin="192,42,77,0" TextWrapping="Wrap" Watermark="Backup description" VerticalAlignment="Top" />
-                            <GroupBox Header="Type Settings" Height="62" Margin="10,70,10,0" VerticalAlignment="Top">
-                                <Grid>
-                                    <Label Content="Backup Type:" HorizontalAlignment="Left" Margin="48,4,0,0" VerticalAlignment="Top"/>
-                                    <RadioButton Name="radioBtn_Template_Full" Content="Full" HorizontalAlignment="Left" Margin="179,10,0,0" Height="21" VerticalAlignment="Top"/>
-                                    <RadioButton Name="radioBtn_Template_Diff" Content="Differencial" HorizontalAlignment="Left" Margin="263,10,0,0" Height="21" VerticalAlignment="Top" IsChecked="True"/>
-                                </Grid>
-                            </GroupBox>
-                            <GroupBox Header="Compression Settings" Height="62" Margin="10,137,10,0" VerticalAlignment="Top">
-                                <Grid>
-                                    <Label Content="Compression Type:" HorizontalAlignment="Left" Margin="19,4,0,0" VerticalAlignment="Top"/>
-                                    <RadioButton x:Name="radioBtn_Template_Compress" Content="Compress" HorizontalAlignment="Left" Margin="179,10,0,0" Height="21" VerticalAlignment="Top"/>
-                                    <RadioButton x:Name="radioBtn_Temmplate_NoCompress" Content="No Compress" HorizontalAlignment="Left" Margin="263,10,0,0" Height="21" VerticalAlignment="Top" IsChecked="True"/>
-                                </Grid>
-                            </GroupBox>
-                        </Grid>
+                        <ScrollViewer VerticalScrollBarVisibility="Visible">
+                            <Grid>
+                                <Label Content="Name:" HorizontalAlignment="Left" Margin="99,10,0,0" VerticalAlignment="Top"/>
+                                <xctk:WatermarkTextBox x:Name="textBox_Template_Name" Height="23" Margin="192,13,77,0" TextWrapping="Wrap" Watermark="Backup name" VerticalAlignment="Top" />
+                                <Label Content="Description:" HorizontalAlignment="Left" Margin="70,38,0,0" VerticalAlignment="Top"/>
+                                <xctk:WatermarkTextBox x:Name="textBox_Template_Description" Height="23" Margin="192,42,77,0" TextWrapping="Wrap" Watermark="Backup description" VerticalAlignment="Top" />
+                                <GroupBox Header="Type Settings" Height="62" Margin="10,70,10,0" VerticalAlignment="Top">
+                                    <Grid>
+                                        <Label Content="Backup Type:" HorizontalAlignment="Left" Margin="48,4,0,0" VerticalAlignment="Top"/>
+                                        <RadioButton Name="radioBtn_Template_Full" Content="Full" HorizontalAlignment="Left" Margin="179,10,0,0" Height="21" VerticalAlignment="Top"/>
+                                        <RadioButton Name="radioBtn_Template_Diff" Content="Differencial" HorizontalAlignment="Left" Margin="263,10,0,0" Height="21" VerticalAlignment="Top" IsChecked="True"/>
+                                    </Grid>
+                                </GroupBox>
+                                <GroupBox Header="Compression Settings" Height="62" Margin="10,137,10,0" VerticalAlignment="Top">
+                                    <Grid>
+                                        <Label Content="Compression Type:" HorizontalAlignment="Left" Margin="19,4,0,0" VerticalAlignment="Top"/>
+                                        <RadioButton x:Name="radioBtn_Template_Compress" Content="Compress" HorizontalAlignment="Left" Margin="179,10,0,0" Height="21" VerticalAlignment="Top"/>
+                                        <RadioButton x:Name="radioBtn_Temmplate_NoCompress" Content="No Compress" HorizontalAlignment="Left" Margin="263,10,0,0" Height="21" VerticalAlignment="Top" IsChecked="True"/>
+                                    </Grid>
+                                </GroupBox>
+                                <GroupBox x:Name="groupBox_Template_Path" Header="Path Settings" HorizontalAlignment="Left" Margin="10,204,0,0" VerticalAlignment="Top" Height="360" Width="478">
+                                    <Grid>
+                                        <GroupBox x:Name="groupBox_Template_Source" Header="Source Path(s)" Margin="10,10,10,0" VerticalAlignment="Top" Height="130">
+                                            <Grid>
+
+                                            </Grid>
+                                        </GroupBox>
+                                        <GroupBox x:Name="groupBox_Template_Destination" Header="Source Destination(s)" Margin="10,145,10,-15" VerticalAlignment="Top" Height="130">
+                                            <Grid>
+
+                                            </Grid>
+                                        </GroupBox>
+
+                                    </Grid>
+                                </GroupBox>
+                            </Grid>
+                        </ScrollViewer>
                     </GroupBox>
                     <Button x:Name="btn_Template_Confirm" Content="New" Margin="0,0,90,15" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75"/>
                     <Button x:Name="btn_Template_Cancel" Content="Cancel" Margin="0,0,10,15" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75"/>
                 </Grid>
+
             </TabItem>
             <TabItem Header="Backups">
                 <Grid x:Name="Backup_Grid">
@@ -166,7 +194,7 @@
                             <Button Name ="btn_Backup_Cancel" Content="Cancel" HorizontalAlignment="Left" Margin="90,0,0,10" VerticalAlignment="Bottom" Width="75" Click="btn_Backup_Cancel_Click" Height="22"/>
                             <Label Content="Created By Template:" HorizontalAlignment="Left" Margin="20,69,0,0" VerticalAlignment="Top"/>
                             <TextBox x:Name="textBox_Backup_Template" Height="23" Margin="192,72,77,0" TextWrapping="Wrap" Text="Backup template" VerticalAlignment="Top"/>
-                            <Button x:Name="btn_Backup_TemplateTree" Content="..." HorizontalAlignment="Right" Margin="0,0,52,436" VerticalAlignment="Bottom" Width="20" ToolTip="Show tree of this template"/>
+                            <Button x:Name="btn_Backup_TemplateTree" Content="..." HorizontalAlignment="Right" Margin="0,0,52,432" VerticalAlignment="Bottom" Width="20" ToolTip="Show tree of this template"/>
                         </Grid>
                     </GroupBox>
                 </Grid>
