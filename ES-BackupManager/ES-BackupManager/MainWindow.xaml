@@ -5,9 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"        
         mc:Ignorable="d"
-        Title="Backup Administrator | Evolution Studio" Height="819" Width="1003" 
-        ResizeMode="NoResize">
+        Title="Backup Administrator | Evolution Studio" Height="800" Width="1280" 
+        MinWidth="1000" MinHeight="650">
     <!-- STANDARD HEIGHT: 650 ,STANDARD WIDTH: 1000 -->
+    <!-- CURRENT HEIGHT: 800 ,CURRENT WIDTH: 1280 -->
     <Grid>
         <!-- Musel jsem to prohodit kvůli null reference exception, instancuje se to jako HTML -->
         <Label Content="Sort by:" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top"/>
@@ -18,7 +19,7 @@
         </ComboBox>
         <Label Content="Filter:" HorizontalAlignment="Left" Margin="21,9,0,0" VerticalAlignment="Top"/>
         <ComboBox x:Name="comboBox_Main_Filter" HorizontalAlignment="Left" Margin="65,12,0,0" VerticalAlignment="Top" Width="140" SelectedIndex="0" SelectionChanged="comboBox_Main_Filter_SelectionChanged">
-            <ComboBoxItem Content="None"/>
+            <ComboBoxItem Content="All"/>
             <ComboBoxItem Content="Verified"/>
             <ComboBoxItem Content="Unverified"/>
             <ComboBoxItem Content="Banned"/>
@@ -47,26 +48,26 @@
         <TabControl Name="TabControl_Main" Margin="215,10,10,10" IsEnabled="False">
             <TabItem Header="Information">
                 <Grid>
-                    <GroupBox Header="Client Details" Margin="5,0,5,328">
+                    <GroupBox Header="Client Details" Margin="10,0" Height="306" VerticalAlignment="Top">
                         <Grid>
                             <Label Content="Name:" HorizontalAlignment="Left" Margin="99,10,0,0" VerticalAlignment="Top"/>
-                            <TextBox x:Name="textBox_Client_Name" HorizontalAlignment="Left" Height="23" Margin="192,13,0,0" TextWrapping="Wrap" Text="Client name" VerticalAlignment="Top" Width="250" />
+                            <TextBox x:Name="textBox_Client_Name" Height="23" Margin="192,13,289,0" TextWrapping="Wrap" Text="Client name" VerticalAlignment="Top" />
                             <Label Content="Description:" HorizontalAlignment="Left" Margin="70,38,0,0" VerticalAlignment="Top"/>
-                            <xctk:WatermarkTextBox x:Name="textBox_Client_Description" HorizontalAlignment="Left" Height="23" Margin="192,42,0,0" TextWrapping="Wrap" Watermark="Description not set" VerticalAlignment="Top" Width="250"/>
-                            <GroupBox Header="Client Emails" Height="146" Margin="10,70,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="689">
+                            <xctk:WatermarkTextBox x:Name="textBox_Client_Description" Height="23" Margin="192,42,289,0" TextWrapping="Wrap" Watermark="Description not set" VerticalAlignment="Top"/>
+                            <GroupBox Header="Client Emails" Height="146" Margin="10,90,10,0" VerticalAlignment="Top">
                                 <Grid>
-                                    <ListBox x:Name="listBox_Client_Emails" HorizontalAlignment="Left" Margin="273,10,0,10" Width="394" SelectionChanged="listBox_Client_Emails_SelectionChanged"/>
-                                    <xctk:WatermarkTextBox x:Name="textBox_Client_Email" HorizontalAlignment="Left" Height="23" Margin="10,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="240" TextChanged="textBox_Client_Email_TextChanged" Watermark="Client email"/>
-                                    <Button x:Name="btn_Client_EmailAdd" Content="Add" HorizontalAlignment="Left" Margin="10,94,0,0" VerticalAlignment="Top" Width="75" Click="btn_Client_EmailAdd_Click"/>
-                                    <Button x:Name="btn_Client_EmailEdit" Content="Edit" HorizontalAlignment="Left" Margin="90,94,0,0" VerticalAlignment="Top" Width="75" Click="btn_Client_EmailEdit_Click"/>
-                                    <Button x:Name="btn_Client_EmailRemove" Content="Remove" HorizontalAlignment="Left" Margin="170,94,0,0" VerticalAlignment="Top" Width="75" Click="btn_Client_EmailRemove_Click"/>
+                                    <ListBox x:Name="listBox_Client_Emails" Margin="0,10,10,10" SelectionChanged="listBox_Client_Emails_SelectionChanged" HorizontalAlignment="Right" Width="394"/>
+                                    <xctk:WatermarkTextBox x:Name="textBox_Client_Email" Height="23" Margin="10,35,409,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="textBox_Client_Email_TextChanged" Watermark="Client email"/>
+                                    <Button x:Name="btn_Client_EmailAdd" Content="Add" HorizontalAlignment="Left" Margin="35,94,0,0" VerticalAlignment="Top" Width="75" Click="btn_Client_EmailAdd_Click"/>
+                                    <Button x:Name="btn_Client_EmailEdit" Content="Edit" HorizontalAlignment="Left" Margin="115,94,0,0" VerticalAlignment="Top" Width="75" Click="btn_Client_EmailEdit_Click"/>
+                                    <Button x:Name="btn_Client_EmailRemove" Content="Remove" HorizontalAlignment="Left" Margin="195,94,0,0" VerticalAlignment="Top" Width="75" Click="btn_Client_EmailRemove_Click"/>
                                     <Label x:Name="label_Client_EmailError" Content="*Email is not in valid format" ToolTip="Example: evostudio@evostudio.com or evo.studio@evostudio.co.uk" HorizontalAlignment="Left" Margin="10,58,0,0" VerticalAlignment="Top" FontSize="10" Foreground="#FFC31616" Visibility="Hidden"/>
 
                                 </Grid>
                             </GroupBox>
                         </Grid>
                     </GroupBox>
-                    <GroupBox Header="Client Settings" Margin="5,245,5,50">
+                    <GroupBox Header="Client Settings" Margin="10,311,10,50">
                         <Grid>
                             <Label Content="Status:" HorizontalAlignment="Left" Margin="99,10,0,0" VerticalAlignment="Top"/>
                             <ComboBox x:Name="comboBox_Client_Status" HorizontalAlignment="Left" Margin="192,14,0,0" VerticalAlignment="Top" Width="250" IsReadOnly="True">
@@ -74,22 +75,22 @@
                                 <ComboBoxItem Content="Unverified"/>
                                 <ComboBoxItem Content="Banned"/>
                             </ComboBox>
-                            <GroupBox x:Name="groupBox_Client_Connection" Header="Connection Info" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Height="132" Width="720">
+                            <GroupBox x:Name="groupBox_Client_Connection" Header="Connection Info" Margin="10,50,10,0" VerticalAlignment="Top" Height="132">
                                 <Grid>
                                     <Label x:Name="label" Content="Connection repeat:" HorizontalAlignment="Left" Margin="21,54,0,0" VerticalAlignment="Top"/>
                                     <xctk:IntegerUpDown x:Name="IntUpDown_Client_StatusRepeat" Margin="179,56,279,0" Height="24" VerticalAlignment="Top"/>
                                     <Label x:Name="label_Copy" Content="Connection repeat:" HorizontalAlignment="Left" Margin="21,23,0,0" VerticalAlignment="Top"/>
                                     <RadioButton x:Name="radioButton_Client_ConnDefault" Content="Default" HorizontalAlignment="Left" Margin="179,28,0,0" VerticalAlignment="Top"/>
-                                    <RadioButton x:Name="radioButton_Client_ConnSet" Content="Customize" HorizontalAlignment="Left" Margin="294,28,0,0" VerticalAlignment="Top"/>
+                                    <RadioButton x:Name="radioButton_Client_ConnSet" Content="Customize" HorizontalAlignment="Right" Margin="0,29,400,0" VerticalAlignment="Top"/>
                                 </Grid>
                             </GroupBox>
 
 
                         </Grid>
                     </GroupBox>
-                    <Button x:Name="btn_Client_Edit" Content="Edit" Margin="0,0,12,23" Click="btn_Client_Edit_Click" HorizontalAlignment="Right" Width="75" Height="22" VerticalAlignment="Bottom"/>
-                    <Button x:Name="btn_Client_Save" Content="Save" HorizontalAlignment="Left" Margin="10,0,0,23" Width="75" Click="btn_Client_Save_Click" Height="22" VerticalAlignment="Bottom"/>
-                    <Button x:Name="btn_Client_Cancel" Content="Cancel" HorizontalAlignment="Left" Margin="90,0,0,23" Width="75" Click="btn_Client_Cancel_Click" Height="22" VerticalAlignment="Bottom"/>
+                    <Button x:Name="btn_Client_Edit" Content="Edit" Margin="0,0,12,15" Click="btn_Client_Edit_Click" HorizontalAlignment="Right" Width="75" Height="22" VerticalAlignment="Bottom"/>
+                    <Button x:Name="btn_Client_Save" Content="Save" HorizontalAlignment="Left" Margin="10,0,0,15" Width="75" Click="btn_Client_Save_Click" Height="22" VerticalAlignment="Bottom"/>
+                    <Button x:Name="btn_Client_Cancel" Content="Cancel" HorizontalAlignment="Left" Margin="90,0,0,15" Width="75" Click="btn_Client_Cancel_Click" Height="22" VerticalAlignment="Bottom"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Backup Templates">
@@ -120,26 +121,108 @@
                                         <RadioButton x:Name="radioBtn_Temmplate_NoCompress" Content="No Compress" HorizontalAlignment="Left" Margin="263,10,0,0" Height="21" VerticalAlignment="Top" IsChecked="True"/>
                                     </Grid>
                                 </GroupBox>
-                                <GroupBox x:Name="groupBox_Template_Path" Header="Path Settings" HorizontalAlignment="Left" Margin="10,204,0,0" VerticalAlignment="Top" Height="360" Width="478">
+                                <GroupBox x:Name="groupBox_Template_Path" Header="Path Settings" Margin="10,204,10,0" VerticalAlignment="Top" Height="360">
                                     <Grid>
-                                        <GroupBox x:Name="groupBox_Template_Source" Header="Source Path(s)" Margin="10,10,10,0" VerticalAlignment="Top" Height="130">
+                                        <GroupBox x:Name="groupBox_Template_Source" Header="Source Path(s)" Margin="10,10,10,0" VerticalAlignment="Top" Height="145">
                                             <Grid>
-
+                                                <xctk:WatermarkTextBox x:Name="textBox_Template_Source" Height="23" Margin="10,30,320,0" TextWrapping="Wrap" VerticalAlignment="Top" Watermark="Source path"/>
+                                                <ListView x:Name="listView_Template_Source" Height="103" Margin="0,10,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="240">
+                                                    <ListView.View>
+                                                        <GridView>
+                                                            <GridViewColumn/>
+                                                        </GridView>
+                                                    </ListView.View>
+                                                </ListView>
+                                                <Button x:Name="btn_Template_SourceAdd" Content="Add" HorizontalAlignment="Left" Margin="10,93,0,0" VerticalAlignment="Top" Width="75"/>
+                                                <Button x:Name="btn_Template_SourceRemove" Content="Remove" HorizontalAlignment="Left" Margin="90,93,0,0" VerticalAlignment="Top" Width="75"/>
                                             </Grid>
                                         </GroupBox>
-                                        <GroupBox x:Name="groupBox_Template_Destination" Header="Source Destination(s)" Margin="10,145,10,-15" VerticalAlignment="Top" Height="130">
+                                        <GroupBox x:Name="groupBox_Template_Destination" Header="Source Destination(s)" Margin="10,160,10,0" VerticalAlignment="Top" Height="145">
                                             <Grid>
-
+                                                <xctk:WatermarkTextBox x:Name="textBox_Template_Dest" Height="23" Margin="10,30,320,0" TextWrapping="Wrap" Watermark="Destination path" VerticalAlignment="Top"/>
+                                                <ListView x:Name="listView_Template_Destination" HorizontalAlignment="Right" Height="103" Margin="0,10,10,0" VerticalAlignment="Top" Width="240">
+                                                    <ListView.View>
+                                                        <GridView>
+                                                            <GridViewColumn Width="50"/>
+                                                            <GridViewColumn Width="Auto"/>
+                                                        </GridView>
+                                                    </ListView.View>
+                                                </ListView>
+                                                <Button x:Name="btn_Template_DestinationAdd" Content="Add" HorizontalAlignment="Left" Margin="10,93,0,0" VerticalAlignment="Top" Width="75"/>
+                                                <Button x:Name="btn_Template_DestinationRemove" Content="Remove" HorizontalAlignment="Left" Margin="90,93,0,0" VerticalAlignment="Top" Width="75"/>
+                                                <ComboBox Margin="0,31,255,0" SelectedIndex="0" HorizontalAlignment="Right" Width="58" Height="22" VerticalAlignment="Top">
+                                                    <ComboBoxItem Content="WIN"/>
+                                                    <ComboBoxItem Content="FTP"/>
+                                                    <ComboBoxItem Content="SSH"/>
+                                                </ComboBox>
                                             </Grid>
                                         </GroupBox>
 
                                     </Grid>
                                 </GroupBox>
+                                <GroupBox Header="Time Settings" Height="280" Margin="10,569,10,0" VerticalAlignment="Top">
+                                    <Grid>
+                                        <RadioButton x:Name="radioBtn_Template_TimeDisabled" Content="Disabled" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top"/>
+                                        <GroupBox Margin="10,40,10,10">
+                                            <GroupBox.Header>
+                                                <RadioButton x:Name="radioBtn_Template_TimeEnabled" Content="Enabled"/>
+                                            </GroupBox.Header>
+                                            <Grid>
+                                                <RadioButton x:Name="radioBtn_Template_Time_AtDate" Content="At date" HorizontalAlignment="Left" Margin="40,20,0,0" VerticalAlignment="Top"/>
+                                                <xctk:DateTimePicker Margin="182,20,67,0" Height="24" VerticalAlignment="Top"/>
+                                                <RadioButton x:Name="radioBtn_Template_Time_EveryDate" Content="Every" HorizontalAlignment="Left" Margin="40,65,0,0" VerticalAlignment="Top"/>
+                                                <ComboBox x:Name="comboBox_Template_Day" HorizontalAlignment="Left" Margin="182,65,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0">
+                                                    <ComboBoxItem Content="Monday"/>
+                                                    <ComboBoxItem Content="Tuesday"/>
+                                                    <ComboBoxItem Content="Wednesday"/>
+                                                    <ComboBoxItem Content="Thursday"/>
+                                                    <ComboBoxItem Content="Friday"/>
+                                                    <ComboBoxItem Content="Saturday"/>
+                                                    <ComboBoxItem Content="Sunday"/>
+                                                </ComboBox>
+                                                <Label Content="at" HorizontalAlignment="Left" Margin="307,63,0,0" VerticalAlignment="Top"/>
+                                                <xctk:TimePicker x:Name="timePicker_Template_Time" Margin="332,65,67,97"/>
+                                                <ListView Height="75" Margin="182,101,67,0" VerticalAlignment="Top">
+                                                    <ListView.View>
+                                                        <GridView>
+                                                            <GridViewColumn/>
+                                                        </GridView>
+                                                    </ListView.View>
+                                                </ListView>
+                                            </Grid>
+                                        </GroupBox>
+
+                                    </Grid>
+                                </GroupBox>
+                                <GroupBox Header="Notification Settings" Height="213" Margin="10,854,10,0" VerticalAlignment="Top">
+                                    <Grid>
+                                        <RadioButton Content="On Screen" HorizontalAlignment="Left" Margin="60,32,0,0" VerticalAlignment="Top"/>
+                                        <RadioButton Content="Email" HorizontalAlignment="Left" Margin="60,52,0,0" VerticalAlignment="Top"/>
+                                        <RadioButton Content="Both" HorizontalAlignment="Left" Margin="60,72,0,0" VerticalAlignment="Top"/>
+                                        <DataGrid x:Name="dataGrid_Template_NotificationEmails" Height="171" Margin="200,10,80,0" VerticalAlignment="Top">
+                                            <DataGrid.Columns>
+                                                <DataGridCheckBoxColumn/>
+                                                <DataGridTextColumn Width="*"/>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                    </Grid>
+                                </GroupBox>
+                                <GroupBox Header="Report Settings" Height="231" Margin="10,1072,10,0" VerticalAlignment="Top">
+                                    <Grid>
+                                        <DataGrid x:Name="dataGrid_Template_ReportEmails" Height="189" Margin="10,10,300,0" VerticalAlignment="Top">
+                                            <DataGrid.Columns>
+                                                <DataGridCheckBoxColumn/>
+                                                <DataGridTextColumn Width="*"/>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                    </Grid>
+                                </GroupBox>
                             </Grid>
                         </ScrollViewer>
                     </GroupBox>
-                    <Button x:Name="btn_Template_Confirm" Content="New" Margin="0,0,90,15" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75"/>
+                    <Button x:Name="btn_Template_Confirm" Content="New" Margin="225,0,743,15" Height="20" VerticalAlignment="Bottom"/>
                     <Button x:Name="btn_Template_Cancel" Content="Cancel" Margin="0,0,10,15" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75"/>
+                    <Button x:Name="btn_Template_Edit" Content="Edit" Margin="0,0,90,15" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75"/>
                 </Grid>
 
             </TabItem>
@@ -171,7 +254,7 @@
                                     <TextBox x:Name="textBox_Backup_Dest" Height="23" Margin="175,37,62,0" TextWrapping="Wrap" Text="Backup destination path" VerticalAlignment="Top"/>
                                 </Grid>
                             </GroupBox>
-                            <GroupBox Header="Time Settings" Margin="10,340,10,58">
+                            <GroupBox Header="Time Settings" Margin="10,340,10,209">
                                 <Grid>
                                     <Label Content="Expiration Date:" HorizontalAlignment="Left" Margin="36,9,0,0" VerticalAlignment="Top"/>
                                     <Label Content="Start Time:" HorizontalAlignment="Left" Margin="63,38,0,0" VerticalAlignment="Top"/>
@@ -186,7 +269,7 @@
                                 <Grid>
                                     <Label Content="Compression Type:" HorizontalAlignment="Left" Margin="19,4,0,0" VerticalAlignment="Top"/>
                                     <RadioButton x:Name="radioBtn_Backup_Compress" Content="Compress" HorizontalAlignment="Left" Margin="179,10,0,0" Height="21" VerticalAlignment="Top"/>
-                                    <RadioButton x:Name="radioBtn_Backup_NoCompress" Content="No Compress" HorizontalAlignment="Left" Margin="263,10,0,0" Height="21" VerticalAlignment="Top" IsChecked="True"/>
+                                    <RadioButton x:Name="radioBtn_Backup_NoCompress" Content="No Compress" Margin="0,10,130,0" Height="21" VerticalAlignment="Top" IsChecked="True" HorizontalAlignment="Right" Width="91"/>
                                 </Grid>
                             </GroupBox>
                             <Button Name="btn_Backup_Edit" Content="Edit" Margin="0,0,10,10" HorizontalAlignment="Right" Width="75" Height="22" VerticalAlignment="Bottom" Click="btn_Backup_Edit_Click"/>
@@ -194,7 +277,7 @@
                             <Button Name ="btn_Backup_Cancel" Content="Cancel" HorizontalAlignment="Left" Margin="90,0,0,10" VerticalAlignment="Bottom" Width="75" Click="btn_Backup_Cancel_Click" Height="22"/>
                             <Label Content="Created By Template:" HorizontalAlignment="Left" Margin="20,69,0,0" VerticalAlignment="Top"/>
                             <TextBox x:Name="textBox_Backup_Template" Height="23" Margin="192,72,77,0" TextWrapping="Wrap" Text="Backup template" VerticalAlignment="Top"/>
-                            <Button x:Name="btn_Backup_TemplateTree" Content="..." HorizontalAlignment="Right" Margin="0,0,52,432" VerticalAlignment="Bottom" Width="20" ToolTip="Show tree of this template"/>
+                            <Button x:Name="btn_Backup_TemplateTree" Content="..." HorizontalAlignment="Right" Margin="0,75,52,0" Width="20" ToolTip="Show tree of this template" Height="20" VerticalAlignment="Top"/>
                         </Grid>
                     </GroupBox>
                 </Grid>
@@ -211,9 +294,9 @@
                             <Label Content="Backup:" HorizontalAlignment="Left" Margin="99,10,0,0" VerticalAlignment="Top"/>
                             <Label Content="Log Type:" HorizontalAlignment="Left" Margin="89,41,0,0" VerticalAlignment="Top"/>
                             <Label Content="UTC Time:" HorizontalAlignment="Left" Margin="86,72,0,0" VerticalAlignment="Top"/>
-                            <xctk:DateTimePicker Name="dateTimePicker_Log_Time" Margin="176,74,0,175" HorizontalAlignment="Left" Width="246"/>
-                            <TextBox x:Name="textBox_Log_BackupName" HorizontalAlignment="Left" Height="23" Margin="176,13,0,0" TextWrapping="Wrap" Text="Backup name" VerticalAlignment="Top" Width="246"/>
-                            <ComboBox x:Name="comboBox_Log_LogType" HorizontalAlignment="Left" Margin="176,45,0,0" VerticalAlignment="Top" Width="246">
+                            <xctk:WatermarkTextBox x:Name="textBox_Log_BackupName" Height="23" Margin="176,13,92,0" TextWrapping="Wrap" Text="Backup name" VerticalAlignment="Top"/>
+                            <xctk:DateTimePicker Name="dateTimePicker_Log_Time" Margin="176,74,92,0" Height="24" VerticalAlignment="Top"/>
+                            <ComboBox x:Name="comboBox_Log_LogType" Margin="176,45,92,0" VerticalAlignment="Top">
                                 <ComboBoxItem Content="Error"/>
                                 <ComboBoxItem Content="Warning"/>
                                 <ComboBoxItem Content="Message"/>

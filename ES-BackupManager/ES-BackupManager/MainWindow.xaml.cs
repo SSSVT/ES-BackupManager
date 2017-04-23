@@ -211,6 +211,9 @@ namespace ES_BackupManager
                     this.comboBox_Client_Status.SelectedIndex = 1;
                     break;
             }
+            
+            //TODO: Connection Repeat Info
+
 
             client.Close();
         }
@@ -227,7 +230,8 @@ namespace ES_BackupManager
             this._clientTab_DisableComponents();
             this.btn_Client_Edit.IsEnabled = true;
 
-            //TODO: Send data to server and update database
+            //TODO: Connection Repeat Info
+
             client.UpdateClient(c);
             client.Close();
         }
@@ -239,8 +243,8 @@ namespace ES_BackupManager
             this._loadClientInfo(client);
         }
         private void btn_Client_Edit_Click(object sender, RoutedEventArgs e)
-        {            
-            //TODO: Status etc..
+        {
+            //TODO: Connection Repeat Info
             this.textBox_Client_Name.IsEnabled = true;
             this.textBox_Client_Description.IsEnabled = true;
             this.textBox_Client_Email.IsEnabled = true;
@@ -385,18 +389,37 @@ namespace ES_BackupManager
         }
         private bool _isEmailValid(string emailAddress)
         {
-            if (Regex.IsMatch(emailAddress, @"^[a-z0-9]+(\.?[a-z0-9]+)*@([a-z0-9]+\.)+[a-z]{2,}$"))
-            { 
+            if (!this._isEmailRegistered(emailAddress))
+            {
+                this.label_Client_EmailError.Content = "*Email is already registred";
+                this.label_Client_EmailError.ToolTip = "Please add email which is not in the list";
+                this.label_Client_EmailError.Visibility = Visibility.Visible;
+                return false;
+            }
+            else if (Regex.IsMatch(emailAddress, @"^[a-z0-9]+(\.?[a-z0-9]+)*@([a-z0-9]+\.)+[a-z]{2,}$"))
+            {
                 this.label_Client_EmailError.Visibility = Visibility.Hidden;
                 return true;
             }
             else
             {
+                this.label_Client_EmailError.Content = "*Email is not in valid format";
+                this.label_Client_EmailError.ToolTip = "Example: evostudio@evostudio.com or evo.studio@evostudio.co.uk";
                 this.label_Client_EmailError.Visibility = Visibility.Visible;
                 return false;
             }
         }
-
+        private bool _isEmailRegistered(string emailAdress)
+        {
+            foreach (string item in this._listBoxEmailsList)
+            {
+                if (emailAdress == item)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
         #endregion
 
         #endregion
