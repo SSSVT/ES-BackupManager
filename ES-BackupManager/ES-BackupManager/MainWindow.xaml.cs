@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
@@ -32,7 +33,7 @@ namespace ES_BackupManager
             //this._loadGrid(Filter.All,Sort.Asc);
 
             //TODO: DEBUG
-            this.TabControl_Main.IsEnabled = true;
+            this.TabControl_Main.IsEnabled = true;            
         }
 
         #region Local Properties
@@ -423,6 +424,25 @@ namespace ES_BackupManager
         #endregion
 
         #endregion
+        #region Backup Template Controls
+        private void _templateTab_DisableComponents()
+        {
+            this.textBox_Template_Name.IsEnabled = false;
+            this.textBox_Template_Dest.IsEnabled = false;
+
+            this.groupBox_Template_Type.IsEnabled = false;
+            this.groupBox_Template_Compression.IsEnabled = false;
+            this.groupBox_Template_Path.IsEnabled = false;
+            this.groupBox_Template_Time.IsEnabled = false;
+            //this.checkBox_Template_TimeBox.IsEnabled = false;            
+            this.groupBox_Template_Notification.IsEnabled = false;
+        }
+        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
+            e.Handled = true;
+        }
+        #endregion
         #region Backup Controls
         private void _loadBackupInfo(Backup b)
         {
@@ -475,6 +495,7 @@ namespace ES_BackupManager
         {
             this.textBox_Backup_Name.IsEnabled = false;
             this.textBox_Backup_Description.IsEnabled = false;
+            this.textBox_Backup_BaseBackup.IsEnabled = false;
             this.textBox_Backup_Template.IsEnabled = false;
             this.radioBtn_Backup_Full.IsEnabled = false;
             this.radioBtn_Backup_Diff.IsEnabled = false;
@@ -494,6 +515,8 @@ namespace ES_BackupManager
         {
             this.textBox_Backup_Name.Text = "Backup name";
             this.textBox_Backup_Description.Text = "Backup description";
+            this.textBox_Backup_BaseBackup.Text = "";
+
             this.radioBtn_Backup_NoCompress.IsChecked = true;
             this.radioBtn_Backup_Diff.IsChecked = true;
 

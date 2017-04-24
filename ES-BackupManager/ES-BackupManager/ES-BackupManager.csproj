@@ -60,6 +60,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="AppStruct\Windows\AdministratorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -67,6 +71,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppStruct\Windows\AdministratorWindow.xaml.cs">
+      <DependentUpon>AdministratorWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Connected Services\ESBackupServerAdminService\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -129,7 +136,6 @@
   <ItemGroup>
     <Folder Include="AppStruct\Components\" />
     <Folder Include="AppStruct\Objects\" />
-    <Folder Include="AppStruct\Windows\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
