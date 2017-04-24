@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"        
         mc:Ignorable="d"
-        Title="Backup Administrator | Evolution Studio" Height="800" Width="1280" 
+        Title="Backup Administrator | Evolution Studio" Height="1500" Width="1280" 
         MinWidth="1000" MinHeight="650">
     <!-- STANDARD HEIGHT: 650 ,STANDARD WIDTH: 1000 -->
     <!-- CURRENT HEIGHT: 800 ,CURRENT WIDTH: 1280 -->
@@ -112,6 +112,7 @@
                                         <Label Content="Backup Type:" HorizontalAlignment="Left" Margin="48,4,0,0" VerticalAlignment="Top"/>
                                         <RadioButton Name="radioBtn_Template_Full" Content="Full" HorizontalAlignment="Left" Margin="179,10,0,0" Height="21" VerticalAlignment="Top"/>
                                         <RadioButton Name="radioBtn_Template_Diff" Content="Differencial" HorizontalAlignment="Left" Margin="263,10,0,0" Height="21" VerticalAlignment="Top" IsChecked="True"/>
+                                        <RadioButton Name="radioBtn_Template_Increm" Content="Incremental" HorizontalAlignment="Left" Margin="365,10,0,0" Height="21" VerticalAlignment="Top" IsChecked="True"/>
                                     </Grid>
                                 </GroupBox>
                                 <GroupBox Header="Compression Settings" Height="62" Margin="10,137,10,0" VerticalAlignment="Top">
@@ -160,61 +161,28 @@
 
                                     </Grid>
                                 </GroupBox>
-                                <GroupBox Header="Time Settings" Height="280" Margin="10,569,10,0" VerticalAlignment="Top">
+                                <GroupBox Height="72" Margin="10,569,10,0" VerticalAlignment="Top">
+                                    <GroupBox.Header>
+                                        <CheckBox x:Name="checkBox_Template_TimeBox" Content="Time Settings"/>
+                                    </GroupBox.Header>
                                     <Grid>
-                                        <RadioButton x:Name="radioBtn_Template_TimeDisabled" Content="Disabled" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top"/>
-                                        <GroupBox Margin="10,40,10,10">
-                                            <GroupBox.Header>
-                                                <RadioButton x:Name="radioBtn_Template_TimeEnabled" Content="Enabled"/>
-                                            </GroupBox.Header>
-                                            <Grid>
-                                                <RadioButton x:Name="radioBtn_Template_Time_AtDate" Content="At date" HorizontalAlignment="Left" Margin="40,20,0,0" VerticalAlignment="Top"/>
-                                                <xctk:DateTimePicker Margin="182,20,67,0" Height="24" VerticalAlignment="Top"/>
-                                                <RadioButton x:Name="radioBtn_Template_Time_EveryDate" Content="Every" HorizontalAlignment="Left" Margin="40,65,0,0" VerticalAlignment="Top"/>
-                                                <ComboBox x:Name="comboBox_Template_Day" HorizontalAlignment="Left" Margin="182,65,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0">
-                                                    <ComboBoxItem Content="Monday"/>
-                                                    <ComboBoxItem Content="Tuesday"/>
-                                                    <ComboBoxItem Content="Wednesday"/>
-                                                    <ComboBoxItem Content="Thursday"/>
-                                                    <ComboBoxItem Content="Friday"/>
-                                                    <ComboBoxItem Content="Saturday"/>
-                                                    <ComboBoxItem Content="Sunday"/>
-                                                </ComboBox>
-                                                <Label Content="at" HorizontalAlignment="Left" Margin="307,63,0,0" VerticalAlignment="Top"/>
-                                                <xctk:TimePicker x:Name="timePicker_Template_Time" Margin="332,65,67,97"/>
-                                                <ListView Height="75" Margin="182,101,67,0" VerticalAlignment="Top">
-                                                    <ListView.View>
-                                                        <GridView>
-                                                            <GridViewColumn/>
-                                                        </GridView>
-                                                    </ListView.View>
-                                                </ListView>
-                                            </Grid>
-                                        </GroupBox>
+                                        <Label Content="CRON Value:" HorizontalAlignment="Left" Margin="40,10,0,0" VerticalAlignment="Top"/>
+                                        <xctk:WatermarkTextBox Margin="182,12,67,0" Watermark="Type in CRON format" Height="24" VerticalAlignment="Top"/>
 
                                     </Grid>
                                 </GroupBox>
-                                <GroupBox Header="Notification Settings" Height="213" Margin="10,854,10,0" VerticalAlignment="Top">
+                                <GroupBox Height="59" Margin="10,646,10,0" VerticalAlignment="Top">
+                                    <GroupBox.Header>
+                                        <CheckBox x:Name="checkBox_Template_NotificationBox" Content="Notification Settings"/>
+                                    </GroupBox.Header>
                                     <Grid>
-                                        <RadioButton Content="On Screen" HorizontalAlignment="Left" Margin="60,32,0,0" VerticalAlignment="Top"/>
-                                        <RadioButton Content="Email" HorizontalAlignment="Left" Margin="60,52,0,0" VerticalAlignment="Top"/>
-                                        <RadioButton Content="Both" HorizontalAlignment="Left" Margin="60,72,0,0" VerticalAlignment="Top"/>
-                                        <DataGrid x:Name="dataGrid_Template_NotificationEmails" Height="171" Margin="200,10,80,0" VerticalAlignment="Top">
-                                            <DataGrid.Columns>
-                                                <DataGridCheckBoxColumn/>
-                                                <DataGridTextColumn Width="*"/>
-                                            </DataGrid.Columns>
-                                        </DataGrid>
+                                        <RadioButton Content="On Screen:" HorizontalAlignment="Left" Margin="38,10,0,0" VerticalAlignment="Top"/>
+
                                     </Grid>
                                 </GroupBox>
-                                <GroupBox Header="Report Settings" Height="231" Margin="10,1072,10,0" VerticalAlignment="Top">
+                                <GroupBox x:Name="groupBox" Header="Email Report Settings" Margin="10,0,10,410" VerticalAlignment="Bottom" Height="226">
                                     <Grid>
-                                        <DataGrid x:Name="dataGrid_Template_ReportEmails" Height="189" Margin="10,10,300,0" VerticalAlignment="Top">
-                                            <DataGrid.Columns>
-                                                <DataGridCheckBoxColumn/>
-                                                <DataGridTextColumn Width="*"/>
-                                            </DataGrid.Columns>
-                                        </DataGrid>
+
                                     </Grid>
                                 </GroupBox>
                             </Grid>
@@ -243,7 +211,7 @@
                                 <Grid>
                                     <Label Content="Backup Type:" HorizontalAlignment="Left" Margin="48,4,0,0" VerticalAlignment="Top"/>
                                     <RadioButton Name="radioBtn_Backup_Full" Content="Full" HorizontalAlignment="Left" Margin="179,10,0,0" Height="21" VerticalAlignment="Top"/>
-                                    <RadioButton Name="radioBtn_Backup_Diff" Content="Differencial" Margin="0,10,145,0" Height="21" VerticalAlignment="Top" IsChecked="True" HorizontalAlignment="Right" Width="79"/>
+                                    <RadioButton Name="radioBtn_Backup_Diff" Content="Differencial" Margin="263,10,416,0" Height="21" VerticalAlignment="Top" IsChecked="True"/>
                                 </Grid>
                             </GroupBox>
                             <GroupBox Header="Path Settings" Height="90" Margin="10,245,10,0" VerticalAlignment="Top" >
@@ -269,7 +237,7 @@
                                 <Grid>
                                     <Label Content="Compression Type:" HorizontalAlignment="Left" Margin="19,4,0,0" VerticalAlignment="Top"/>
                                     <RadioButton x:Name="radioBtn_Backup_Compress" Content="Compress" HorizontalAlignment="Left" Margin="179,10,0,0" Height="21" VerticalAlignment="Top"/>
-                                    <RadioButton x:Name="radioBtn_Backup_NoCompress" Content="No Compress" Margin="0,10,130,0" Height="21" VerticalAlignment="Top" IsChecked="True" HorizontalAlignment="Right" Width="91"/>
+                                    <RadioButton x:Name="radioBtn_Backup_NoCompress" Content="No Compress" Margin="263,10,404,0" Height="21" VerticalAlignment="Top" IsChecked="True"/>
                                 </Grid>
                             </GroupBox>
                             <Button Name="btn_Backup_Edit" Content="Edit" Margin="0,0,10,10" HorizontalAlignment="Right" Width="75" Height="22" VerticalAlignment="Bottom" Click="btn_Backup_Edit_Click"/>

@@ -1,0 +1,35 @@
+GRID TIME SETTINGS
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    <Grid>
+                                        <RadioButton x:Name="radioBtn_Template_TimeDisabled" Content="Disabled" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top"/>
+                                        <GroupBox Margin="10,40,10,10">
+                                            <GroupBox.Header>
+                                                <RadioButton x:Name="radioBtn_Template_TimeEnabled" Content="Enabled"/>
+                                            </GroupBox.Header>
+                                            <Grid>
+                                                <RadioButton x:Name="radioBtn_Template_Time_AtDate" Content="At date" HorizontalAlignment="Left" Margin="40,20,0,0" VerticalAlignment="Top"/>
+                                                <xctk:DateTimePicker Margin="182,20,67,0" Height="24" VerticalAlignment="Top"/>
+                                                <RadioButton x:Name="radioBtn_Template_Time_EveryDate" Content="Every" HorizontalAlignment="Left" Margin="40,65,0,0" VerticalAlignment="Top"/>
+                                                <ComboBox x:Name="comboBox_Template_Day" HorizontalAlignment="Left" Margin="182,65,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0">
+                                                    <ComboBoxItem Content="Monday"/>
+                                                    <ComboBoxItem Content="Tuesday"/>
+                                                    <ComboBoxItem Content="Wednesday"/>
+                                                    <ComboBoxItem Content="Thursday"/>
+                                                    <ComboBoxItem Content="Friday"/>
+                                                    <ComboBoxItem Content="Saturday"/>
+                                                    <ComboBoxItem Content="Sunday"/>
+                                                </ComboBox>
+                                                <Label Content="at" HorizontalAlignment="Left" Margin="307,63,0,0" VerticalAlignment="Top"/>
+                                                <xctk:TimePicker x:Name="timePicker_Template_Time" Margin="332,65,67,97"/>
+                                                <ListView Height="75" Margin="182,101,67,0" VerticalAlignment="Top">
+                                                    <ListView.View>
+                                                        <GridView>
+                                                            <GridViewColumn/>
+                                                        </GridView>
+                                                    </ListView.View>
+                                                </ListView>
+                                            </Grid>
+                                        </GroupBox>
+
+                                    </Grid>
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
