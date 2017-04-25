@@ -6,7 +6,8 @@
       <xsd:import schemaLocation="http://localhost:53095/ESBackupServerAdminService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://localhost:53095/ESBackupServerAdminService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/ESBackupServer.App.Objects.Filters" />
       <xsd:import schemaLocation="http://localhost:53095/ESBackupServerAdminService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/ESBackupServer.Database.Objects" />
-      <xsd:import schemaLocation="http://localhost:53095/ESBackupServerAdminService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/ESBackupServer.App.Objects" />
+      <xsd:import schemaLocation="http://localhost:53095/ESBackupServerAdminService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/ESBackupServer.App.Objects.Config" />
+      <xsd:import schemaLocation="http://localhost:53095/ESBackupServerAdminService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/ESBackupServer.App.Objects" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IESBackupServerAdminService_GetClients_InputMessage">
@@ -44,6 +45,12 @@
   </wsdl:message>
   <wsdl:message name="IESBackupServerAdminService_GetConfigurationByClientID_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetConfigurationByClientIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_GetTemplateByID_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTemplateByID" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_GetTemplateByID_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTemplateByIDResponse" />
   </wsdl:message>
   <wsdl:message name="IESBackupServerAdminService_SaveConfiguration_InputMessage">
     <wsdl:part name="parameters" element="tns:SaveConfiguration" />
@@ -93,6 +100,10 @@
     <wsdl:operation name="GetConfigurationByClientID">
       <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetConfigurationByClientID" message="tns:IESBackupServerAdminService_GetConfigurationByClientID_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetConfigurationByClientIDResponse" message="tns:IESBackupServerAdminService_GetConfigurationByClientID_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTemplateByID">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetTemplateByID" message="tns:IESBackupServerAdminService_GetTemplateByID_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetTemplateByIDResponse" message="tns:IESBackupServerAdminService_GetTemplateByID_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="SaveConfiguration">
       <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/SaveConfiguration" message="tns:IESBackupServerAdminService_SaveConfiguration_InputMessage" />
@@ -160,6 +171,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetConfigurationByClientID">
       <soap:operation soapAction="http://tempuri.org/IESBackupServerAdminService/GetConfigurationByClientID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTemplateByID">
+      <soap:operation soapAction="http://tempuri.org/IESBackupServerAdminService/GetTemplateByID" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

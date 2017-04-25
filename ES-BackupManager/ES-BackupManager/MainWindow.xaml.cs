@@ -38,6 +38,42 @@ namespace ES_BackupManager
 
         #region Local Properties
         private bool _emailChangeMode { get; set; }
+
+        private bool template_AddMode;
+        private bool _template_AddMode
+        {
+            get { return template_AddMode; }
+            set
+            {
+                template_AddMode = value;
+                if(value == true)
+                {
+                    this.btn_Template_New.IsEnabled = false;
+                    this.btn_Template_Edit.Content = "Add";
+                }
+                else
+                {
+                    this.btn_Template_New.IsEnabled = true;
+                    this.btn_Template_Edit.Content = "Edit";
+                }
+            }
+        }
+
+
+        private bool template_EditMode;
+        private bool _template_EditMode
+        {
+            get { return template_EditMode; }
+            set
+            {
+                template_EditMode = value;
+                if (value == true)                
+                    this.btn_Template_Edit.Content = "Add";                
+                else                
+                    this.btn_Template_Edit.Content = "Edit";                
+            }
+        }
+
         #endregion
 
         #region BindingLists for DataGrids/ListBoxes
@@ -46,6 +82,9 @@ namespace ES_BackupManager
         private BindingList<Log> _gridLogsList { get; set; } = new BindingList<Log>();
         private BindingList<BackupTemplate> _gridTemplatesList { get; set; } = new BindingList<BackupTemplate>();
         private BindingList<string> _listBoxEmailsList { get; set; } = new BindingList<string>();
+
+        private BindingList<string> _listViewTemplateSource { get; set; } = new BindingList<string>();
+        private BindingList<string> _listViewTemplateDestination { get; set; } = new BindingList<string>();
         #endregion
 
         #region Setup Controls
@@ -126,7 +165,26 @@ namespace ES_BackupManager
             }
             #endregion
             #region BackupTemplates_Tab
-            //TODO: Implement            
+            //TODO: Implement     
+            /*
+            Configuration config = client.GetConfigurationByClientID(c.ID);
+
+            foreach (BackupTemplate item in config.Templates)
+            {
+                this._gridTemplatesList.Add(item);
+            }
+
+            if (this._gridTemplatesList.Count == 0)
+            {
+                this.dataGrid_BackupTemplates.SelectedIndex = -1;
+                this.btn_Template_Edit.IsEnabled = false;
+            }
+            else
+            {
+                this.dataGrid_BackupTemplates.SelectedIndex = 0;
+                this.btn_Template_Edit.IsEnabled = true;
+            }
+            */
             #endregion
             #region Logs_Tab
             foreach (Log item in client.GetLogsByClientID(c.ID))
@@ -451,11 +509,72 @@ namespace ES_BackupManager
 
         #endregion
         #region Backup Template Controls
+        private void radioBtn_Template_Ignore_Checked(object sender, RoutedEventArgs e)
+        {
+            this.textBox_Template_Ignore.IsEnabled = true;
+            this.textBox_Template_Only.IsEnabled = false;
+        }
+        private void radioBtn_Template_Only_Checked(object sender, RoutedEventArgs e)
+        {
+            this.textBox_Template_Ignore.IsEnabled = false;
+            this.textBox_Template_Only.IsEnabled = true;
+        }
+        private void dataGrid_BackupTemplates_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            BackupTemplate bt = this.dataGrid_BackupTemplates.SelectedItem as BackupTemplate;
+            this._loadTemplateInfo(bt);
+        }
+        private void btn_Template_New_Click(object sender, RoutedEventArgs e)
+        {
+            this._template_AddMode = true;
+            this._templateTab_EnableComponents();
+            this._templateTab_SetDefaultValues();
+
+        }
+        private void btn_Template_Edit_Click(object sender, RoutedEventArgs e)
+        {
+            if (this._template_AddMode)
+            {
+                this._template_AddMode = false;
+            }
+
+            if (this._template_EditMode)
+            {
+                this._template_EditMode = false;
+            }
+        }
+
+        private void btn_Template_Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            BackupTemplate bt = this.dataGrid_BackupTemplates.SelectedItem as BackupTemplate;
+
+            if (this._template_AddMode)
+                this._template_AddMode = false;
+
+            if (this._template_EditMode)
+                this._template_EditMode = false;
+
+            this._loadTemplateInfo(bt);
+        }
+        private void _templateTab_EnableComponents()
+        {
+            this.textBox_Template_Name.IsEnabled = true;
+            this.textBox_Template_Description.IsEnabled = true;
+
+            this.groupBox_Template_Exception.IsEnabled = true;
+            this.groupBox_Template_Type.IsEnabled = true;
+            this.groupBox_Template_Compression.IsEnabled = true;
+            this.groupBox_Template_Path.IsEnabled = true;
+            this.groupBox_Template_Time.IsEnabled = true;
+            //this.checkBox_Template_TimeBox.IsEnabled = true;            
+            this.groupBox_Template_Notification.IsEnabled = true;
+        }
         private void _templateTab_DisableComponents()
         {
             this.textBox_Template_Name.IsEnabled = false;
-            this.textBox_Template_Dest.IsEnabled = false;
+            this.textBox_Template_Description.IsEnabled = false;
 
+            this.groupBox_Template_Exception.IsEnabled = false;
             this.groupBox_Template_Type.IsEnabled = false;
             this.groupBox_Template_Compression.IsEnabled = false;
             this.groupBox_Template_Path.IsEnabled = false;
@@ -468,6 +587,69 @@ namespace ES_BackupManager
             Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
             e.Handled = true;
         }
+        private void _loadTemplateInfo(BackupTemplate bt)
+        {
+            this._templateTab_DisableComponents();
+
+            if (bt != null)
+            {                
+                this.textBox_Template_Name.Text = bt.Name;
+                this.textBox_Template_Description.Text = bt.Description;
+
+                //TODO: Rework to Incremental
+                this.radioBtn_Template_Full.IsChecked = bt.Type;
+
+                this.radioBtn_Template_Compress.IsChecked = bt.Compression;
+
+                //TODO: Get templates source path(s)
+
+                //TODO: Get templates destination path(s)
+
+                //TODO: Get templates exceptions
+
+                this.textBox_Template_CRON.Text = bt.CRONRepeatInterval;
+                if (bt.DaysToExpiration != null)
+                    this.dateTimePicker_Template_Expire.Value = DateTime.Now.AddDays(Convert.ToDouble(bt.DaysToExpiration));
+                else
+                    this.dateTimePicker_Template_Expire.Value = null;
+
+                this.radioBtn_Template_NotifEnable.IsChecked = bt.IsNotificationEnabled;
+            }
+            else
+                this._templateTab_SetDefaultValues();
+        }
+        private void _templateTab_SetDefaultValues()
+        {
+            //Name
+            this.textBox_Template_Name.Text = null;
+            this.textBox_Template_Description.Text = null;
+
+            //Backup Type
+            this.radioBtn_Template_Full.IsChecked = true;
+
+            //Compression
+            this.radioBtn_Template_NoCompress.IsChecked = true;
+
+            //Source path(s)
+            this.textBox_Template_Source.Text = null;
+            this._listViewTemplateSource.Clear();
+
+            //Destination path(s)
+            this.textBox_Template_Dest.Text = null;
+            this._listViewTemplateDestination.Clear();
+
+            //Time settings
+            this.textBox_Template_CRON.Text = null;
+            this.dateTimePicker_Template_Expire.Value = null;
+
+            //Notification settings
+            this.radioBtn_Template_NotifEnable.IsChecked = false;
+
+            //Exception settings
+            this.checkBox_Template_EmptyFolders.IsChecked = false;
+            this.textBox_Template_Ignore.Text = "";
+            this.textBox_Template_Only.Text = "";
+        }
         #endregion
         #region Backup Controls
         private void _loadBackupInfo(Backup b)
@@ -479,8 +661,8 @@ namespace ES_BackupManager
 
                 this.textBox_Backup_Name.Text = b.Name;
                 this.textBox_Backup_Description.Text = b.Description;
-
-                this.textBox_Backup_Template.Text = b.Template.Name;
+                
+                //this.textBox_Backup_Template.Text = client.GetTemplateByID(Convert.ToInt32(b.IDBackupTemplate)).Name;
 
                 if(b.BaseFullBackupID != null)
                     this.textBox_Backup_BaseBackup.Text = client.GetBackupByID((long)b.BaseFullBackupID).Name;
@@ -620,6 +802,7 @@ namespace ES_BackupManager
             this.comboBox_Log_LogType.IsEnabled = false;
             this.dateTimePicker_Log_Time.IsEnabled = false;
         }
+
         #endregion
 
     }
