@@ -30,10 +30,10 @@ namespace ES_BackupManager
         {
             InitializeComponent();
 
-            //this._loadGrid(Filter.All,Sort.Asc);
+            this._loadGrid(Filter.All,Sort.Asc);
 
             //TODO: DEBUG
-            this.TabControl_Main.IsEnabled = true;            
+            //this.TabControl_Main.IsEnabled = true;            
         }
 
         #region Local Properties
@@ -181,7 +181,8 @@ namespace ES_BackupManager
             this.listBox_Client_Emails.IsEnabled = false;
             this.label_Client_EmailError.Visibility = Visibility.Hidden;
             this.textBox_Client_Email.Text = "";
-            this.comboBox_Client_Status.IsEnabled = false;            
+            this.comboBox_Client_Status.IsEnabled = false;
+            this.groupBox_Client_Connection.IsEnabled = false;     
         }
         private void _loadClientInfo(Client c)
         {
@@ -191,11 +192,11 @@ namespace ES_BackupManager
             this.textBox_Client_Name.Text = c.Name;
             this.textBox_Client_Description.Text = c.Description;
 
-            foreach (string item in this._convertEmailsToListBox(c.Emails))
-            {
-                this._listBoxEmailsList.Add(item);
-            }
-            this.listBox_Client_Emails.ItemsSource = this._listBoxEmailsList;
+            //foreach (string item in this._convertEmailsToListBox(c.Emails))
+            //{
+            //    this._listBoxEmailsList.Add(item);
+            //}
+            //this.listBox_Client_Emails.ItemsSource = this._listBoxEmailsList;
 
             switch (c.Status)
             {
@@ -212,9 +213,20 @@ namespace ES_BackupManager
                     this.comboBox_Client_Status.SelectedIndex = 1;
                     break;
             }
+
+            if (c.StatusReportEnabled)
+            {
+                this.radioBtn_Client_ConnSet.IsChecked = true;
+                this.IntUpDown_Client_StatusRepeat.Value = c.ReportInterval;
+
+            }
+            else
+            {
+                this.radioBtn_Client_ConnDefault.IsChecked = true;
+            }           
             
             //TODO: Connection Repeat Info
-
+            
 
             client.Close();
         }
@@ -225,8 +237,11 @@ namespace ES_BackupManager
 
             c.Name = this.textBox_Client_Name.Text;
             c.Description = this.textBox_Client_Description.Text;
-            c.Emails = this._convertEmailsFromListBox(this._listBoxEmailsList);
+            //c.Emails = this._convertEmailsFromListBox(this._listBoxEmailsList);
             c.Status = Convert.ToByte(this.comboBox_Client_Status.SelectedIndex);
+            c.StatusReportEnabled = (bool)this.radioBtn_Client_ConnSet.IsChecked ? true : false ;
+            if (c.StatusReportEnabled)
+                c.ReportInterval = this.IntUpDown_Client_StatusRepeat.Value;
 
             this._clientTab_DisableComponents();
             this.btn_Client_Edit.IsEnabled = true;
@@ -251,10 +266,21 @@ namespace ES_BackupManager
             this.textBox_Client_Email.IsEnabled = true;
             this.listBox_Client_Emails.IsEnabled = true;
             this.comboBox_Client_Status.IsEnabled = true;
+            this.groupBox_Client_Connection.IsEnabled = true;
 
             this.btn_Client_Save.IsEnabled = true;
             this.btn_Client_Cancel.IsEnabled = true;
 
+        }
+        private void radioBtn_Client_ConnSet_Checked(object sender, RoutedEventArgs e)
+        {
+            this.IntUpDown_Client_StatusRepeat.IsEnabled = true;
+        }
+
+        private void radioBtn_Client_ConnDefault_Checked(object sender, RoutedEventArgs e)
+        {
+            this.IntUpDown_Client_StatusRepeat.IsEnabled = false;
+            this.IntUpDown_Client_StatusRepeat.Value = null;
         }
         #region Email Controls
         private List<string> _convertEmailsToListBox(string emails)
@@ -445,12 +471,19 @@ namespace ES_BackupManager
         #endregion
         #region Backup Controls
         private void _loadBackupInfo(Backup b)
-        {
+        {            
             this._backupTab_DisableComponents();
             if (b != null)
             {
+                ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
+
                 this.textBox_Backup_Name.Text = b.Name;
                 this.textBox_Backup_Description.Text = b.Description;
+
+                this.textBox_Backup_Template.Text = b.Template.Name;
+
+                if(b.BaseFullBackupID != null)
+                    this.textBox_Backup_BaseBackup.Text = client.GetBackupByID((long)b.BaseFullBackupID).Name;
 
                 if (b.Compressed)
                     this.radioBtn_Backup_Compress.IsChecked = true;
@@ -481,6 +514,8 @@ namespace ES_BackupManager
                 if (this.btn_Backup_Edit.IsEnabled == false)
                     this.btn_Backup_Edit.IsEnabled = true;
 
+                client.Close();
+
                 this.label_Backup_ExpireError.Visibility = Visibility.Hidden;
             }
             else
@@ -499,6 +534,7 @@ namespace ES_BackupManager
             this.textBox_Backup_Template.IsEnabled = false;
             this.radioBtn_Backup_Full.IsEnabled = false;
             this.radioBtn_Backup_Diff.IsEnabled = false;
+            this.radioBtn_Backup_Increm.IsEnabled = false;
             this.radioBtn_Backup_Compress.IsEnabled = false;
             this.radioBtn_Backup_NoCompress.IsEnabled = false;
             this.textBox_Backup_Source.IsEnabled = false;
@@ -585,5 +621,6 @@ namespace ES_BackupManager
             this.dateTimePicker_Log_Time.IsEnabled = false;
         }
         #endregion
+
     }
 }
