@@ -139,30 +139,26 @@
                                             <GroupBox x:Name="groupBox_Template_Source" Header="Source Path(s)" Margin="10,10,10,0" VerticalAlignment="Top" Height="145">
                                                 <Grid>
                                                     <xctk:WatermarkTextBox x:Name="textBox_Template_Source" Height="23" Margin="10,30,255,0" TextWrapping="Wrap" VerticalAlignment="Top" Watermark="Source path"/>
-                                                    <ListView x:Name="listView_Template_Source" Height="103" Margin="0,10,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="240">
-                                                        <ListView.View>
-                                                            <GridView>
-                                                                <GridViewColumn/>
-                                                            </GridView>
-                                                        </ListView.View>
-                                                    </ListView>
-                                                    <Button x:Name="btn_Template_SourceAdd" Content="Add" HorizontalAlignment="Left" Margin="10,93,0,0" VerticalAlignment="Top" Width="75"/>
-                                                    <Button x:Name="btn_Template_SourceRemove" Content="Remove" HorizontalAlignment="Left" Margin="90,93,0,0" VerticalAlignment="Top" Width="75"/>
+                                                    <DataGrid x:Name="dataGrid_Template_Source" Height="103" Margin="0,10,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="240" AutoGenerateColumns="False">
+                                                        <DataGrid.Columns>
+                                                            <DataGridTextColumn Header="Path Value" Width="*" Binding="{Binding Value}"/>
+                                                        </DataGrid.Columns>
+                                                    </DataGrid>
+                                                    <Button x:Name="btn_Template_SourceAdd" Content="Add" HorizontalAlignment="Left" Margin="10,93,0,0" VerticalAlignment="Top" Width="75" Click="btn_Template_SourceAdd_Click"/>
+                                                    <Button x:Name="btn_Template_SourceRemove" Content="Remove" HorizontalAlignment="Left" Margin="90,93,0,0" VerticalAlignment="Top" Width="75" Click="btn_Template_SourceRemove_Click"/>
                                                 </Grid>
                                             </GroupBox>
                                             <GroupBox x:Name="groupBox_Template_Destination" Header="Source Destination(s)" Margin="10,160,10,0" VerticalAlignment="Top" Height="145">
                                                 <Grid>
                                                     <xctk:WatermarkTextBox x:Name="textBox_Template_Dest" Height="23" Margin="75,30,255,0" TextWrapping="Wrap" Watermark="Destination path" VerticalAlignment="Top"/>
-                                                    <ListView x:Name="listView_Template_Destination" HorizontalAlignment="Right" Height="103" Margin="0,10,10,0" VerticalAlignment="Top" Width="240">
-                                                        <ListView.View>
-                                                            <GridView>
-                                                                <GridViewColumn Width="50"/>
-                                                                <GridViewColumn Width="Auto"/>
-                                                            </GridView>
-                                                        </ListView.View>
-                                                    </ListView>
-                                                    <Button x:Name="btn_Template_DestinationAdd" Content="Add" HorizontalAlignment="Left" Margin="10,93,0,0" VerticalAlignment="Top" Width="75"/>
-                                                    <Button x:Name="btn_Template_DestinationRemove" Content="Remove" HorizontalAlignment="Left" Margin="90,93,0,0" VerticalAlignment="Top" Width="75"/>
+                                                    <DataGrid x:Name="dataGrid_Template_Destination" HorizontalAlignment="Right" Height="103" Margin="0,10,10,0" VerticalAlignment="Top" Width="240" AutoGenerateColumns="False">
+                                                        <DataGrid.Columns>
+                                                            <DataGridTextColumn Header="Type" Width="50" Binding="{Binding PathType}"/>
+                                                            <DataGridTextColumn Header="Path Value" Width="*" Binding="{Binding Value}"/>
+                                                        </DataGrid.Columns>
+                                                    </DataGrid>
+                                                    <Button x:Name="btn_Template_DestinationAdd" Content="Add" HorizontalAlignment="Left" Margin="10,93,0,0" VerticalAlignment="Top" Width="75" Click="btn_Template_DestinationAdd_Click"/>
+                                                    <Button x:Name="btn_Template_DestinationRemove" Content="Remove" HorizontalAlignment="Left" Margin="90,93,0,0" VerticalAlignment="Top" Width="75" Click="btn_Template_DestinationRemove_Click"/>
                                                     <ComboBox x:Name="comboBox_Template_DestinationType" Margin="16,31,0,0" SelectedIndex="0" HorizontalAlignment="Left" Width="58" Height="22" VerticalAlignment="Top">
                                                         <ComboBoxItem Content="WIN"/>
                                                         <ComboBoxItem Content="FTP"/>

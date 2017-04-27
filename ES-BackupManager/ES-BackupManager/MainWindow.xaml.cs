@@ -1,4 +1,5 @@
-﻿using ES_BackupManager.ESBackupServerAdminService;
+﻿using ES_BackupManager.AppStruct.Objects;
+using ES_BackupManager.ESBackupServerAdminService;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -30,10 +31,12 @@ namespace ES_BackupManager
         {
             InitializeComponent();
 
-            this._loadGrid(Filter.All,Sort.Asc);
-
+            //this._loadGrid(Filter.All,Sort.Asc);
+            
             //TODO: DEBUG
-            //this.TabControl_Main.IsEnabled = true;            
+            this.TabControl_Main.IsEnabled = true;
+            this.dataGrid_Template_Source.ItemsSource = this._gridTemplateSourceList;
+            this.dataGrid_Template_Destination.ItemsSource = this._gridTemplateDestinationList;
         }
 
         #region Local Properties
@@ -83,8 +86,8 @@ namespace ES_BackupManager
         private BindingList<BackupTemplate> _gridTemplatesList { get; set; } = new BindingList<BackupTemplate>();
         private BindingList<string> _listBoxEmailsList { get; set; } = new BindingList<string>();
 
-        private BindingList<string> _listViewTemplateSource { get; set; } = new BindingList<string>();
-        private BindingList<string> _listViewTemplateDestination { get; set; } = new BindingList<string>();
+        private BindingList<PathInfo> _gridTemplateSourceList { get; set; } = new BindingList<PathInfo>();
+        private BindingList<PathInfo> _gridTemplateDestinationList { get; set; } = new BindingList<PathInfo>();
         #endregion
 
         #region Setup Controls
@@ -165,6 +168,8 @@ namespace ES_BackupManager
             }
             #endregion
             #region BackupTemplates_Tab
+            this.dataGrid_Template_Source.ItemsSource = this._gridTemplateSourceList;
+            this.dataGrid_Template_Destination.ItemsSource = this._gridTemplateDestinationList;
             //TODO: Implement     
             /*
             Configuration config = client.GetConfigurationByClientID(c.ID);
@@ -524,6 +529,22 @@ namespace ES_BackupManager
             BackupTemplate bt = this.dataGrid_BackupTemplates.SelectedItem as BackupTemplate;
             this._loadTemplateInfo(bt);
         }
+        private void btn_Template_SourceAdd_Click(object sender, RoutedEventArgs e)
+        {
+            this._gridTemplateSourceList.Add(new PathInfo(this.textBox_Template_Source.Text));
+        }
+        private void btn_Template_SourceRemove_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void btn_Template_DestinationAdd_Click(object sender, RoutedEventArgs e)
+        {
+            this._gridTemplateDestinationList.Add(new PathInfo(this.textBox_Template_Source.Text,this.comboBox_Template_DestinationType.SelectedIndex));
+        }
+        private void btn_Template_DestinationRemove_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
         private void btn_Template_New_Click(object sender, RoutedEventArgs e)
         {
             this._template_AddMode = true;
@@ -632,11 +653,11 @@ namespace ES_BackupManager
 
             //Source path(s)
             this.textBox_Template_Source.Text = null;
-            this._listViewTemplateSource.Clear();
+            this._gridTemplateSourceList.Clear();
 
             //Destination path(s)
             this.textBox_Template_Dest.Text = null;
-            this._listViewTemplateDestination.Clear();
+            this._gridTemplateDestinationList.Clear();
 
             //Time settings
             this.textBox_Template_CRON.Text = null;
@@ -804,6 +825,6 @@ namespace ES_BackupManager
         }
 
         #endregion
-
+        
     }
 }
