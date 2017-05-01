@@ -59,29 +59,18 @@
                     <DataGridTextColumn Header="Client Name" Binding="{Binding Name}" Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>
-            <TabControl Name="TabControl_Main" Margin="215,10,10,10" IsEnabled="False">
+            <TabControl Name="TabControl_Main" Margin="215,10,10,10" IsEnabled="False" SelectionChanged="TabControl_Main_SelectionChanged">
                 <TabItem Header="Information">
                     <Grid>
-                        <GroupBox Header="Client Details" Margin="10,0" Height="272" VerticalAlignment="Top">
+                        <GroupBox Header="Client Details" Margin="10,0" Height="107" VerticalAlignment="Top">
                             <Grid>
                                 <Label Content="Name:" HorizontalAlignment="Left" Margin="99,10,0,0" VerticalAlignment="Top"/>
                                 <TextBox x:Name="textBox_Client_Name" Height="23" Margin="192,13,289,0" TextWrapping="Wrap" Text="Client name" VerticalAlignment="Top" />
                                 <Label Content="Description:" HorizontalAlignment="Left" Margin="70,38,0,0" VerticalAlignment="Top"/>
                                 <xctk:WatermarkTextBox x:Name="textBox_Client_Description" Height="23" Margin="192,42,289,0" TextWrapping="Wrap" Watermark="Description not set" VerticalAlignment="Top"/>
-                                <GroupBox Header="Client Emails" Height="146" Margin="10,85,10,0" VerticalAlignment="Top">
-                                    <Grid>
-                                        <ListBox x:Name="listBox_Client_Emails" Margin="0,10,10,10" SelectionChanged="listBox_Client_Emails_SelectionChanged" HorizontalAlignment="Right" Width="394"/>
-                                        <xctk:WatermarkTextBox x:Name="textBox_Client_Email" Height="23" Margin="10,35,409,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="textBox_Client_Email_TextChanged" Watermark="Client email"/>
-                                        <Button x:Name="btn_Client_EmailAdd" Content="Add" HorizontalAlignment="Left" Margin="35,94,0,0" VerticalAlignment="Top" Width="75" Click="btn_Client_EmailAdd_Click"/>
-                                        <Button x:Name="btn_Client_EmailEdit" Content="Edit" HorizontalAlignment="Left" Margin="115,94,0,0" VerticalAlignment="Top" Width="75" Click="btn_Client_EmailEdit_Click"/>
-                                        <Button x:Name="btn_Client_EmailRemove" Content="Remove" HorizontalAlignment="Left" Margin="195,94,0,0" VerticalAlignment="Top" Width="75" Click="btn_Client_EmailRemove_Click"/>
-                                        <Label x:Name="label_Client_EmailError" Content="*Email is not in valid format" ToolTip="Example: evostudio@evostudio.com or evo.studio@evostudio.co.uk" HorizontalAlignment="Left" Margin="10,58,0,0" VerticalAlignment="Top" FontSize="10" Foreground="#FFC31616" Visibility="Hidden"/>
-
-                                    </Grid>
-                                </GroupBox>
                             </Grid>
                         </GroupBox>
-                        <GroupBox Header="Client Settings" Margin="10,277,10,84">
+                        <GroupBox Header="Client Settings" Margin="10,112,10,0" Height="197" VerticalAlignment="Top">
                             <Grid>
                                 <Label Content="Status:" HorizontalAlignment="Left" Margin="99,10,0,0" VerticalAlignment="Top"/>
                                 <ComboBox x:Name="comboBox_Client_Status" HorizontalAlignment="Left" Margin="192,14,0,0" VerticalAlignment="Top" Width="250" IsReadOnly="True">
@@ -95,7 +84,7 @@
                                         <xctk:IntegerUpDown x:Name="IntUpDown_Client_StatusRepeat" Margin="194,42,264,0" Height="24" VerticalAlignment="Top" Watermark="Connection refresh interval" />
                                         <Label x:Name="label_Copy" Content="Connection refresh:" HorizontalAlignment="Left" Margin="33,10,0,0" VerticalAlignment="Top"/>
                                         <RadioButton x:Name="radioBtn_Client_ConnDefault" Content="Default" HorizontalAlignment="Left" Margin="194,16,0,0" VerticalAlignment="Top" Checked="radioBtn_Client_ConnDefault_Checked"/>
-                                        <RadioButton x:Name="radioBtn_Client_ConnSet" Content="Customize" HorizontalAlignment="Right" Margin="0,16,585,0" VerticalAlignment="Top" Checked="radioBtn_Client_ConnSet_Checked"/>
+                                        <RadioButton x:Name="radioBtn_Client_ConnSet" Content="Customize" Margin="318,16,0,0" VerticalAlignment="Top" Checked="radioBtn_Client_ConnSet_Checked" HorizontalAlignment="Left" Width="74"/>
                                     </Grid>
                                 </GroupBox>
                             </Grid>
@@ -107,12 +96,12 @@
                 </TabItem>
                 <TabItem Header="Backup Templates">
                     <Grid>
-                        <DataGrid x:Name="dataGrid_BackupTemplates" HorizontalAlignment="Left" Margin="10,10,0,10" Width="200" IsReadOnly="True" AutoGenerateColumns="False" SelectionMode="Single" SelectionChanged="dataGrid_BackupTemplates_SelectionChanged">
+                        <DataGrid x:Name="dataGrid_Templates" HorizontalAlignment="Left" Margin="10,10,0,10" Width="200" IsReadOnly="True" AutoGenerateColumns="False" SelectionMode="Single" SelectionChanged="dataGrid_BackupTemplates_SelectionChanged" Grid.ColumnSpan="2">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Template Name" Binding="{Binding Name}" Width="*"/>
                             </DataGrid.Columns>
                         </DataGrid>
-                        <GroupBox Header="Backup Template Info" Margin="225,10,10,40">
+                        <GroupBox Header="Backup Template Info" Margin="215,10,10,40">
                             <ScrollViewer VerticalScrollBarVisibility="Visible">
                                 <Grid>
                                     <Label Content="Name:" HorizontalAlignment="Left" Margin="99,10,0,0" VerticalAlignment="Top"/>
@@ -138,8 +127,8 @@
                                         <Grid>
                                             <GroupBox x:Name="groupBox_Template_Source" Header="Source Path(s)" Margin="10,10,10,0" VerticalAlignment="Top" Height="145">
                                                 <Grid>
-                                                    <xctk:WatermarkTextBox x:Name="textBox_Template_Source" Height="23" Margin="10,30,255,0" TextWrapping="Wrap" VerticalAlignment="Top" Watermark="Source path"/>
-                                                    <DataGrid x:Name="dataGrid_Template_Source" Height="103" Margin="0,10,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="240" AutoGenerateColumns="False">
+                                                    <xctk:WatermarkTextBox x:Name="textBox_Template_Source" Height="23" Margin="10,30,270,0" TextWrapping="Wrap" VerticalAlignment="Top" Watermark="Source path"/>
+                                                    <DataGrid x:Name="dataGrid_Template_Source" Height="103" Margin="0,10,10,0" VerticalAlignment="Top" AutoGenerateColumns="False" HorizontalAlignment="Right" Width="255">
                                                         <DataGrid.Columns>
                                                             <DataGridTextColumn Header="Path Value" Width="*" Binding="{Binding Value}"/>
                                                         </DataGrid.Columns>
@@ -150,10 +139,10 @@
                                             </GroupBox>
                                             <GroupBox x:Name="groupBox_Template_Destination" Header="Source Destination(s)" Margin="10,160,10,0" VerticalAlignment="Top" Height="145">
                                                 <Grid>
-                                                    <xctk:WatermarkTextBox x:Name="textBox_Template_Dest" Height="23" Margin="75,30,255,0" TextWrapping="Wrap" Watermark="Destination path" VerticalAlignment="Top"/>
-                                                    <DataGrid x:Name="dataGrid_Template_Destination" HorizontalAlignment="Right" Height="103" Margin="0,10,10,0" VerticalAlignment="Top" Width="240" AutoGenerateColumns="False">
+                                                    <xctk:WatermarkTextBox x:Name="textBox_Template_Dest" Height="23" Margin="75,30,270,0" TextWrapping="Wrap" Watermark="Destination path" VerticalAlignment="Top"/>
+                                                    <DataGrid x:Name="dataGrid_Template_Destination" Height="103" Margin="0,10,10,0" VerticalAlignment="Top" AutoGenerateColumns="False" HorizontalAlignment="Right" Width="255">
                                                         <DataGrid.Columns>
-                                                            <DataGridTextColumn Header="Type" Width="50" Binding="{Binding PathType}"/>
+                                                            <DataGridTextColumn Header="Type" Width="50" Binding="{Binding Type}"/>
                                                             <DataGridTextColumn Header="Path Value" Width="*" Binding="{Binding Value}"/>
                                                         </DataGrid.Columns>
                                                     </DataGrid>
@@ -169,7 +158,7 @@
 
                                         </Grid>
                                     </GroupBox>
-                                    <GroupBox Name="groupBox_Template_Time" Header="Time Settings" Height="140" Margin="10,665,10,0" VerticalAlignment="Top">
+                                    <GroupBox Name="groupBox_Template_Time" Header="Time Settings" Height="140" Margin="10,642,10,0" VerticalAlignment="Top">
                                         <Grid>
                                             <Label Content="CRON Value:" HorizontalAlignment="Left" Margin="40,10,0,0" VerticalAlignment="Top"/>
                                             <xctk:WatermarkTextBox x:Name="textBox_Template_CRON" Margin="182,12,67,0" Watermark="Type in CRON format" Height="24" VerticalAlignment="Top"/>
@@ -184,7 +173,7 @@
                                             <Label x:Name= "label_Template_ExpireError" Content = "*" ToolTip = "Date must be higher than current date." Margin = "0,81,38,0" VerticalAlignment = "Top" Foreground = "Red" Visibility = "Hidden" HorizontalAlignment = "Right" Width = "29" />
                                         </Grid>
                                     </GroupBox>
-                                    <GroupBox Name="groupBox_Template_Notification" Header="Notification Settings" Height="76" Margin="10,810,10,0" VerticalAlignment="Top">
+                                    <GroupBox Name="groupBox_Template_Notification" Header="Notification Settings" Height="76" Margin="10,787,10,0" VerticalAlignment="Top">
                                         <Grid>
                                             <RadioButton x:Name="radioBtn_Template_NotifEnable" Content="Enabled" HorizontalAlignment="Left" Margin="60,10,0,0" Height="21" VerticalAlignment="Top"/>
                                             <RadioButton x:Name="radioBtn_Template_NotifDisable" Content="Disabled" HorizontalAlignment="Left" Margin="170,10,0,0" Height="21" VerticalAlignment="Top" IsChecked="True"/>
@@ -192,26 +181,25 @@
 
                                         </Grid>
                                     </GroupBox>
-                                    <GroupBox x:Name="groupBox" Header="Email Report Settings" Margin="10,891,10,368">
+                                    <GroupBox x:Name="groupBox" Header="Email Report Settings" Margin="10,868,10,391">
                                         <Grid>
 
                                         </Grid>
                                     </GroupBox>
-                                    <GroupBox x:Name="groupBox_Template_Exception" Header="Exception Settings" Margin="10,538,10,0" VerticalAlignment="Top" Height="122">
+                                    <GroupBox x:Name="groupBox_Template_Exception" Header="Exception Settings" Margin="10,538,10,0" VerticalAlignment="Top" Height="99">
                                         <Grid>
-                                            <RadioButton x:Name="radioBtn_Template_Ignore" Content="Ignore" HorizontalAlignment="Left" Margin="73,41,0,0" VerticalAlignment="Top" Checked="radioBtn_Template_Ignore_Checked"/>
-                                            <RadioButton x:Name="radioBtn_Template_Only" Content="Only" HorizontalAlignment="Left" Margin="73,69,0,0" VerticalAlignment="Top" Checked="radioBtn_Template_Only_Checked"/>
-                                            <xctk:WatermarkTextBox x:Name="textBox_Template_Ignore" Height="23" Margin="182,39,63,0" TextWrapping="Wrap" Watermark="Type file pattern" VerticalAlignment="Top"/>
-                                            <xctk:WatermarkTextBox x:Name="textBox_Template_Only" Height="23" Margin="182,67,63,0" TextWrapping="Wrap" Watermark="Type file pattern" VerticalAlignment="Top"/>
+                                            <CheckBox x:Name="checkBox_Template_SearchPattern" Content="Search pattern" HorizontalAlignment="Left" Margin="73,41,0,0" VerticalAlignment="Top" Checked="checkBox_Template_SearchPattern_Checked"/>
+                                            <xctk:WatermarkTextBox x:Name="textBox_Template_SearchPattern" Height="23" Margin="184,36,61,0" TextWrapping="Wrap" Watermark="Type search pattern" VerticalAlignment="Top"/>
                                             <CheckBox x:Name="checkBox_Template_EmptyFolders" Content="Exclude empty folders" HorizontalAlignment="Left" Margin="73,10,0,0" VerticalAlignment="Top"/>
                                         </Grid>
                                     </GroupBox>
                                 </Grid>
                             </ScrollViewer>
                         </GroupBox>
-                        <Button x:Name="btn_Template_New" Content="New" Margin="225,0,0,15" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="73" Click="btn_Template_New_Click"/>
-                        <Button x:Name="btn_Template_Cancel" Content="Cancel" Margin="0,0,10,15" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Click="btn_Template_Cancel_Click"/>
-                        <Button x:Name="btn_Template_Edit" Content="Edit" Margin="0,0,90,15" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Click="btn_Template_Edit_Click"/>
+                        <Button x:Name="btn_Template_New" Content="New" Margin="215,0,0,15" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="73" Click="btn_Template_New_Click"/>
+                        <Button x:Name="btn_Template_Cancel" Content="Cancel" Margin="0,0,10,15" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Click="btn_Template_Cancel_Click" Grid.Column="1"/>
+                        <Button x:Name="btn_Template_Edit" Content="Edit" Margin="0,0,90,15" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Click="btn_Template_Edit_Click" Grid.Column="1"/>
+                        <Button x:Name="btn_Template_StatusChange" Content="Enable" Margin="293,0,0,15" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="73" Click="btn_Template_StatusChange_Click"/>
                     </Grid>
 
                 </TabItem>
@@ -294,10 +282,10 @@
                                     <ComboBoxItem Content="Warning"/>
                                     <ComboBoxItem Content="Message"/>
                                 </ComboBox>
-                                <GroupBox HorizontalAlignment="Left" Height="36" Margin="10,10,0,0" VerticalAlignment="Top" Width="774">
+                                <GroupBox Height="36" Margin="10,10,10,0" VerticalAlignment="Top">
                                     <Grid>
-                                        <RadioButton Content="Backup" HorizontalAlignment="Left" Margin="243,10,0,0" VerticalAlignment="Top"/>
-                                        <RadioButton Content="Backup Template" HorizontalAlignment="Left" Margin="331,10,0,0" VerticalAlignment="Top"/>
+                                        <RadioButton Content="Backup" Margin="0,10,403,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="57"/>
+                                        <RadioButton Content="Backup Template" Margin="0,10,180,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="109"/>
                                         <RadioButton Content="Client" HorizontalAlignment="Left" Margin="161,10,0,0" VerticalAlignment="Top"/>
                                     </Grid>
                                 </GroupBox>

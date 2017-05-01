@@ -33,6 +33,10 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>
+    </ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -72,7 +76,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="AppStruct\Objects\PathInfo.cs" />
+    <Compile Include="AppStruct\Objects\DestinationPathInfo.cs" />
+    <Compile Include="AppStruct\Objects\SourcePathInfo.cs" />
     <Compile Include="AppStruct\Windows\AdministratorWindow.xaml.cs">
       <DependentUpon>AdministratorWindow.xaml</DependentUpon>
     </Compile>
@@ -118,9 +123,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\ESBackupServerAdminService\ESBackupServerAdminService4.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\ESBackupServerAdminService\ESBackupServerAdminService5.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\ESBackupServerAdminService\ES_BackupManager.ESBackupServerAdminService.Backup.datasource">
@@ -178,6 +180,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ImgStatusBanned.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Icon.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\icons\ES.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\icons\icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

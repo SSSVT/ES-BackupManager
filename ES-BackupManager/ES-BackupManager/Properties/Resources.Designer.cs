@@ -63,6 +63,16 @@ namespace ES_BackupManager.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ImgStatusBanned {
+            get {
+                object obj = ResourceManager.GetObject("ImgStatusBanned", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ImgStatusOffline {
             get {
                 object obj = ResourceManager.GetObject("ImgStatusOffline", resourceCulture);

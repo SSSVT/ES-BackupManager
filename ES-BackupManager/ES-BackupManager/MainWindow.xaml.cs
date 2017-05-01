@@ -31,17 +31,16 @@ namespace ES_BackupManager
         {
             InitializeComponent();
 
-            //this._loadGrid(Filter.All,Sort.Asc);
-            
-            //TODO: DEBUG
-            this.TabControl_Main.IsEnabled = true;
-            this.dataGrid_Template_Source.ItemsSource = this._gridTemplateSourceList;
-            this.dataGrid_Template_Destination.ItemsSource = this._gridTemplateDestinationList;
+            this._loadGrid(Filter.All,Sort.Asc);
+
+            //DEBUG
+            //this.TabControl_Main.IsEnabled = true;           
         }
 
         #region Local Properties
-        private bool _emailChangeMode { get; set; }
-
+        private bool TemplatesLoaded { get; set; }
+        private bool BackupsLoaded { get; set; }
+        private bool LogsLoaded { get; set; }        
         private bool template_AddMode;
         private bool _template_AddMode
         {
@@ -61,8 +60,6 @@ namespace ES_BackupManager
                 }
             }
         }
-
-
         private bool template_EditMode;
         private bool _template_EditMode
         {
@@ -86,8 +83,8 @@ namespace ES_BackupManager
         private BindingList<BackupTemplate> _gridTemplatesList { get; set; } = new BindingList<BackupTemplate>();
         private BindingList<string> _listBoxEmailsList { get; set; } = new BindingList<string>();
 
-        private BindingList<PathInfo> _gridTemplateSourceList { get; set; } = new BindingList<PathInfo>();
-        private BindingList<PathInfo> _gridTemplateDestinationList { get; set; } = new BindingList<PathInfo>();
+        private BindingList<SourcePathInfo> _gridTemplateSourceList { get; set; } = new BindingList<SourcePathInfo>();
+        private BindingList<DestinationPathInfo> _gridTemplateDestinationList { get; set; } = new BindingList<DestinationPathInfo>();
         #endregion
 
         #region Setup Controls
@@ -139,95 +136,49 @@ namespace ES_BackupManager
             if (!this.TabControl_Main.IsEnabled)
                 this.TabControl_Main.IsEnabled = true;
 
-            this._gridBackupsList.Clear();
-            this._gridTemplatesList.Clear();
-            this._gridLogsList.Clear();
-            this._listBoxEmailsList.Clear();
-
-            ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
-            #region AboutClient_Tab
-
-            #endregion
-            #region Backups_Tab
-            foreach (Backup item in client.GetBackupsByClientID(c.ID))
-            {
-                this._gridBackupsList.Add(item);
-            }            
-            this.dataGrid_Backups.ItemsSource = this._gridBackupsList;
-            this._backupTab_DisableComponents();
-
-            if (this._gridBackupsList.Count == 0)
-            {
-                this.dataGrid_Backups.SelectedIndex = -1;
-                this.btn_Backup_Edit.IsEnabled = false;
-            }
-            else
-            {
-                this.dataGrid_Backups.SelectedIndex = 0;
-                this.btn_Backup_Edit.IsEnabled = true;
-            }
-            #endregion
-            #region BackupTemplates_Tab
-            this.dataGrid_Template_Source.ItemsSource = this._gridTemplateSourceList;
-            this.dataGrid_Template_Destination.ItemsSource = this._gridTemplateDestinationList;
-            //TODO: Implement     
-            /*
-            Configuration config = client.GetConfigurationByClientID(c.ID);
-
-            foreach (BackupTemplate item in config.Templates)
-            {
-                this._gridTemplatesList.Add(item);
-            }
-
-            if (this._gridTemplatesList.Count == 0)
-            {
-                this.dataGrid_BackupTemplates.SelectedIndex = -1;
-                this.btn_Template_Edit.IsEnabled = false;
-            }
-            else
-            {
-                this.dataGrid_BackupTemplates.SelectedIndex = 0;
-                this.btn_Template_Edit.IsEnabled = true;
-            }
-            */
-            #endregion
-            #region Logs_Tab
-            foreach (Log item in client.GetLogsByClientID(c.ID))
-            {
-                this._gridLogsList.Add(item);
-            }
-            this.dataGrid_Logs.ItemsSource = this._gridLogsList;
-
-            this._logTab_DisableComponents();
-            #endregion
-            #region Logins_Tab
-
-            #endregion
-            #region Settings_Tab
-
-            #endregion
-            client.Close();
+            this.TemplatesLoaded = false;
+            this.BackupsLoaded = false;
+            this.LogsLoaded = false;
         }
         private void comboBox_Main_Filter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             this.comboBox_Main_Sort.IsEnabled = (this.comboBox_Main_Filter.SelectedIndex == 0) ? false : true;
+        }
+        private void TabControl_Main_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
+            Client c = this.dataGrid_Clients.SelectedItem as Client;
+
+            switch (this.TabControl_Main.SelectedIndex)
+            {
+                case 1:
+                    this.LoadTemplatesData(c);
+                    break;
+                case 2:
+                    this.LoadBackupsData(c);
+                    break;
+                case 3:
+                    this.LoadLogsData(c);
+                    break;
+                default:
+                    break;
+            }
+            client.Close();
+
         }
         #endregion
 
         #region Client Controls        
         private void dataGrid_Clients_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (!this.TabControl_Main.IsEnabled)
-                this.TabControl_Main.IsEnabled = true;
-
-            if (!this.btn_Client_Edit.IsEnabled)
-                this.btn_Client_Edit.IsEnabled = true;
+            this.TabControl_Main.IsEnabled = true;            
+            this.btn_Client_Edit.IsEnabled = true;
 
             Client c = this.dataGrid_Clients.SelectedItem as Client;  
             if(c != null)
             {
                 this._loadComponents(c);
-                this._loadClientInfo(c);
+                this.LoadClientInfo(c);
             }                                  
         }
 
@@ -235,31 +186,18 @@ namespace ES_BackupManager
         {
             this.textBox_Client_Name.IsEnabled = false;
             this.textBox_Client_Description.IsEnabled = false;
-            this.textBox_Client_Email.IsEnabled = false;
-            this.btn_Client_EmailAdd.IsEnabled = false;
-            this.btn_Client_EmailEdit.IsEnabled = false;
-            this.btn_Client_EmailRemove.IsEnabled = false;
             this.btn_Client_Cancel.IsEnabled = false;
             this.btn_Client_Save.IsEnabled = false;
-            this.listBox_Client_Emails.IsEnabled = false;
-            this.label_Client_EmailError.Visibility = Visibility.Hidden;
-            this.textBox_Client_Email.Text = "";
             this.comboBox_Client_Status.IsEnabled = false;
             this.groupBox_Client_Connection.IsEnabled = false;     
         }
-        private void _loadClientInfo(Client c)
+        private void LoadClientInfo(Client c)
         {
             ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
             this._clientTab_DisableComponents();
 
             this.textBox_Client_Name.Text = c.Name;
             this.textBox_Client_Description.Text = c.Description;
-
-            //foreach (string item in this._convertEmailsToListBox(c.Emails))
-            //{
-            //    this._listBoxEmailsList.Add(item);
-            //}
-            //this.listBox_Client_Emails.ItemsSource = this._listBoxEmailsList;
 
             switch (c.Status)
             {
@@ -279,7 +217,7 @@ namespace ES_BackupManager
 
             if (c.StatusReportEnabled)
             {
-                this.radioBtn_Client_ConnSet.IsChecked = true;
+                this.radioBtn_Client_ConnSet.IsChecked = true;                
                 this.IntUpDown_Client_StatusRepeat.Value = c.ReportInterval;
 
             }
@@ -287,8 +225,7 @@ namespace ES_BackupManager
             {
                 this.radioBtn_Client_ConnDefault.IsChecked = true;
             }           
-            
-            //TODO: Connection Repeat Info
+                        
             
 
             client.Close();
@@ -304,12 +241,11 @@ namespace ES_BackupManager
             c.Status = Convert.ToByte(this.comboBox_Client_Status.SelectedIndex);
             c.StatusReportEnabled = (bool)this.radioBtn_Client_ConnSet.IsChecked ? true : false ;
             if (c.StatusReportEnabled)
-                c.ReportInterval = this.IntUpDown_Client_StatusRepeat.Value;
+                c.ReportInterval = (int)this.IntUpDown_Client_StatusRepeat.Value;
+                
 
             this._clientTab_DisableComponents();
-            this.btn_Client_Edit.IsEnabled = true;
-
-            //TODO: Connection Repeat Info
+            this.btn_Client_Edit.IsEnabled = true;            
 
             client.UpdateClient(c);
             client.Close();
@@ -319,15 +255,12 @@ namespace ES_BackupManager
         {
             Client client = this.dataGrid_Clients.SelectedItem as Client;
             this._listBoxEmailsList.Clear();
-            this._loadClientInfo(client);
+            this.LoadClientInfo(client);
         }
         private void btn_Client_Edit_Click(object sender, RoutedEventArgs e)
-        {
-            //TODO: Connection Repeat Info
+        {            
             this.textBox_Client_Name.IsEnabled = true;
             this.textBox_Client_Description.IsEnabled = true;
-            this.textBox_Client_Email.IsEnabled = true;
-            this.listBox_Client_Emails.IsEnabled = true;
             this.comboBox_Client_Status.IsEnabled = true;
             this.groupBox_Client_Connection.IsEnabled = true;
 
@@ -344,206 +277,81 @@ namespace ES_BackupManager
         {
             this.IntUpDown_Client_StatusRepeat.IsEnabled = false;
             this.IntUpDown_Client_StatusRepeat.Value = null;
-        }
-        #region Email Controls
-        private List<string> _convertEmailsToListBox(string emails)
-        {
-            List<string> list = new List<string>();
-            foreach (string item in emails.Split(';'))
-            {
-                list.Add(item);
-            }
-            return list;
-        }
-        private string _convertEmailsFromListBox(BindingList<string> emails)
-        {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < emails.Count; i++)
-            {
-                sb.Append(emails[i]+';');
-            }
-            sb.Length--;
-            return sb.ToString();
-        }
-        private void btn_Client_EmailAdd_Click(object sender, RoutedEventArgs e)
-        {
-            if (!this._emailChangeMode)
-            {
-                string emailAddress = this.textBox_Client_Email.Text;
-
-                if (this._isEmailValid(emailAddress))
-                {
-                    this._listBoxEmailsList.Add(emailAddress);
-                    this._emailChangeState(2);
-                    this.btn_Client_EmailAdd.IsEnabled = false;
-                }
-            }
-            else if (this._emailChangeMode)
-            {
-                this._listBoxEmailsList[this.listBox_Client_Emails.SelectedIndex] = this.textBox_Client_Email.Text;
-
-                this._emailChangeState(2);
-                this.btn_Client_EmailAdd.IsEnabled = false;
-                this.btn_Client_EmailEdit.IsEnabled = false;
-                this.btn_Client_EmailRemove.IsEnabled = false;
-            }
-        }
-
-        private void btn_Client_EmailEdit_Click(object sender, RoutedEventArgs e)
-        {
-            if(this.listBox_Client_Emails.SelectedIndex >= 0)
-            {
-                if (!this._emailChangeMode)
-                {
-                    this._emailChangeState(1);
-                    this.textBox_Client_Email.Text = this.listBox_Client_Emails.SelectedItem as string;
-                }
-                else if (this._emailChangeMode)
-                {
-                    this._emailChangeState(2);
-                    this.btn_Client_EmailAdd.IsEnabled = false;
-                }
-            }
         }        
-        
-        private void _emailChangeState(int code)
+        #endregion
+        #region Backup Template Controls
+        private void LoadTemplatesData(Client c)
         {
-            if(code == 1)
+            if (!this.TemplatesLoaded)
             {
-                this._emailChangeMode = true;
-                this.btn_Client_EmailAdd.Content = "Save";
-                this.btn_Client_EmailAdd.IsEnabled = true;
-                this.btn_Client_EmailEdit.Content = "Cancel";
-                this.btn_Client_EmailRemove.IsEnabled = false;
+                if (this._gridTemplatesList.Count > 0)
+                    this._gridTemplatesList.Clear();
+
+            ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
+
+            this.dataGrid_Template_Source.ItemsSource = this._gridTemplateSourceList;
+            this.dataGrid_Template_Destination.ItemsSource = this._gridTemplateDestinationList;
+            //TODO: Implement                 
+            Configuration config = client.GetConfigurationByClientID(c.ID);
+
+            foreach (BackupTemplate item in config.Templates)
+            {
+                this._gridTemplatesList.Add(item);
             }
-            else if (code == 2)
-            {
-                this._emailChangeMode = false;
-                this.btn_Client_EmailAdd.Content = "Add";
-                this.btn_Client_EmailEdit.Content = "Edit";                                
-                this.btn_Client_EmailRemove.IsEnabled = true;
-                this.textBox_Client_Email.Text = "";
-                this.textBox_Client_Email.Watermark = "Client email";
-            }
-        }
-        private void btn_Client_EmailRemove_Click(object sender, RoutedEventArgs e)
-        {
-            int index = this.listBox_Client_Emails.SelectedIndex;            
+            this.dataGrid_Templates.ItemsSource = this._gridTemplatesList;
+            this._templateTab_DisableComponents();
 
-            if(this.listBox_Client_Emails.SelectedIndex == 0)
+            if (this._gridTemplatesList.Count == 0)
             {
-                this.btn_Client_EmailEdit.IsEnabled = false;
-                this.btn_Client_EmailRemove.IsEnabled = false;
-            }
-
-            if(this.listBox_Client_Emails.SelectedIndex != -1)
-            {
-                this._listBoxEmailsList.RemoveAt(index);
-                this.listBox_Client_Emails.SelectedIndex = index - 1;
-            }            
-        }
-        private void textBox_Client_Email_TextChanged(object sender, TextChangedEventArgs e)
-        {            
-            if(!this._emailChangeMode)
-            {
-                if (!this.btn_Client_EmailAdd.IsEnabled)
-                    this.btn_Client_EmailAdd.IsEnabled = true;
-
-                this.btn_Client_EmailEdit.IsEnabled = false;
-                this.btn_Client_EmailRemove.IsEnabled = false;
-
-                this.listBox_Client_Emails.SelectedIndex = -1;
-            }
-        }
-        private void listBox_Client_Emails_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if(this.listBox_Client_Emails.SelectedIndex >= 0)
-            {
-                if (this._emailChangeMode)
-                {
-                    this._emailChangeMode = false;
-                    this.btn_Client_EmailAdd.Content = "Add";
-                    this.btn_Client_EmailEdit.Content = "Edit";
-                    this.btn_Client_EmailRemove.IsEnabled = true;
-                }
-
-                if (this.btn_Client_EmailAdd.IsEnabled)
-                    this.btn_Client_EmailAdd.IsEnabled = false;
-
-                if (!this.btn_Client_EmailEdit.IsEnabled)
-                    this.btn_Client_EmailEdit.IsEnabled = true;
-
-                if (!this.btn_Client_EmailRemove.IsEnabled)
-                    this.btn_Client_EmailRemove.IsEnabled = true;
-            }            
-        }
-        private bool _isEmailValid(string emailAddress)
-        {
-            if (!this._isEmailRegistered(emailAddress))
-            {
-                this.label_Client_EmailError.Content = "*Email is already registred";
-                this.label_Client_EmailError.ToolTip = "Please add email which is not in the list";
-                this.label_Client_EmailError.Visibility = Visibility.Visible;
-                return false;
-            }
-            else if (Regex.IsMatch(emailAddress, @"^[a-z0-9]+(\.?[a-z0-9]+)*@([a-z0-9]+\.)+[a-z]{2,}$"))
-            {
-                this.label_Client_EmailError.Visibility = Visibility.Hidden;
-                return true;
+                this.dataGrid_Templates.SelectedIndex = -1;
+                this.btn_Template_Edit.IsEnabled = false;
             }
             else
             {
-                this.label_Client_EmailError.Content = "*Email is not in valid format";
-                this.label_Client_EmailError.ToolTip = "Example: evostudio@evostudio.com or evo.studio@evostudio.co.uk";
-                this.label_Client_EmailError.Visibility = Visibility.Visible;
-                return false;
+                this.dataGrid_Templates.SelectedIndex = 0;
+                this.btn_Template_Edit.IsEnabled = true;
             }
-        }
-        private bool _isEmailRegistered(string emailAdress)
-        {
-            foreach (string item in this._listBoxEmailsList)
-            {
-                if (emailAdress == item)
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-        #endregion
 
-        #endregion
-        #region Backup Template Controls
-        private void radioBtn_Template_Ignore_Checked(object sender, RoutedEventArgs e)
-        {
-            this.textBox_Template_Ignore.IsEnabled = true;
-            this.textBox_Template_Only.IsEnabled = false;
-        }
-        private void radioBtn_Template_Only_Checked(object sender, RoutedEventArgs e)
-        {
-            this.textBox_Template_Ignore.IsEnabled = false;
-            this.textBox_Template_Only.IsEnabled = true;
+                this.TemplatesLoaded = true;
+
+            client.Close();
+            }
         }
         private void dataGrid_BackupTemplates_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            BackupTemplate bt = this.dataGrid_BackupTemplates.SelectedItem as BackupTemplate;
+            BackupTemplate bt = this.dataGrid_Templates.SelectedItem as BackupTemplate;
             this._loadTemplateInfo(bt);
+            e.Handled = true;
         }
         private void btn_Template_SourceAdd_Click(object sender, RoutedEventArgs e)
         {
-            this._gridTemplateSourceList.Add(new PathInfo(this.textBox_Template_Source.Text));
+            string path = this.textBox_Template_Source.Text;            
+            if (this._template_IsPathValid(path))
+            {
+                this._gridTemplateSourceList.Add(new SourcePathInfo(path));
+                this.textBox_Template_Source.Text = "";
+            }
         }
         private void btn_Template_SourceRemove_Click(object sender, RoutedEventArgs e)
         {
-
+            int index = this.dataGrid_Template_Source.SelectedIndex;
+            if (index >= 0)
+                this._gridTemplateSourceList.RemoveAt(index);
         }
         private void btn_Template_DestinationAdd_Click(object sender, RoutedEventArgs e)
         {
-            this._gridTemplateDestinationList.Add(new PathInfo(this.textBox_Template_Source.Text,this.comboBox_Template_DestinationType.SelectedIndex));
+            string path = this.textBox_Template_Dest.Text;
+            if (this._template_IsPathValid(path))
+            {                
+                this._gridTemplateDestinationList.Add(new DestinationPathInfo(path, Convert.ToByte(this.comboBox_Template_DestinationType.SelectedIndex)));
+                this.textBox_Template_Source.Text = "";
+            }
         }
         private void btn_Template_DestinationRemove_Click(object sender, RoutedEventArgs e)
         {
-
+            int index = this.dataGrid_Template_Destination.SelectedIndex;
+            if (index >= 0)
+                this._gridTemplateDestinationList.RemoveAt(index);
         }
         private void btn_Template_New_Click(object sender, RoutedEventArgs e)
         {
@@ -554,20 +362,105 @@ namespace ES_BackupManager
         }
         private void btn_Template_Edit_Click(object sender, RoutedEventArgs e)
         {
+            ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
+
             if (this._template_AddMode)
             {
+                Client c = this.dataGrid_Clients.SelectedItem as Client;
+
+                BackupTemplate template = new BackupTemplate();
+                template.IDClient = c.ID;
+                template.Name = this.textBox_Template_Name.Text;
+                template.Description = this.textBox_Template_Description.Text;
+
+                template.BackupType = this._template_GetTemplateType();
+                template.Compression = this.radioBtn_Template_Compress.IsChecked == true ? true: false;
+                                
+                List<BackupTemplatePath> paths = new List<BackupTemplatePath>();
+                foreach (SourcePathInfo source in this._gridTemplateSourceList)
+                {
+                    foreach (DestinationPathInfo dest in this._gridTemplateDestinationList)
+                    {
+                        paths.Add(new BackupTemplatePath()
+                        {
+                            Source = source.Value,
+                            Destination = dest.Value,
+                            PathOrder = Convert.ToUInt16(paths.Count),
+                            TargetType = dest.TypeByte
+                        });
+                    }
+                }
+                template.Paths = paths.ToArray();
+
+                template.BackupEmptyDirectories = this.checkBox_Template_EmptyFolders.IsChecked == true ? true : false ;
+
+                if (this.checkBox_Template_SearchPattern.IsChecked == true)
+                    template.SearchPattern = this.textBox_Template_SearchPattern.Text;
+                else
+                    template.SearchPattern = "*";
+
+                template.CRONRepeatInterval = this.textBox_Template_CRON.Text;
+                if(this.dateTimePicker_Template_Expire.Value != null)
+                    template.DaysToExpiration = (uint?)((DateTime)this.dateTimePicker_Template_Expire.Value - DateTime.Now).Days;
+
+                template.IsNotificationEnabled = this.radioBtn_Template_NotifEnable.IsChecked == true ? true :false;
+
                 this._template_AddMode = false;
+                client.SaveTemplate(template);
+                this._gridTemplatesList.Add(template);
+                this.dataGrid_Templates.SelectedIndex = this.dataGrid_Templates.Items.Count - 1;               
             }
 
             if (this._template_EditMode)
             {
+                //TODO: Edit mode
+                BackupTemplate template = this.dataGrid_Templates.SelectedItem as BackupTemplate;
+
+                template.Name = this.textBox_Template_Name.Text;
+                template.Description = this.textBox_Template_Description.Text;
+
+                template.BackupType = this._template_GetTemplateType();
+                template.Compression = this.radioBtn_Template_Compress.IsChecked == true ? true : false;
+
+                List<BackupTemplatePath> paths = new List<BackupTemplatePath>();
+                foreach (SourcePathInfo source in this._gridTemplateSourceList)
+                {
+                    foreach (DestinationPathInfo dest in this._gridTemplateDestinationList)
+                    {
+                        paths.Add(new BackupTemplatePath()
+                        {
+                            Source = source.Value,
+                            Destination = dest.Value,
+                            PathOrder = Convert.ToUInt16(paths.Count),
+                            TargetType = dest.TypeByte
+                        });
+                    }
+                }
+                template.Paths = paths.ToArray();
+
+                template.BackupEmptyDirectories = this.checkBox_Template_EmptyFolders.IsChecked == true ? true : false;
+
+                if (this.checkBox_Template_SearchPattern.IsChecked == true)
+                    template.SearchPattern = this.textBox_Template_SearchPattern.Text;
+                else
+                    template.SearchPattern = "*";
+
+                template.CRONRepeatInterval = this.textBox_Template_CRON.Text;
+                if (this.dateTimePicker_Template_Expire.Value != null)
+                    template.DaysToExpiration = (uint?)((DateTime)this.dateTimePicker_Template_Expire.Value - DateTime.Now).Days;
+
+                template.IsNotificationEnabled = this.radioBtn_Template_NotifEnable.IsChecked == true ? true : false;
+
+                client.SaveTemplate(template);
                 this._template_EditMode = false;
             }
+
+            client.Close();
         }
 
         private void btn_Template_Cancel_Click(object sender, RoutedEventArgs e)
         {
-            BackupTemplate bt = this.dataGrid_BackupTemplates.SelectedItem as BackupTemplate;
+            BackupTemplate bt = this.dataGrid_Templates.SelectedItem as BackupTemplate;
 
             if (this._template_AddMode)
                 this._template_AddMode = false;
@@ -602,6 +495,10 @@ namespace ES_BackupManager
             this.groupBox_Template_Time.IsEnabled = false;
             //this.checkBox_Template_TimeBox.IsEnabled = false;            
             this.groupBox_Template_Notification.IsEnabled = false;
+
+            this.btn_Template_New.IsEnabled = true;
+            this.btn_Template_StatusChange.IsEnabled = false;
+            this.btn_Template_Edit.Content = "Edit";
         }
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
         {
@@ -611,22 +508,51 @@ namespace ES_BackupManager
         private void _loadTemplateInfo(BackupTemplate bt)
         {
             this._templateTab_DisableComponents();
+            this._gridTemplateSourceList.Clear();
+            this._gridTemplateDestinationList.Clear();
 
             if (bt != null)
             {                
                 this.textBox_Template_Name.Text = bt.Name;
                 this.textBox_Template_Description.Text = bt.Description;
-
-                //TODO: Rework to Incremental
-                this.radioBtn_Template_Full.IsChecked = bt.Type;
+                
+                switch (bt.BackupType)
+                {
+                    case 0:
+                        this.radioBtn_Template_Full.IsChecked = true;
+                        break;
+                    case 1:
+                        this.radioBtn_Template_Diff.IsChecked = true;
+                        break;
+                    case 2:
+                        this.radioBtn_Template_Increm.IsChecked = true;
+                        break;
+                    default:
+                        break;
+                }
 
                 this.radioBtn_Template_Compress.IsChecked = bt.Compression;
+                                
+                if(bt.Paths != null)
+                {               
+                    foreach (BackupTemplatePath item in bt.Paths)
+                    {           
+                        if(this._gridTemplateSourceList.Where(x => x.Value == item.Source).FirstOrDefault() == null)
+                            this._gridTemplateSourceList.Add(new SourcePathInfo(item.Source));
 
-                //TODO: Get templates source path(s)
+                        this.dataGrid_Template_Source.ItemsSource = this._gridTemplateSourceList;
 
-                //TODO: Get templates destination path(s)
+                        this._gridTemplateDestinationList.Add(new DestinationPathInfo(item.Destination, item.TargetType));
+                        this.dataGrid_Template_Destination.ItemsSource = this._gridTemplateDestinationList;
+                    }
+                }
 
-                //TODO: Get templates exceptions
+                this.checkBox_Template_EmptyFolders.IsChecked = bt.BackupEmptyDirectories;
+                if (!string.IsNullOrWhiteSpace(bt.SearchPattern))
+                {
+                    this.checkBox_Template_SearchPattern.IsChecked = true;
+                    this.textBox_Template_SearchPattern.Text = bt.SearchPattern;
+                }
 
                 this.textBox_Template_CRON.Text = bt.CRONRepeatInterval;
                 if (bt.DaysToExpiration != null)
@@ -635,9 +561,41 @@ namespace ES_BackupManager
                     this.dateTimePicker_Template_Expire.Value = null;
 
                 this.radioBtn_Template_NotifEnable.IsChecked = bt.IsNotificationEnabled;
+
+                this.btn_Template_StatusChange.Content = bt.Enabled ? "Disable" : "Enable";
+                this.btn_Template_StatusChange.IsEnabled = true;
             }
             else
                 this._templateTab_SetDefaultValues();
+        }
+        private void checkBox_Template_SearchPattern_Checked(object sender, RoutedEventArgs e)
+        {
+            if (this.checkBox_Template_SearchPattern.IsChecked == true)
+                this.textBox_Template_SearchPattern.IsEnabled = true;
+            else
+                this.textBox_Template_SearchPattern.IsEnabled = false;
+        }
+
+        private void btn_Template_StatusChange_Click(object sender, RoutedEventArgs e)
+        {
+            ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
+
+            BackupTemplate template = this.dataGrid_Templates.SelectedItem as BackupTemplate;
+            
+            if(template.Enabled)
+            {
+                this.btn_Template_StatusChange.Content = "Enable";
+                template.Enabled = false;
+                client.SetTemplateStatus(template.ID, false);
+            }
+            else if(!template.Enabled)
+            {             
+                this.btn_Template_StatusChange.Content = "Disable";
+                template.Enabled = true;
+                client.SetTemplateStatus(template.ID, true);
+            }                        
+
+            client.Close();
         }
         private void _templateTab_SetDefaultValues()
         {
@@ -668,11 +626,55 @@ namespace ES_BackupManager
 
             //Exception settings
             this.checkBox_Template_EmptyFolders.IsChecked = false;
-            this.textBox_Template_Ignore.Text = "";
-            this.textBox_Template_Only.Text = "";
+            this.checkBox_Template_SearchPattern.IsChecked = false;
+            this.textBox_Template_SearchPattern.Text = "";
+        }
+        private byte _template_GetTemplateType()
+        {
+            if (this.radioBtn_Template_Full.IsChecked == true)
+                return 0;
+            else if (this.radioBtn_Template_Diff.IsChecked == true)
+                return 1;
+            else
+                return 2;
+        }        
+        private bool _template_IsPathValid(string path)
+        {
+            //TODO: Implement Regex validation
+            return true;
         }
         #endregion
         #region Backup Controls
+        private void LoadBackupsData(Client c)
+        {
+            if (!this.BackupsLoaded)
+            {           
+                if(this._gridBackupsList.Count > 0)
+                    this._gridBackupsList.Clear();
+
+            ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
+
+            foreach (Backup item in client.GetBackupsByClientID(c.ID))
+            {
+                this._gridBackupsList.Add(item);
+            }
+            this.dataGrid_Backups.ItemsSource = this._gridBackupsList;
+            this._backupTab_DisableComponents();
+
+            if (this._gridBackupsList.Count == 0)
+            {
+                this.dataGrid_Backups.SelectedIndex = -1;
+                this.btn_Backup_Edit.IsEnabled = false;
+            }
+            else
+            {
+                this.dataGrid_Backups.SelectedIndex = 0;
+                this.btn_Backup_Edit.IsEnabled = true;
+            }
+
+            client.Close();
+            }
+        }
         private void _loadBackupInfo(Backup b)
         {            
             this._backupTab_DisableComponents();
@@ -684,35 +686,46 @@ namespace ES_BackupManager
                 this.textBox_Backup_Description.Text = b.Description;
                 
                 //this.textBox_Backup_Template.Text = client.GetTemplateByID(Convert.ToInt32(b.IDBackupTemplate)).Name;
-
-                if(b.BaseFullBackupID != null)
-                    this.textBox_Backup_BaseBackup.Text = client.GetBackupByID((long)b.BaseFullBackupID).Name;
+               
+                
+                if(b.BaseBackupID != null)
+                    this.textBox_Backup_BaseBackup.Text = client.GetBackupByID((long)b.BaseBackupID).Name;
 
                 if (b.Compressed)
                     this.radioBtn_Backup_Compress.IsChecked = true;
 
-                if (b.IsDifferential)
-                    this.radioBtn_Backup_Diff.IsChecked = true;
-                else
-                    this.radioBtn_Backup_Full.IsChecked = true;
+                switch (b.BackupType)
+                {
+                    case 0:
+                        this.radioBtn_Backup_Full.IsChecked = true;
+                        break;
+                    case 1:
+                        this.radioBtn_Backup_Diff.IsChecked = true;
+                        break;
+                    case 2:
+                        this.radioBtn_Backup_Increm.IsChecked = true;
+                        break;
+                    default:
+                        break;
+                }
 
                 this.textBox_Backup_Source.Text = b.Source;
                 this.textBox_Backup_Dest.Text = b.Destination;
 
-                if (b.Expiration == null)
+                if (b.UTCExpiration == null)
                 {
                     this.dateTimePicker_Backup_Expire.Watermark = "Expire date is not set.";
                     this.dateTimePicker_Backup_Expire.Value = null;
                 }
                 else
-                    this.dateTimePicker_Backup_Expire.Value = b.Expiration;
+                    this.dateTimePicker_Backup_Expire.Value = b.UTCExpiration;
 
-                this.dateTimePicker_Backup_Start.Value = b.Start;
+                this.dateTimePicker_Backup_Start.Value = b.UTCStart;
 
-                if (b.End == null)
+                if (b.UTCEnd == null)
                     this.dateTimePicker_Backup_End.Watermark = "End time is not set.";
                 else
-                    this.dateTimePicker_Backup_End.Value = b.End;
+                    this.dateTimePicker_Backup_End.Value = b.UTCEnd;
 
                 if (this.btn_Backup_Edit.IsEnabled == false)
                     this.btn_Backup_Edit.IsEnabled = true;
@@ -728,6 +741,7 @@ namespace ES_BackupManager
         {
             Backup b = this.dataGrid_Backups.SelectedItem as Backup;
             this._loadBackupInfo(b);
+            e.Handled = true;
         }
         private void _backupTab_DisableComponents()
         {
@@ -800,7 +814,7 @@ namespace ES_BackupManager
 
                 backup.Name = this.textBox_Backup_Name.Text;
                 backup.Description = this.textBox_Backup_Description.Text;
-                backup.Expiration = this.dateTimePicker_Backup_Expire.Value;
+                backup.UTCExpiration = this.dateTimePicker_Backup_Expire.Value;
 
                 this._backupTab_DisableComponents();
                 this.btn_Backup_Edit.IsEnabled = true;                
@@ -814,9 +828,27 @@ namespace ES_BackupManager
         private bool _isBackupExpireDateValid(DateTime? date)
         {
             return date.Value > DateTime.Now.Date ? true : false;
-        } 
+        }
         #endregion
         #region Log Controls
+        private void LoadLogsData(Client c)
+        {
+            this._gridLogsList.Clear();
+
+            ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
+
+            //TODO: Implement
+
+            foreach (Log item in client.GetLogsByClientID(c.ID))
+            {
+                this._gridLogsList.Add(item);
+            }
+            this.dataGrid_Logs.ItemsSource = this._gridLogsList;
+
+            this._logTab_DisableComponents();
+
+            client.Close();
+        }
         private void _logTab_DisableComponents()
         {
             this.textBox_Log_BackupName.IsEnabled = false;
@@ -824,7 +856,6 @@ namespace ES_BackupManager
             this.dateTimePicker_Log_Time.IsEnabled = false;
         }
 
-        #endregion
-        
+        #endregion        
     }
 }

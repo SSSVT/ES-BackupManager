@@ -2,7 +2,7 @@
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://localhost:53095/ESBackupServerAdminService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/ESBackupServer.App.Objects.Filters" />
   <xs:import schemaLocation="http://localhost:53095/ESBackupServerAdminService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/ESBackupServer.Database.Objects" />
-  <xs:import schemaLocation="http://localhost:53095/ESBackupServerAdminService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/ESBackupServer.App.Objects" />
+  <xs:import schemaLocation="http://localhost:53095/ESBackupServerAdminService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/ESBackupServer.App.Objects" />
   <xs:element name="GetClients">
     <xs:complexType>
       <xs:sequence>
@@ -102,22 +102,10 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="SaveConfiguration">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/ESBackupServer.App.Objects" minOccurs="0" name="config" nillable="true" type="q10:Configuration" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="SaveConfigurationResponse">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
   <xs:element name="UpdateClient">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/ESBackupServer.Database.Objects" minOccurs="0" name="client" nillable="true" type="q11:Client" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/ESBackupServer.Database.Objects" minOccurs="0" name="client" nillable="true" type="q10:Client" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -141,11 +129,36 @@
   <xs:element name="UpdateBackup">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/ESBackupServer.Database.Objects" minOccurs="0" name="backup" nillable="true" type="q12:Backup" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/ESBackupServer.Database.Objects" minOccurs="0" name="backup" nillable="true" type="q11:Backup" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="UpdateBackupResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveTemplate">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/ESBackupServer.Database.Objects" minOccurs="0" name="template" nillable="true" type="q12:BackupTemplate" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveTemplateResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SetTemplateStatus">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="id" type="xs:long" />
+        <xs:element minOccurs="0" name="IsEnabled" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SetTemplateStatusResponse">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>

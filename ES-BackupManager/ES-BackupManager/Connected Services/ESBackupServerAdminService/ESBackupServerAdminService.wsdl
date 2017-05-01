@@ -6,8 +6,7 @@
       <xsd:import schemaLocation="http://localhost:53095/ESBackupServerAdminService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://localhost:53095/ESBackupServerAdminService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/ESBackupServer.App.Objects.Filters" />
       <xsd:import schemaLocation="http://localhost:53095/ESBackupServerAdminService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/ESBackupServer.Database.Objects" />
-      <xsd:import schemaLocation="http://localhost:53095/ESBackupServerAdminService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/ESBackupServer.App.Objects.Config" />
-      <xsd:import schemaLocation="http://localhost:53095/ESBackupServerAdminService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/ESBackupServer.App.Objects" />
+      <xsd:import schemaLocation="http://localhost:53095/ESBackupServerAdminService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/ESBackupServer.App.Objects" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IESBackupServerAdminService_GetClients_InputMessage">
@@ -52,12 +51,6 @@
   <wsdl:message name="IESBackupServerAdminService_GetTemplateByID_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetTemplateByIDResponse" />
   </wsdl:message>
-  <wsdl:message name="IESBackupServerAdminService_SaveConfiguration_InputMessage">
-    <wsdl:part name="parameters" element="tns:SaveConfiguration" />
-  </wsdl:message>
-  <wsdl:message name="IESBackupServerAdminService_SaveConfiguration_OutputMessage">
-    <wsdl:part name="parameters" element="tns:SaveConfigurationResponse" />
-  </wsdl:message>
   <wsdl:message name="IESBackupServerAdminService_UpdateClient_InputMessage">
     <wsdl:part name="parameters" element="tns:UpdateClient" />
   </wsdl:message>
@@ -75,6 +68,18 @@
   </wsdl:message>
   <wsdl:message name="IESBackupServerAdminService_UpdateBackup_OutputMessage">
     <wsdl:part name="parameters" element="tns:UpdateBackupResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_SaveTemplate_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveTemplate" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_SaveTemplate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveTemplateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_SetTemplateStatus_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetTemplateStatus" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_SetTemplateStatus_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetTemplateStatusResponse" />
   </wsdl:message>
   <wsdl:portType name="IESBackupServerAdminService">
     <wsdl:operation name="GetClients">
@@ -105,10 +110,6 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetTemplateByID" message="tns:IESBackupServerAdminService_GetTemplateByID_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetTemplateByIDResponse" message="tns:IESBackupServerAdminService_GetTemplateByID_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="SaveConfiguration">
-      <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/SaveConfiguration" message="tns:IESBackupServerAdminService_SaveConfiguration_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/SaveConfigurationResponse" message="tns:IESBackupServerAdminService_SaveConfiguration_OutputMessage" />
-    </wsdl:operation>
     <wsdl:operation name="UpdateClient">
       <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/UpdateClient" message="tns:IESBackupServerAdminService_UpdateClient_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/UpdateClientResponse" message="tns:IESBackupServerAdminService_UpdateClient_OutputMessage" />
@@ -120,6 +121,14 @@
     <wsdl:operation name="UpdateBackup">
       <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/UpdateBackup" message="tns:IESBackupServerAdminService_UpdateBackup_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/UpdateBackupResponse" message="tns:IESBackupServerAdminService_UpdateBackup_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveTemplate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/SaveTemplate" message="tns:IESBackupServerAdminService_SaveTemplate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/SaveTemplateResponse" message="tns:IESBackupServerAdminService_SaveTemplate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetTemplateStatus">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/SetTemplateStatus" message="tns:IESBackupServerAdminService_SetTemplateStatus_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/SetTemplateStatusResponse" message="tns:IESBackupServerAdminService_SetTemplateStatus_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IESBackupServerAdminService" type="tns:IESBackupServerAdminService">
@@ -187,15 +196,6 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="SaveConfiguration">
-      <soap:operation soapAction="http://tempuri.org/IESBackupServerAdminService/SaveConfiguration" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="UpdateClient">
       <soap:operation soapAction="http://tempuri.org/IESBackupServerAdminService/UpdateClient" style="document" />
       <wsdl:input>
@@ -216,6 +216,24 @@
     </wsdl:operation>
     <wsdl:operation name="UpdateBackup">
       <soap:operation soapAction="http://tempuri.org/IESBackupServerAdminService/UpdateBackup" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveTemplate">
+      <soap:operation soapAction="http://tempuri.org/IESBackupServerAdminService/SaveTemplate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetTemplateStatus">
+      <soap:operation soapAction="http://tempuri.org/IESBackupServerAdminService/SetTemplateStatus" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
