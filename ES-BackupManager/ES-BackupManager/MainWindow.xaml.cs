@@ -17,7 +17,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.IO;
 using Xceed.Wpf.Toolkit;
 
 namespace ES_BackupManager
@@ -29,7 +29,7 @@ namespace ES_BackupManager
     {
         public MainWindow()
         {
-            InitializeComponent();
+            InitializeComponent();            
 
             this._loadGrid(Filter.All,Sort.Asc);
 
@@ -640,8 +640,11 @@ namespace ES_BackupManager
         }        
         private bool _template_IsPathValid(string path)
         {
-            //TODO: Implement Regex validation
-            return true;
+            //TODO: Implement Path validation
+            if (Regex.IsMatch(path, @"^(([a-zA-Z]:|\\\\\w[ \w\.]*)(\\\w[ \w\.]*|\\%[ \w\.]+%+)+|%[ \w\.]+%(\\\w[ \w\.]*|\\%[ \w\.]+%+)*)"))
+                return true;
+            else
+                return false; 
         }
         #endregion
         #region Backup Controls
