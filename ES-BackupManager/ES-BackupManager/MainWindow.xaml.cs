@@ -50,12 +50,14 @@ namespace ES_BackupManager
                 template_AddMode = value;
                 if(value == true)
                 {
-                    this.btn_Template_New.IsEnabled = false;
+                    this.btn_Template_New.IsEnabled = false;                    
+                    this.btn_Template_StatusChange.IsEnabled = false;
                     this.btn_Template_Edit.Content = "Add";
                 }
                 else
                 {
                     this.btn_Template_New.IsEnabled = true;
+                    this.btn_Template_StatusChange.IsEnabled = true;
                     this.btn_Template_Edit.Content = "Edit";
                 }
             }
@@ -67,8 +69,8 @@ namespace ES_BackupManager
             set
             {
                 template_EditMode = value;
-                if (value == true)                
-                    this.btn_Template_Edit.Content = "Add";                
+                if (value == true)
+                    this.btn_Template_Edit.Content = "Save";                
                 else                
                     this.btn_Template_Edit.Content = "Edit";                
             }
@@ -258,8 +260,7 @@ namespace ES_BackupManager
             this.LoadClientInfo(client);
         }
         private void btn_Client_Edit_Click(object sender, RoutedEventArgs e)
-        {            
-            this.textBox_Client_Name.IsEnabled = true;
+        {                        
             this.textBox_Client_Description.IsEnabled = true;
             this.comboBox_Client_Status.IsEnabled = true;
             this.groupBox_Client_Connection.IsEnabled = true;
@@ -295,7 +296,7 @@ namespace ES_BackupManager
             Configuration config = client.GetConfigurationByClientID(c.ID);
 
             foreach (BackupTemplate item in config.Templates)
-            {
+            {                    
                 this._gridTemplatesList.Add(item);
             }
             this.dataGrid_Templates.ItemsSource = this._gridTemplatesList;
@@ -344,7 +345,7 @@ namespace ES_BackupManager
             if (this._template_IsPathValid(path))
             {                
                 this._gridTemplateDestinationList.Add(new DestinationPathInfo(path, Convert.ToByte(this.comboBox_Template_DestinationType.SelectedIndex)));
-                this.textBox_Template_Source.Text = "";
+                this.textBox_Template_Dest.Text = "";
             }
         }
         private void btn_Template_DestinationRemove_Click(object sender, RoutedEventArgs e)
@@ -356,6 +357,8 @@ namespace ES_BackupManager
         private void btn_Template_New_Click(object sender, RoutedEventArgs e)
         {
             this._template_AddMode = true;
+            this.btn_Template_New.IsEnabled = false;
+            this.btn_Template_Edit.IsEnabled = true;
             this._templateTab_EnableComponents();
             this._templateTab_SetDefaultValues();
 
@@ -385,7 +388,7 @@ namespace ES_BackupManager
                         {
                             Source = source.Value,
                             Destination = dest.Value,
-                            PathOrder = Convert.ToUInt16(paths.Count),
+                            PathOrder = Convert.ToInt16(paths.Count),
                             TargetType = dest.TypeByte
                         });
                     }
@@ -414,6 +417,7 @@ namespace ES_BackupManager
             if (this._template_EditMode)
             {
                 //TODO: Edit mode
+
                 BackupTemplate template = this.dataGrid_Templates.SelectedItem as BackupTemplate;
 
                 template.Name = this.textBox_Template_Name.Text;
@@ -431,7 +435,7 @@ namespace ES_BackupManager
                         {
                             Source = source.Value,
                             Destination = dest.Value,
-                            PathOrder = Convert.ToUInt16(paths.Count),
+                            PathOrder = Convert.ToInt16(paths.Count),
                             TargetType = dest.TypeByte
                         });
                     }
@@ -455,6 +459,9 @@ namespace ES_BackupManager
                 this._template_EditMode = false;
             }
 
+            if (!this._template_EditMode)
+                this.template_EditMode = true;
+
             client.Close();
         }
 
@@ -467,6 +474,9 @@ namespace ES_BackupManager
 
             if (this._template_EditMode)
                 this._template_EditMode = false;
+
+            if (this._gridTemplatesList.Count == 0)
+                this.btn_Template_Edit.IsEnabled = false;
 
             this._loadTemplateInfo(bt);
         }

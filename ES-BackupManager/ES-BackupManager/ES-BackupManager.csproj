@@ -182,9 +182,6 @@
     <None Include="Resources\ImgStatusBanned.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Icon.bmp" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="bin\Debug\icons\ES.ico" />
   </ItemGroup>
   <ItemGroup>

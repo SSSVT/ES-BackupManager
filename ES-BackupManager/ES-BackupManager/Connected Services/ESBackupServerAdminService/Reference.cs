@@ -1021,7 +1021,7 @@ namespace ES_BackupManager.ESBackupServerAdminService {
         private long IDBackupTemplateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private ushort PathOrderField;
+        private short PathOrderField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string SourceField;
@@ -1079,7 +1079,7 @@ namespace ES_BackupManager.ESBackupServerAdminService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public ushort PathOrder {
+        public short PathOrder {
             get {
                 return this.PathOrderField;
             }
