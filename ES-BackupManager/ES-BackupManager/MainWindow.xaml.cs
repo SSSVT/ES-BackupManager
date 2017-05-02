@@ -236,8 +236,7 @@ namespace ES_BackupManager
         {
             ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
             Client c = this.dataGrid_Clients.SelectedItem as Client;
-
-            c.Name = this.textBox_Client_Name.Text;
+                        
             c.Description = this.textBox_Client_Description.Text;
             //c.Emails = this._convertEmailsFromListBox(this._listBoxEmailsList);
             c.Status = Convert.ToByte(this.comboBox_Client_Status.SelectedIndex);
@@ -325,10 +324,10 @@ namespace ES_BackupManager
             e.Handled = true;
         }
         private void btn_Template_SourceAdd_Click(object sender, RoutedEventArgs e)
-        {
+        {            
             string path = this.textBox_Template_Source.Text;            
             if (this._template_IsPathValid(path))
-            {
+            {                
                 this._gridTemplateSourceList.Add(new SourcePathInfo(path));
                 this.textBox_Template_Source.Text = "";
             }
@@ -411,7 +410,9 @@ namespace ES_BackupManager
                 this._template_AddMode = false;
                 client.SaveTemplate(template);
                 this._gridTemplatesList.Add(template);
-                this.dataGrid_Templates.SelectedIndex = this.dataGrid_Templates.Items.Count - 1;               
+                this.dataGrid_Templates.SelectedIndex = this.dataGrid_Templates.Items.Count - 1;
+
+                this.LoadTemplatesData(c);  
             }
 
             if (this._template_EditMode)
@@ -547,12 +548,15 @@ namespace ES_BackupManager
                 {               
                     foreach (BackupTemplatePath item in bt.Paths)
                     {           
+                        //TODO: Remake source path, ONLY ONE!
+
                         if(this._gridTemplateSourceList.Where(x => x.Value == item.Source).FirstOrDefault() == null)
                             this._gridTemplateSourceList.Add(new SourcePathInfo(item.Source));
 
                         this.dataGrid_Template_Source.ItemsSource = this._gridTemplateSourceList;
 
-                        this._gridTemplateDestinationList.Add(new DestinationPathInfo(item.Destination, item.TargetType));
+                        if (this._gridTemplateDestinationList.Where(x => x.Value == item.Destination).FirstOrDefault() == null)
+                            this._gridTemplateDestinationList.Add(new DestinationPathInfo(item.Destination, item.TargetType));
                         this.dataGrid_Template_Destination.ItemsSource = this._gridTemplateDestinationList;
                     }
                 }
