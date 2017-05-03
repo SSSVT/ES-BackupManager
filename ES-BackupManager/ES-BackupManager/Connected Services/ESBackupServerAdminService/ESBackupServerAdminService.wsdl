@@ -51,6 +51,12 @@
   <wsdl:message name="IESBackupServerAdminService_GetTemplateByID_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetTemplateByIDResponse" />
   </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_AdminLogIn_InputMessage">
+    <wsdl:part name="parameters" element="tns:AdminLogIn" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_AdminLogIn_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AdminLogInResponse" />
+  </wsdl:message>
   <wsdl:message name="IESBackupServerAdminService_UpdateClient_InputMessage">
     <wsdl:part name="parameters" element="tns:UpdateClient" />
   </wsdl:message>
@@ -109,6 +115,10 @@
     <wsdl:operation name="GetTemplateByID">
       <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetTemplateByID" message="tns:IESBackupServerAdminService_GetTemplateByID_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetTemplateByIDResponse" message="tns:IESBackupServerAdminService_GetTemplateByID_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AdminLogIn">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/AdminLogIn" message="tns:IESBackupServerAdminService_AdminLogIn_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/AdminLogInResponse" message="tns:IESBackupServerAdminService_AdminLogIn_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="UpdateClient">
       <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/UpdateClient" message="tns:IESBackupServerAdminService_UpdateClient_InputMessage" />
@@ -189,6 +199,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetTemplateByID">
       <soap:operation soapAction="http://tempuri.org/IESBackupServerAdminService/GetTemplateByID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AdminLogIn">
+      <soap:operation soapAction="http://tempuri.org/IESBackupServerAdminService/AdminLogIn" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

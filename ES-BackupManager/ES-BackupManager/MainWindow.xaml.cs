@@ -660,6 +660,31 @@ namespace ES_BackupManager
             else
                 return false; 
         }
+        private void comboBox_Template_CRONTemplates_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int index = this.comboBox_Template_CRONTemplates.SelectedIndex;
+            switch (index)
+            {
+                case 1:
+                    this.textBox_Template_CRON.Text = "0 0 0/1 1/1 * ? *";
+                    break;
+                case 2:
+                    this.textBox_Template_CRON.Text = "0 0 12 1/1 * ? *";
+                    break;
+                case 3:
+                    this.textBox_Template_CRON.Text = "0 0 12 ? * SUN *";
+                    break;
+                case 4:
+                    this.textBox_Template_CRON.Text = "0 0 12 ? 1/1 SUN#1 *";
+                    break;
+                default:
+                    break;
+            }
+        }
+        private void textBox_Template_CRON_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            this.comboBox_Template_CRONTemplates.SelectedIndex = 0;
+        }
         #endregion
         #region Backup Controls
         private void LoadBackupsData(Client c)
@@ -873,6 +898,11 @@ namespace ES_BackupManager
             this.dateTimePicker_Log_Time.IsEnabled = false;
         }
 
-        #endregion        
+        #endregion
+
+        private void Admin_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

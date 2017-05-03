@@ -5,16 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"        
         mc:Ignorable="d"
-        Title="Backup Administrator | Evolution Studio" Height="1500" Width="1280" 
-        MinWidth="1000" MinHeight="650">
+        Title="Backup Administrator | Evolution Studio" Height="650" Width="1280" 
+        MinWidth="1000" MinHeight="650" WindowStartupLocation="Manual">
     <!-- STANDARD HEIGHT: 650 ,STANDARD WIDTH: 1000 -->
     <!-- CURRENT HEIGHT: 800 ,CURRENT WIDTH: 1280 -->
     <Grid>
         <StackPanel VerticalAlignment="Top">
             <Menu Width="auto" Height="20">
-                <MenuItem Header="_Admins">
-                    <MenuItem x:Name="ViewAdmins" Header="View" HorizontalAlignment="Left" Width="140"/>
-                </MenuItem>
+                <MenuItem x:Name="Admin" Header="_Admin" Click="Admin_Click"/>
                 <MenuItem Header="_Tools">
                     <MenuItem x:Name="Options" Header="Options" HorizontalAlignment="Left" Width="140"/>
                 </MenuItem>
@@ -146,7 +144,7 @@
                                                         </DataGrid.Columns>
                                                     </DataGrid>
                                                     <Button x:Name="btn_Template_SourceAdd" Content="Add" HorizontalAlignment="Left" Margin="10,93,0,0" VerticalAlignment="Top" Width="75" Click="btn_Template_SourceAdd_Click"/>
-                                                    <Button x:Name="btn_Template_SourceRemove" Content="Remove" HorizontalAlignment="Left" Margin="90,93,0,0" VerticalAlignment="Top" Width="75" Click="btn_Template_SourceRemove_Click"/>
+                                                    <Button x:Name="btn_Template_SourceRemove" Content="Remove" Margin="0,93,270,0" VerticalAlignment="Top" Click="btn_Template_SourceRemove_Click" HorizontalAlignment="Right" Width="75"/>
                                                 </Grid>
                                             </GroupBox>
                                             <GroupBox x:Name="groupBox_Template_Destination" Header="Destination Path(s)" Margin="10,160,10,0" VerticalAlignment="Top" Height="145">
@@ -159,9 +157,9 @@
                                                         </DataGrid.Columns>
                                                     </DataGrid>
                                                     <Button x:Name="btn_Template_DestinationAdd" Content="Add" HorizontalAlignment="Left" Margin="10,93,0,0" VerticalAlignment="Top" Width="75" Click="btn_Template_DestinationAdd_Click"/>
-                                                    <Button x:Name="btn_Template_DestinationRemove" Content="Remove" HorizontalAlignment="Left" Margin="90,93,0,0" VerticalAlignment="Top" Width="75" Click="btn_Template_DestinationRemove_Click"/>
-                                                    <ComboBox x:Name="comboBox_Template_DestinationType" Margin="16,31,0,0" SelectedIndex="0" HorizontalAlignment="Left" Width="58" Height="22" VerticalAlignment="Top">
-                                                        <ComboBoxItem Content="WIN"/>
+                                                    <Button x:Name="btn_Template_DestinationRemove" Content="Remove" Margin="0,93,270,0" VerticalAlignment="Top" Click="btn_Template_DestinationRemove_Click" HorizontalAlignment="Right" Width="75"/>
+                                                    <ComboBox x:Name="comboBox_Template_DestinationType" Margin="10,31,0,0" SelectedIndex="0" HorizontalAlignment="Left" Width="64" Height="22" VerticalAlignment="Top">
+                                                        <ComboBoxItem Content="LOCAL"/>
                                                         <ComboBoxItem Content="FTP"/>
                                                         <ComboBoxItem Content="SSH"/>
                                                     </ComboBox>
@@ -173,7 +171,7 @@
                                     <GroupBox Name="groupBox_Template_Time" Header="Time Settings" Height="140" Margin="10,642,10,0" VerticalAlignment="Top">
                                         <Grid>
                                             <Label Content="CRON Value:" HorizontalAlignment="Left" Margin="40,10,0,0" VerticalAlignment="Top"/>
-                                            <xctk:WatermarkTextBox x:Name="textBox_Template_CRON" Margin="182,12,67,0" Watermark="Type in CRON format" Height="24" VerticalAlignment="Top"/>
+                                            <xctk:WatermarkTextBox x:Name="textBox_Template_CRON" Margin="182,12,210,0" Watermark="Type in CRON format" Height="24" VerticalAlignment="Top" TextChanged="textBox_Template_CRON_TextChanged"/>
                                             <Label Content="*For documentation" HorizontalAlignment="Left" Margin="1,41,0,0" VerticalAlignment="Top"/>
                                             <Label HorizontalAlignment="Left" Margin="117,41,0,0" VerticalAlignment="Top">
                                                 <Hyperlink NavigateUri="http://www.quartz-scheduler.org/documentation/quartz-2.x/tutorials/crontrigger.html" RequestNavigate="Hyperlink_RequestNavigate">
@@ -183,6 +181,13 @@
                                             <Label Content = "Expiration Date:" HorizontalAlignment = "Left" Margin = "24,79,0,0" VerticalAlignment = "Top" />
                                             <xctk:DateTimePicker Name = "dateTimePicker_Template_Expire" Margin = "182,81,67,0" Height = "24" VerticalAlignment = "Top" Watermark="Set expiration date or leave default" />
                                             <Label x:Name= "label_Template_ExpireError" Content = "*" ToolTip = "Date must be higher than current date." Margin = "0,81,38,0" VerticalAlignment = "Top" Foreground = "Red" Visibility = "Hidden" HorizontalAlignment = "Right" Width = "29" />
+                                            <ComboBox Name="comboBox_Template_CRONTemplates" HorizontalAlignment="Left" Margin="550,14,0,0" VerticalAlignment="Top" Width="138" SelectedIndex="0" SelectionChanged="comboBox_Template_CRONTemplates_SelectionChanged">
+                                                <ComboBoxItem Content="Custom"/>
+                                                <ComboBoxItem Content="Every hour"/>
+                                                <ComboBoxItem Content="Every day"/>
+                                                <ComboBoxItem Content="Every week"/>
+                                                <ComboBoxItem Content="Every month"/>
+                                            </ComboBox>
                                         </Grid>
                                     </GroupBox>
                                     <GroupBox Name="groupBox_Template_Notification" Header="Notification Settings" Height="76" Margin="10,787,10,0" VerticalAlignment="Top">
@@ -201,7 +206,7 @@
                                     <GroupBox x:Name="groupBox_Template_Exception" Header="Exception Settings" Margin="10,538,10,0" VerticalAlignment="Top" Height="99">
                                         <Grid>
                                             <CheckBox x:Name="checkBox_Template_SearchPattern" Content="Search pattern" HorizontalAlignment="Left" Margin="73,41,0,0" VerticalAlignment="Top" Checked="checkBox_Template_SearchPattern_Checked"/>
-                                            <xctk:WatermarkTextBox x:Name="textBox_Template_SearchPattern" Height="23" Margin="184,36,61,0" TextWrapping="Wrap" Watermark="Type search pattern" VerticalAlignment="Top"/>
+                                            <xctk:WatermarkTextBox x:Name="textBox_Template_SearchPattern" Height="23" Margin="187,39,58,0" TextWrapping="Wrap" Watermark="Type search pattern" VerticalAlignment="Top"/>
                                             <CheckBox x:Name="checkBox_Template_EmptyFolders" Content="Exclude empty folders" HorizontalAlignment="Left" Margin="73,10,0,0" VerticalAlignment="Top"/>
                                         </Grid>
                                     </GroupBox>

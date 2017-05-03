@@ -22,7 +22,7 @@ namespace ES_BackupManager.AppStruct.Objects
             switch (code)
             {
                 case 0:
-                    return "WIN";
+                    return "LOCAL";
                 case 1:
                     return "FTP";
                 case 2:
