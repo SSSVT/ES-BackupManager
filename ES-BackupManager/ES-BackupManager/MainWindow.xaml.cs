@@ -74,7 +74,7 @@ namespace ES_BackupManager
                 else                
                     this.btn_Template_Edit.Content = "Edit";                
             }
-        }
+        }        
 
         #endregion
 
@@ -364,6 +364,12 @@ namespace ES_BackupManager
         }
         private void btn_Template_Edit_Click(object sender, RoutedEventArgs e)
         {
+            if(!this._template_AddMode)
+            {
+                if (!this._template_EditMode)
+                    this.template_EditMode = true;
+            }
+
             ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
 
             if (this._template_AddMode)
@@ -418,6 +424,7 @@ namespace ES_BackupManager
             if (this._template_EditMode)
             {
                 //TODO: Edit mode
+                this._templateTab_EnableComponents();
 
                 BackupTemplate template = this.dataGrid_Templates.SelectedItem as BackupTemplate;
 
@@ -460,8 +467,6 @@ namespace ES_BackupManager
                 this._template_EditMode = false;
             }
 
-            if (!this._template_EditMode)
-                this.template_EditMode = true;
 
             client.Close();
         }
@@ -666,24 +671,42 @@ namespace ES_BackupManager
             switch (index)
             {
                 case 1:
-                    this.textBox_Template_CRON.Text = "0 0 0/1 1/1 * ? *";
+                    this.textBox_Template_CRON.Text = "0 0 0/1 1/1 * ? *";                    
                     break;
                 case 2:
-                    this.textBox_Template_CRON.Text = "0 0 12 1/1 * ? *";
+                    this.textBox_Template_CRON.Text = "0 0 12 1/1 * ? *";                    
                     break;
                 case 3:
-                    this.textBox_Template_CRON.Text = "0 0 12 ? * SUN *";
+                    this.textBox_Template_CRON.Text = "0 0 12 ? * SUN *";                    
                     break;
                 case 4:
-                    this.textBox_Template_CRON.Text = "0 0 12 ? 1/1 SUN#1 *";
+                    this.textBox_Template_CRON.Text = "0 0 12 ? 1/1 SUN#1 *";                    
                     break;
-                default:
+                default:                    
                     break;
-            }
+            }            
         }
         private void textBox_Template_CRON_TextChanged(object sender, TextChangedEventArgs e)
         {
-            this.comboBox_Template_CRONTemplates.SelectedIndex = 0;
+            string text = this.textBox_Template_CRON.Text;
+            switch (text)
+            {
+                case "0 0 0/1 1/1 * ? *":
+                    this.comboBox_Template_CRONTemplates.SelectedIndex = 1;
+                    break;
+                case "0 0 12 1/1 * ? *":
+                    this.comboBox_Template_CRONTemplates.SelectedIndex = 2;
+                    break;
+                case "0 0 12 ? * SUN *":
+                    this.comboBox_Template_CRONTemplates.SelectedIndex = 3;
+                    break;
+                case "0 0 12 ? 1/1 SUN#1 *":
+                    this.comboBox_Template_CRONTemplates.SelectedIndex = 4;
+                    break;
+                default:
+                    this.comboBox_Template_CRONTemplates.SelectedIndex = 0;
+                    break;
+            }            
         }
         #endregion
         #region Backup Controls

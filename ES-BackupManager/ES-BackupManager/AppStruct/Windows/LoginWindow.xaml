@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ES_BackupManager.AppStruct.Windows"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"     
         mc:Ignorable="d"
-        Title="Login Window" Height="210" Width="300" WindowStartupLocation="CenterScreen">
+        Title="Backup Manager | Evolution Studio" Height="210" Width="300" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid>
         <Button x:Name="button_Login" Content="Log in" Padding="3" Margin="10,0,10,10" VerticalAlignment="Bottom" Click="btn_Login_Click"/>
         <xctk:WatermarkTextBox x:Name="textBox_Username" Watermark="Username" Padding="3" Margin="10,0,10,83" Height="24" VerticalAlignment="Bottom"/>

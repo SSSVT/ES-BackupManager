@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"        
         mc:Ignorable="d"
-        Title="Backup Administrator | Evolution Studio" Height="650" Width="1280" 
+        Title="Backup Manager | Evolution Studio" Height="1500" Width="1280" 
         MinWidth="1000" MinHeight="650" WindowStartupLocation="Manual">
     <!-- STANDARD HEIGHT: 650 ,STANDARD WIDTH: 1000 -->
     <!-- CURRENT HEIGHT: 800 ,CURRENT WIDTH: 1280 -->
@@ -181,7 +181,7 @@
                                             <Label Content = "Expiration Date:" HorizontalAlignment = "Left" Margin = "24,79,0,0" VerticalAlignment = "Top" />
                                             <xctk:DateTimePicker Name = "dateTimePicker_Template_Expire" Margin = "182,81,67,0" Height = "24" VerticalAlignment = "Top" Watermark="Set expiration date or leave default" />
                                             <Label x:Name= "label_Template_ExpireError" Content = "*" ToolTip = "Date must be higher than current date." Margin = "0,81,38,0" VerticalAlignment = "Top" Foreground = "Red" Visibility = "Hidden" HorizontalAlignment = "Right" Width = "29" />
-                                            <ComboBox Name="comboBox_Template_CRONTemplates" HorizontalAlignment="Left" Margin="550,14,0,0" VerticalAlignment="Top" Width="138" SelectedIndex="0" SelectionChanged="comboBox_Template_CRONTemplates_SelectionChanged">
+                                            <ComboBox Name="comboBox_Template_CRONTemplates" Margin="0,14,63,0" VerticalAlignment="Top" SelectedIndex="0" SelectionChanged="comboBox_Template_CRONTemplates_SelectionChanged" HorizontalAlignment="Right" Width="138">
                                                 <ComboBoxItem Content="Custom"/>
                                                 <ComboBoxItem Content="Every hour"/>
                                                 <ComboBoxItem Content="Every day"/>

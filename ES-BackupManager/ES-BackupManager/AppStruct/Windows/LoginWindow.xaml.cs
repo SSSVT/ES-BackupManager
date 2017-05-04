@@ -29,7 +29,7 @@ namespace ES_BackupManager.AppStruct.Windows
         {
             if(!string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(password))
             {
-            ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();                
+            ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();                                
             if (client.Login(username, password))
             {
                 MessageBox.Show("Authentication was successful. Welcome to Admin! ");
