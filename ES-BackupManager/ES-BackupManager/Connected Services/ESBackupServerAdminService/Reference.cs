@@ -1175,11 +1175,11 @@ namespace ES_BackupManager.ESBackupServerAdminService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/GetTemplateByID", ReplyAction="http://tempuri.org/IESBackupServerAdminService/GetTemplateByIDResponse")]
         System.Threading.Tasks.Task<ES_BackupManager.ESBackupServerAdminService.BackupTemplate> GetTemplateByIDAsync(int id);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/AdminLogIn", ReplyAction="http://tempuri.org/IESBackupServerAdminService/AdminLogInResponse")]
-        bool AdminLogIn(string username, string password);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/Login", ReplyAction="http://tempuri.org/IESBackupServerAdminService/LoginResponse")]
+        bool Login(string username, string password);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/AdminLogIn", ReplyAction="http://tempuri.org/IESBackupServerAdminService/AdminLogInResponse")]
-        System.Threading.Tasks.Task<bool> AdminLogInAsync(string username, string password);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/Login", ReplyAction="http://tempuri.org/IESBackupServerAdminService/LoginResponse")]
+        System.Threading.Tasks.Task<bool> LoginAsync(string username, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/UpdateClient", ReplyAction="http://tempuri.org/IESBackupServerAdminService/UpdateClientResponse")]
         void UpdateClient(ES_BackupManager.ESBackupServerAdminService.Client client);
@@ -1295,12 +1295,12 @@ namespace ES_BackupManager.ESBackupServerAdminService {
             return base.Channel.GetTemplateByIDAsync(id);
         }
         
-        public bool AdminLogIn(string username, string password) {
-            return base.Channel.AdminLogIn(username, password);
+        public bool Login(string username, string password) {
+            return base.Channel.Login(username, password);
         }
         
-        public System.Threading.Tasks.Task<bool> AdminLogInAsync(string username, string password) {
-            return base.Channel.AdminLogInAsync(username, password);
+        public System.Threading.Tasks.Task<bool> LoginAsync(string username, string password) {
+            return base.Channel.LoginAsync(username, password);
         }
         
         public void UpdateClient(ES_BackupManager.ESBackupServerAdminService.Client client) {

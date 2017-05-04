@@ -51,11 +51,11 @@
   <wsdl:message name="IESBackupServerAdminService_GetTemplateByID_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetTemplateByIDResponse" />
   </wsdl:message>
-  <wsdl:message name="IESBackupServerAdminService_AdminLogIn_InputMessage">
-    <wsdl:part name="parameters" element="tns:AdminLogIn" />
+  <wsdl:message name="IESBackupServerAdminService_Login_InputMessage">
+    <wsdl:part name="parameters" element="tns:Login" />
   </wsdl:message>
-  <wsdl:message name="IESBackupServerAdminService_AdminLogIn_OutputMessage">
-    <wsdl:part name="parameters" element="tns:AdminLogInResponse" />
+  <wsdl:message name="IESBackupServerAdminService_Login_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoginResponse" />
   </wsdl:message>
   <wsdl:message name="IESBackupServerAdminService_UpdateClient_InputMessage">
     <wsdl:part name="parameters" element="tns:UpdateClient" />
@@ -116,9 +116,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetTemplateByID" message="tns:IESBackupServerAdminService_GetTemplateByID_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetTemplateByIDResponse" message="tns:IESBackupServerAdminService_GetTemplateByID_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="AdminLogIn">
-      <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/AdminLogIn" message="tns:IESBackupServerAdminService_AdminLogIn_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/AdminLogInResponse" message="tns:IESBackupServerAdminService_AdminLogIn_OutputMessage" />
+    <wsdl:operation name="Login">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/Login" message="tns:IESBackupServerAdminService_Login_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/LoginResponse" message="tns:IESBackupServerAdminService_Login_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="UpdateClient">
       <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/UpdateClient" message="tns:IESBackupServerAdminService_UpdateClient_InputMessage" />
@@ -206,8 +206,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="AdminLogIn">
-      <soap:operation soapAction="http://tempuri.org/IESBackupServerAdminService/AdminLogIn" style="document" />
+    <wsdl:operation name="Login">
+      <soap:operation soapAction="http://tempuri.org/IESBackupServerAdminService/Login" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
