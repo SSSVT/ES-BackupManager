@@ -458,10 +458,10 @@ namespace ES_BackupManager
                 template.IsNotificationEnabled = this.radioBtn_Template_NotifEnable.IsChecked == true ? true : false;
 
                 client.SaveTemplate(template);
+                this._templateTab_DisableComponents();
                 this._template_Mode = 0;
             }
-
-            if (this._template_Mode == 0)
+            else if (this._template_Mode == 0)
             {
                 this._template_Mode = 2;
                 this._templateTab_EnableComponents();
