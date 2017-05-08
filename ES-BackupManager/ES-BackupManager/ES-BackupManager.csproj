@@ -72,6 +72,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="AppStruct\Windows\TemplateTreeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -87,6 +91,9 @@
     </Compile>
     <Compile Include="AppStruct\Windows\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppStruct\Windows\TemplateTreeWindow.xaml.cs">
+      <DependentUpon>TemplateTreeWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Connected Services\ESBackupServerAdminService\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -153,7 +160,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AppStruct\Components\" />

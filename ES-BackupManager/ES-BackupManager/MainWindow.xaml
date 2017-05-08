@@ -60,26 +60,32 @@
             <TabControl Name="TabControl_Main" Margin="215,10,10,10" IsEnabled="False" SelectionChanged="TabControl_Main_SelectionChanged">
                 <TabItem Header="Information">
                     <Grid>
-                        <GroupBox Header="Client Details" Margin="10,0" Height="107" VerticalAlignment="Top">
+                        <GroupBox Header="Client Details" Margin="10,0" Height="222" VerticalAlignment="Top">
                             <Grid>
                                 <Label Content="Name:" HorizontalAlignment="Left" Margin="99,10,0,0" VerticalAlignment="Top"/>
-                                <TextBox x:Name="textBox_Client_Name" Height="23" Margin="192,13,289,0" TextWrapping="Wrap" Text="Client name" VerticalAlignment="Top" />
+                                <TextBox x:Name="textBox_Client_Name" Height="24" Margin="192,13,289,0" TextWrapping="Wrap" Text="Client name" VerticalAlignment="Top" />
                                 <Label Content="Description:" HorizontalAlignment="Left" Margin="70,38,0,0" VerticalAlignment="Top"/>
-                                <xctk:WatermarkTextBox x:Name="textBox_Client_Description" Height="23" Margin="192,42,289,0" TextWrapping="Wrap" Watermark="Description not set" VerticalAlignment="Top"/>
+                                <xctk:WatermarkTextBox x:Name="textBox_Client_Description" Height="24" Margin="192,42,289,0" TextWrapping="Wrap" Watermark="Description not set" VerticalAlignment="Top"/>
+                                <Separator Height="22" Margin="10,69,10,0" VerticalAlignment="Top"/>
+                                <Label Content="Last report time:" HorizontalAlignment="Left" Margin="47,98,0,0" VerticalAlignment="Top"/>
+                                <xctk:DateTimePickerBase x:Name="dateTimePicker_Client_LastReportTime" TextAlignment="Left" Height="24" Margin="192,101,289,0" Watermark="Last report time" VerticalAlignment="Top" IsEnabled="False"/>
+                                <Label Content="Last backup time:" HorizontalAlignment="Left" Margin="41,128,0,0" VerticalAlignment="Top"/>
+                                <xctk:DateTimePickerBase x:Name="dateTimePicker_Client_LastBackupTime" Height="24" Margin="192,129,289,0" Watermark="Last backup time" VerticalAlignment="Top" IsEnabled="False"/>
+                                <Label Content="Registration date:" HorizontalAlignment="Left" Margin="40,157,0,0" VerticalAlignment="Top"/>
+                                <xctk:DateTimePickerBase x:Name="dateTimePicker_Client_RegistrationDate" Height="24" Margin="192,158,289,0" Watermark="Registration date" VerticalAlignment="Top" IsEnabled="False"/>
                             </Grid>
                         </GroupBox>
-                        <GroupBox Header="Client Settings" Margin="10,112,10,0" Height="197" VerticalAlignment="Top">
+                        <GroupBox Header="Client Settings" Margin="10,227,10,0" Height="218" VerticalAlignment="Top">
                             <Grid>
-                                <Label Content="Status:" HorizontalAlignment="Left" Margin="99,10,0,0" VerticalAlignment="Top"/>
-                                <ComboBox x:Name="comboBox_Client_Status" HorizontalAlignment="Left" Margin="192,14,0,0" VerticalAlignment="Top" Width="250" IsReadOnly="True">
+                                <ComboBox x:Name="comboBox_Client_Status" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="250" IsReadOnly="True" Height="50" FontSize="35">
                                     <ComboBoxItem Content="Verified"/>
                                     <ComboBoxItem Content="Unverified"/>
                                     <ComboBoxItem Content="Banned"/>
                                 </ComboBox>
-                                <GroupBox x:Name="groupBox_Client_Connection" Header="Connection Info" Margin="10,50,10,0" VerticalAlignment="Top" Height="108">
+                                <GroupBox x:Name="groupBox_Client_Connection" Header="Connection Info" Margin="10,80,10,0" VerticalAlignment="Top" Height="108">
                                     <Grid>
                                         <Label x:Name="label" Content="Refresh Interval (ms):" HorizontalAlignment="Left" Margin="26,42,0,0" VerticalAlignment="Top"/>
-                                        <xctk:IntegerUpDown x:Name="IntUpDown_Client_StatusRepeat" Margin="194,42,264,0" Height="24" VerticalAlignment="Top" Watermark="Connection refresh interval" />
+                                        <xctk:IntegerUpDown x:Name="IntUpDown_Client_StatusRepeat" Margin="182,42,276,0" Height="24" VerticalAlignment="Top" Watermark="Connection refresh interval" />
                                         <Label x:Name="label_Copy" Content="Connection refresh:" HorizontalAlignment="Left" Margin="33,10,0,0" VerticalAlignment="Top"/>
                                         <RadioButton x:Name="radioBtn_Client_ConnDefault" Content="Default" HorizontalAlignment="Left" Margin="194,16,0,0" VerticalAlignment="Top" Checked="radioBtn_Client_ConnDefault_Checked"/>
                                         <RadioButton x:Name="radioBtn_Client_ConnSet" Content="Customize" Margin="318,16,0,0" VerticalAlignment="Top" Checked="radioBtn_Client_ConnSet_Checked" HorizontalAlignment="Left" Width="74"/>
@@ -174,7 +180,7 @@
                                             <xctk:WatermarkTextBox x:Name="textBox_Template_CRON" Margin="182,12,210,0" Watermark="Type in CRON format" Height="24" VerticalAlignment="Top" TextChanged="textBox_Template_CRON_TextChanged"/>
                                             <Label Content="*For documentation" HorizontalAlignment="Left" Margin="1,41,0,0" VerticalAlignment="Top"/>
                                             <Label HorizontalAlignment="Left" Margin="117,41,0,0" VerticalAlignment="Top">
-                                                <Hyperlink NavigateUri="http://www.quartz-scheduler.org/documentation/quartz-2.x/tutorials/crontrigger.html" RequestNavigate="Hyperlink_RequestNavigate">
+                                                <Hyperlink NavigateUri="http://www.quartz-scheduler.org/documentation/quartz-2.x/tutorials/crontrigger.html" RequestNavigate="Hyperlink_RequestNavigate_CRONDocumentation">
                                                     <Run Text="click here"/>
                                                 </Hyperlink>
                                             </Label>
@@ -188,6 +194,12 @@
                                                 <ComboBoxItem Content="Every week"/>
                                                 <ComboBoxItem Content="Every month"/>
                                             </ComboBox>
+                                            <Label Content="or for CRON format generator" HorizontalAlignment="Left" Margin="182,41,0,0" VerticalAlignment="Top"/>
+                                            <Label Name="hyperlink_CRONGenerator" HorizontalAlignment="Left" Margin="351,41,0,0" VerticalAlignment="Top">
+                                                <Hyperlink NavigateUri="http://www.cronmaker.com/" RequestNavigate="Hyperlink_RequestNavigate_CRONGenerator">
+                                                    <Run Text="click here"/>
+                                                </Hyperlink>
+                                            </Label>
                                         </Grid>
                                     </GroupBox>
                                     <GroupBox Name="groupBox_Template_Notification" Header="Notification Settings" Height="76" Margin="10,787,10,0" VerticalAlignment="Top">

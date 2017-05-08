@@ -40,42 +40,41 @@ namespace ES_BackupManager
         #region Local Properties
         private bool TemplatesLoaded { get; set; }
         private bool BackupsLoaded { get; set; }
-        private bool LogsLoaded { get; set; }        
-        private bool template_AddMode;
-        private bool _template_AddMode
+        private bool LogsLoaded { get; set; }
+        private byte template_Mode;
+
+        public byte _template_Mode
         {
-            get { return template_AddMode; }
+            get { return template_Mode; }
             set
             {
-                template_AddMode = value;
-                if(value == true)
-                {
-                    this.btn_Template_New.IsEnabled = false;                    
-                    this.btn_Template_StatusChange.IsEnabled = false;
-                    this.btn_Template_Edit.Content = "Add";
-                }
-                else
+                /* 
+                 * VALUES
+                 * 0 = NONE
+                 * 1 = ADD
+                 * 2 = EDIT
+                 */
+                template_Mode = value;
+                if (value == 0)
                 {
                     this.btn_Template_New.IsEnabled = true;
                     this.btn_Template_StatusChange.IsEnabled = true;
                     this.btn_Template_Edit.Content = "Edit";
                 }
+                else if(value == 1)
+                {
+                    this.btn_Template_New.IsEnabled = false;
+                    this.btn_Template_StatusChange.IsEnabled = false;
+                    this.btn_Template_Edit.Content = "Add";
+                }
+                else if (value == 2)
+                {                    
+                    this.btn_Template_New.IsEnabled = false;
+                    this.btn_Template_StatusChange.IsEnabled = false;
+                    this.btn_Template_Edit.Content = "Save";
+                }
             }
-        }
-        private bool template_EditMode;
-        private bool _template_EditMode
-        {
-            get { return template_EditMode; }
-            set
-            {
-                template_EditMode = value;
-                if (value == true)
-                    this.btn_Template_Edit.Content = "Save";                
-                else                
-                    this.btn_Template_Edit.Content = "Edit";                
-            }
-        }        
-
+        }    
         #endregion
 
         #region BindingLists for DataGrids/ListBoxes
@@ -187,7 +186,7 @@ namespace ES_BackupManager
         private void _clientTab_DisableComponents()
         {
             this.textBox_Client_Name.IsEnabled = false;
-            this.textBox_Client_Description.IsEnabled = false;
+            this.textBox_Client_Description.IsEnabled = false;            
             this.btn_Client_Cancel.IsEnabled = false;
             this.btn_Client_Save.IsEnabled = false;
             this.comboBox_Client_Status.IsEnabled = false;
@@ -226,9 +225,11 @@ namespace ES_BackupManager
             else
             {
                 this.radioBtn_Client_ConnDefault.IsChecked = true;
-            }           
-                        
-            
+            }
+
+            this.dateTimePicker_Client_LastBackupTime.Value = c.UTCLastBackupTime != null ?  c.UTCLastBackupTime : null;
+            this.dateTimePicker_Client_LastReportTime.Value = c.UTCLastBackupTime != null ? c.UTCLastStatusReportTime : null;
+            this.dateTimePicker_Client_RegistrationDate.Value = c.UTCRegistrationDate;
 
             client.Close();
         }
@@ -355,7 +356,7 @@ namespace ES_BackupManager
         }
         private void btn_Template_New_Click(object sender, RoutedEventArgs e)
         {
-            this._template_AddMode = true;
+            this._template_Mode = 1;
             this.btn_Template_New.IsEnabled = false;
             this.btn_Template_Edit.IsEnabled = true;
             this._templateTab_EnableComponents();
@@ -364,15 +365,9 @@ namespace ES_BackupManager
         }
         private void btn_Template_Edit_Click(object sender, RoutedEventArgs e)
         {
-            if(!this._template_AddMode)
-            {
-                if (!this._template_EditMode)
-                    this.template_EditMode = true;
-            }
-
             ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
 
-            if (this._template_AddMode)
+            if (this._template_Mode == 1)
             {
                 Client c = this.dataGrid_Clients.SelectedItem as Client;
 
@@ -413,7 +408,7 @@ namespace ES_BackupManager
 
                 template.IsNotificationEnabled = this.radioBtn_Template_NotifEnable.IsChecked == true ? true :false;
 
-                this._template_AddMode = false;
+                this._template_Mode = 0;
                 client.SaveTemplate(template);
                 this._gridTemplatesList.Add(template);
                 this.dataGrid_Templates.SelectedIndex = this.dataGrid_Templates.Items.Count - 1;
@@ -421,10 +416,9 @@ namespace ES_BackupManager
                 this.LoadTemplatesData(c);  
             }
 
-            if (this._template_EditMode)
+            if (this._template_Mode == 2)
             {
                 //TODO: Edit mode
-                this._templateTab_EnableComponents();
 
                 BackupTemplate template = this.dataGrid_Templates.SelectedItem as BackupTemplate;
 
@@ -464,10 +458,14 @@ namespace ES_BackupManager
                 template.IsNotificationEnabled = this.radioBtn_Template_NotifEnable.IsChecked == true ? true : false;
 
                 client.SaveTemplate(template);
-                this._template_EditMode = false;
+                this._template_Mode = 0;
             }
 
-
+            if (this._template_Mode == 0)
+            {
+                this._template_Mode = 2;
+                this._templateTab_EnableComponents();
+            }                
             client.Close();
         }
 
@@ -475,11 +473,7 @@ namespace ES_BackupManager
         {
             BackupTemplate bt = this.dataGrid_Templates.SelectedItem as BackupTemplate;
 
-            if (this._template_AddMode)
-                this._template_AddMode = false;
-
-            if (this._template_EditMode)
-                this._template_EditMode = false;
+            this._template_Mode = 0;
 
             if (this._gridTemplatesList.Count == 0)
                 this.btn_Template_Edit.IsEnabled = false;
@@ -516,7 +510,12 @@ namespace ES_BackupManager
             this.btn_Template_StatusChange.IsEnabled = false;
             this.btn_Template_Edit.Content = "Edit";
         }
-        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
+        private void Hyperlink_RequestNavigate_CRONDocumentation(object sender, RequestNavigateEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
+            e.Handled = true;
+        }
+        private void Hyperlink_RequestNavigate_CRONGenerator(object sender, RequestNavigateEventArgs e)
         {
             Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
             e.Handled = true;
