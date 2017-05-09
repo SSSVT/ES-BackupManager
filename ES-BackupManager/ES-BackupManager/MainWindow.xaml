@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"        
         mc:Ignorable="d"
-        Title="Backup Manager | Evolution Studio" Height="1500" Width="1280" 
+        Title="Backup Manager | Evolution Studio" Height="1409.6" Width="1280" 
         MinWidth="1000" MinHeight="650" WindowStartupLocation="Manual">
     <!-- STANDARD HEIGHT: 650 ,STANDARD WIDTH: 1000 -->
     <!-- CURRENT HEIGHT: 800 ,CURRENT WIDTH: 1280 -->
@@ -13,9 +13,6 @@
         <StackPanel VerticalAlignment="Top">
             <Menu Width="auto" Height="20">
                 <MenuItem x:Name="Admin" Header="_Admin" Click="Admin_Click"/>
-                <MenuItem Header="_Tools">
-                    <MenuItem x:Name="Options" Header="Options" HorizontalAlignment="Left" Width="140"/>
-                </MenuItem>
                 <MenuItem Header="_Help">
                     <MenuItem x:Name="About" Header="About" HorizontalAlignment="Left" Width="140"/>
                 </MenuItem>
@@ -229,6 +226,7 @@
                         <Button x:Name="btn_Template_Cancel" Content="Cancel" Margin="0,0,10,15" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Click="btn_Template_Cancel_Click" Grid.Column="1"/>
                         <Button x:Name="btn_Template_Edit" Content="Edit" Margin="0,0,90,15" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Click="btn_Template_Edit_Click" Grid.Column="1"/>
                         <Button x:Name="btn_Template_StatusChange" Content="Enable" Margin="293,0,0,15" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="73" Click="btn_Template_StatusChange_Click"/>
+                        <Button x:Name="btn_Template_Remove" Content="Remove" Margin="371,0,0,15.4" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="73" Click="btn_Template_Remove_Click"/>
                     </Grid>
 
                 </TabItem>
@@ -261,7 +259,7 @@
                                         <TextBox x:Name="textBox_Backup_Dest" Height="23" Margin="175,37,62,0" TextWrapping="Wrap" Text="Backup destination path" VerticalAlignment="Top"/>
                                     </Grid>
                                 </GroupBox>
-                                <GroupBox Header="Time Settings" Margin="10,382,10,847">
+                                <GroupBox Header="Time Settings" Margin="10,382,9.6,0" Height="131" VerticalAlignment="Top">
                                     <Grid>
                                         <Label Content="Expiration Date:" HorizontalAlignment="Left" Margin="36,9,0,0" VerticalAlignment="Top"/>
                                         <Label Content="Start Time:" HorizontalAlignment="Left" Margin="63,38,0,0" VerticalAlignment="Top"/>

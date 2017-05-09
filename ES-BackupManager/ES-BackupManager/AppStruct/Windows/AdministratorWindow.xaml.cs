@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ES_BackupManager.ESBackupServerAdminService;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,10 +20,62 @@ namespace ES_BackupManager.AppStruct.Windows
     /// </summary>
     public partial class AdministratorWindow : Window
     {
-        public AdministratorWindow()
+        public AdministratorWindow(Administrator admin)
         {
             InitializeComponent();
+
+            this.Admin = admin;
+
+            this.LoadAdministratorData(admin);
         }
+
+        #region Local properties
+        private Administrator Admin { get; set; }
+
+        private bool _isEditState;
+        public bool IsEditState
+        {
+            get { return _isEditState; }
+            set
+            {
+                _isEditState = value;
+                if (value)
+                {
+                    this.btn_Edit.Content = "Save";
+                    this.btn_Cancel.IsEnabled = true;
+                }
+                else
+                {
+                    this.btn_Edit.Content = "Edit";
+                    this.btn_Cancel.IsEnabled = false;
+                }
+            }
+        }
+
+        #endregion
+
+        public void LoadAdministratorData(Administrator admin)
+        {
+            this.DisableComponents();
+
+            this.textBox_FirstName.Text = admin.FirstName;
+            this.textBox_LastName.Text = admin.LastName;
+            this.dateTimePicker_RegistrationDate.Value = admin.UTCRegistrationDate;            
+            this.listBox_Emails.ItemsSource = admin.Emails;
+        }
+
+        public void DisableComponents()
+        {
+            this.groupBox_Details.IsEnabled = false;
+            this.groupBox_Emails.IsEnabled = false;
+        }
+
+        public void EnableComponents()
+        {
+            this.groupBox_Details.IsEnabled = true;
+            this.groupBox_Emails.IsEnabled = true;
+        }
+
         public void Emails()
         {
             /*
@@ -193,6 +246,24 @@ namespace ES_BackupManager.AppStruct.Windows
             }
             #endregion
             */
+        }
+
+        private void btn_Edit_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.IsEditState)
+            {
+
+            }
+            else
+            {
+                this.EnableComponents();
+                this.IsEditState = true;
+            }
+        }
+        private void btn_Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.IsEditState = false;
+            this.LoadAdministratorData(this.Admin);
         }
     }
 }

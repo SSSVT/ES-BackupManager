@@ -1,24 +1,15 @@
 ﻿using ES_BackupManager.AppStruct.Objects;
+using ES_BackupManager.AppStruct.Windows;
 using ES_BackupManager.ESBackupServerAdminService;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Net.Mail;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.IO;
-using Xceed.Wpf.Toolkit;
 
 namespace ES_BackupManager
 {
@@ -27,10 +18,11 @@ namespace ES_BackupManager
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        public MainWindow(Administrator admin)
         {
-            InitializeComponent();            
+            InitializeComponent();
 
+            this.Administrator = admin;            
             this._loadGrid(Filter.All,Sort.Asc);
 
             //DEBUG
@@ -38,14 +30,14 @@ namespace ES_BackupManager
         }
 
         #region Local Properties
+        private Administrator Administrator { get; set; }
         private bool TemplatesLoaded { get; set; }
         private bool BackupsLoaded { get; set; }
         private bool LogsLoaded { get; set; }
-        private byte template_Mode;
-
-        public byte _template_Mode
+        private TemplateInputModes _templateMode;
+        private TemplateInputModes TemplateMode
         {
-            get { return template_Mode; }
+            get { return _templateMode; }
             set
             {
                 /* 
@@ -54,27 +46,28 @@ namespace ES_BackupManager
                  * 1 = ADD
                  * 2 = EDIT
                  */
-                template_Mode = value;
-                if (value == 0)
+                _templateMode = value;
+                if (value == TemplateInputModes.None)
                 {
                     this.btn_Template_New.IsEnabled = true;
                     this.btn_Template_StatusChange.IsEnabled = true;
                     this.btn_Template_Edit.Content = "Edit";
                 }
-                else if(value == 1)
+                else if (value == TemplateInputModes.Add)
                 {
                     this.btn_Template_New.IsEnabled = false;
                     this.btn_Template_StatusChange.IsEnabled = false;
                     this.btn_Template_Edit.Content = "Add";
                 }
-                else if (value == 2)
-                {                    
+                else if (value == TemplateInputModes.Edit)
+                {
                     this.btn_Template_New.IsEnabled = false;
                     this.btn_Template_StatusChange.IsEnabled = false;
                     this.btn_Template_Edit.Content = "Save";
                 }
+
             }
-        }    
+        }
         #endregion
 
         #region BindingLists for DataGrids/ListBoxes
@@ -88,6 +81,13 @@ namespace ES_BackupManager
         private BindingList<DestinationPathInfo> _gridTemplateDestinationList { get; set; } = new BindingList<DestinationPathInfo>();
         #endregion
 
+        #region Menu Controls
+        private void Admin_Click(object sender, RoutedEventArgs e)
+        {
+            AdministratorWindow aw = new AdministratorWindow(this.Administrator);
+            aw.Show();
+        }
+        #endregion
         #region Setup Controls
         private void btn_Main_ApplyFilter_Click(object sender, RoutedEventArgs e)
         {
@@ -356,18 +356,26 @@ namespace ES_BackupManager
         }
         private void btn_Template_New_Click(object sender, RoutedEventArgs e)
         {
-            this._template_Mode = 1;
+            this.TemplateMode = TemplateInputModes.Add;
             this.btn_Template_New.IsEnabled = false;
             this.btn_Template_Edit.IsEnabled = true;
             this._templateTab_EnableComponents();
             this._templateTab_SetDefaultValues();
 
         }
+        private void btn_Template_Remove_Click(object sender, RoutedEventArgs e)
+        {
+            if (Xceed.Wpf.Toolkit.MessageBox.Show(this,"Are you sure?", "Confirm", MessageBoxButton.YesNo) == MessageBoxResult.Yes )
+            {
+                //TODO: Implement - template remove
+                Xceed.Wpf.Toolkit.MessageBox.Show(this,"deleted");
+            }
+        }
         private void btn_Template_Edit_Click(object sender, RoutedEventArgs e)
         {
             ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
 
-            if (this._template_Mode == 1)
+            if (this.TemplateMode == TemplateInputModes.Add)
             {
                 Client c = this.dataGrid_Clients.SelectedItem as Client;
 
@@ -393,7 +401,7 @@ namespace ES_BackupManager
                         });
                     }
                 }
-                template.Paths = paths.ToArray();
+                template.Paths = paths;
 
                 template.BackupEmptyDirectories = this.checkBox_Template_EmptyFolders.IsChecked == true ? true : false ;
 
@@ -408,7 +416,7 @@ namespace ES_BackupManager
 
                 template.IsNotificationEnabled = this.radioBtn_Template_NotifEnable.IsChecked == true ? true :false;
 
-                this._template_Mode = 0;
+                this.TemplateMode = TemplateInputModes.None;
                 client.SaveTemplate(template);
                 this._gridTemplatesList.Add(template);
                 this.dataGrid_Templates.SelectedIndex = this.dataGrid_Templates.Items.Count - 1;
@@ -416,7 +424,7 @@ namespace ES_BackupManager
                 this.LoadTemplatesData(c);  
             }
 
-            if (this._template_Mode == 2)
+            if (this.TemplateMode == TemplateInputModes.Edit)
             {
                 //TODO: Edit mode
 
@@ -435,6 +443,7 @@ namespace ES_BackupManager
                     {
                         paths.Add(new BackupTemplatePath()
                         {
+                            IDBackupTemplate = template.ID,
                             Source = source.Value,
                             Destination = dest.Value,
                             PathOrder = Convert.ToInt16(paths.Count),
@@ -442,7 +451,7 @@ namespace ES_BackupManager
                         });
                     }
                 }
-                template.Paths = paths.ToArray();
+                template.Paths = paths;
 
                 template.BackupEmptyDirectories = this.checkBox_Template_EmptyFolders.IsChecked == true ? true : false;
 
@@ -459,11 +468,11 @@ namespace ES_BackupManager
 
                 client.SaveTemplate(template);
                 this._templateTab_DisableComponents();
-                this._template_Mode = 0;
+                this.TemplateMode = TemplateInputModes.None;
             }
-            else if (this._template_Mode == 0)
+            else if (this.TemplateMode == TemplateInputModes.None)
             {
-                this._template_Mode = 2;
+                this.TemplateMode = TemplateInputModes.Edit;
                 this._templateTab_EnableComponents();
             }                
             client.Close();
@@ -473,7 +482,7 @@ namespace ES_BackupManager
         {
             BackupTemplate bt = this.dataGrid_Templates.SelectedItem as BackupTemplate;
 
-            this._template_Mode = 0;
+            this.TemplateMode = TemplateInputModes.None;
 
             if (this._gridTemplatesList.Count == 0)
                 this.btn_Template_Edit.IsEnabled = false;
@@ -507,6 +516,7 @@ namespace ES_BackupManager
             this.groupBox_Template_Notification.IsEnabled = false;
 
             this.btn_Template_New.IsEnabled = true;
+            this.btn_Template_Remove.IsEnabled = false;
             this.btn_Template_StatusChange.IsEnabled = false;
             this.btn_Template_Edit.Content = "Edit";
         }
@@ -527,7 +537,9 @@ namespace ES_BackupManager
             this._gridTemplateDestinationList.Clear();
 
             if (bt != null)
-            {                
+            {
+                this.btn_Template_Remove.IsEnabled = true;
+
                 this.textBox_Template_Name.Text = bt.Name;
                 this.textBox_Template_Description.Text = bt.Description;
                 
@@ -850,6 +862,8 @@ namespace ES_BackupManager
             this.dateTimePicker_Backup_End.Watermark = "Backup end time";
             this.dateTimePicker_Backup_End.Value = null;
             this.label_Backup_ExpireError.Visibility = Visibility.Hidden;
+
+            this.btn_Template_Remove.IsEnabled = false;
         }
         private void btn_Backup_Edit_Click(object sender, RoutedEventArgs e)
         {        
@@ -866,7 +880,7 @@ namespace ES_BackupManager
         }
         private void btn_Backup_Cancel_Click(object sender, RoutedEventArgs e)
         {
-            Backup backup = this.dataGrid_Backups.SelectedItem as Backup;
+            Backup backup = this.dataGrid_Backups.SelectedItem as Backup;            
             this._loadBackupInfo(backup);
         }
         private void btn_Backup_Save_Click(object sender, RoutedEventArgs e)
@@ -921,10 +935,5 @@ namespace ES_BackupManager
         }
 
         #endregion
-
-        private void Admin_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }

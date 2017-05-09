@@ -57,6 +57,12 @@
   <wsdl:message name="IESBackupServerAdminService_Login_OutputMessage">
     <wsdl:part name="parameters" element="tns:LoginResponse" />
   </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_GetProfile_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetProfile" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_GetProfile_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetProfileResponse" />
+  </wsdl:message>
   <wsdl:message name="IESBackupServerAdminService_UpdateClient_InputMessage">
     <wsdl:part name="parameters" element="tns:UpdateClient" />
   </wsdl:message>
@@ -86,6 +92,18 @@
   </wsdl:message>
   <wsdl:message name="IESBackupServerAdminService_SetTemplateStatus_OutputMessage">
     <wsdl:part name="parameters" element="tns:SetTemplateStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_RemoveBackupTemplate_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveBackupTemplate" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_RemoveBackupTemplate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveBackupTemplateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_RemoveBackupTemplatePath_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveBackupTemplatePath" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_RemoveBackupTemplatePath_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveBackupTemplatePathResponse" />
   </wsdl:message>
   <wsdl:portType name="IESBackupServerAdminService">
     <wsdl:operation name="GetClients">
@@ -120,6 +138,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/Login" message="tns:IESBackupServerAdminService_Login_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/LoginResponse" message="tns:IESBackupServerAdminService_Login_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="GetProfile">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetProfile" message="tns:IESBackupServerAdminService_GetProfile_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetProfileResponse" message="tns:IESBackupServerAdminService_GetProfile_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="UpdateClient">
       <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/UpdateClient" message="tns:IESBackupServerAdminService_UpdateClient_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/UpdateClientResponse" message="tns:IESBackupServerAdminService_UpdateClient_OutputMessage" />
@@ -139,6 +161,14 @@
     <wsdl:operation name="SetTemplateStatus">
       <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/SetTemplateStatus" message="tns:IESBackupServerAdminService_SetTemplateStatus_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/SetTemplateStatusResponse" message="tns:IESBackupServerAdminService_SetTemplateStatus_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveBackupTemplate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/RemoveBackupTemplate" message="tns:IESBackupServerAdminService_RemoveBackupTemplate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/RemoveBackupTemplateResponse" message="tns:IESBackupServerAdminService_RemoveBackupTemplate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveBackupTemplatePath">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/RemoveBackupTemplatePath" message="tns:IESBackupServerAdminService_RemoveBackupTemplatePath_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/RemoveBackupTemplatePathResponse" message="tns:IESBackupServerAdminService_RemoveBackupTemplatePath_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IESBackupServerAdminService" type="tns:IESBackupServerAdminService">
@@ -215,6 +245,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GetProfile">
+      <soap:operation soapAction="http://tempuri.org/IESBackupServerAdminService/GetProfile" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="UpdateClient">
       <soap:operation soapAction="http://tempuri.org/IESBackupServerAdminService/UpdateClient" style="document" />
       <wsdl:input>
@@ -253,6 +292,24 @@
     </wsdl:operation>
     <wsdl:operation name="SetTemplateStatus">
       <soap:operation soapAction="http://tempuri.org/IESBackupServerAdminService/SetTemplateStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveBackupTemplate">
+      <soap:operation soapAction="http://tempuri.org/IESBackupServerAdminService/RemoveBackupTemplate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveBackupTemplatePath">
+      <soap:operation soapAction="http://tempuri.org/IESBackupServerAdminService/RemoveBackupTemplatePath" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

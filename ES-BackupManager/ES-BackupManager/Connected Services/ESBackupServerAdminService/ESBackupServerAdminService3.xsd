@@ -119,4 +119,33 @@
     <xs:attribute ref="ser:Ref" />
   </xs:complexType>
   <xs:element name="BackupTemplatePath" nillable="true" type="tns:BackupTemplatePath" />
+  <xs:complexType name="Administrator">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Emails" nillable="true" type="tns:ArrayOfEmail" />
+      <xs:element minOccurs="0" name="FirstName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ID" type="xs:long" />
+      <xs:element minOccurs="0" name="LastName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UTCRegistrationDate" type="xs:dateTime" />
+    </xs:sequence>
+    <xs:attribute ref="ser:Id" />
+    <xs:attribute ref="ser:Ref" />
+  </xs:complexType>
+  <xs:element name="Administrator" nillable="true" type="tns:Administrator" />
+  <xs:complexType name="ArrayOfEmail">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Email" nillable="true" type="tns:Email" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfEmail" nillable="true" type="tns:ArrayOfEmail" />
+  <xs:complexType name="Email">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Address" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ID" type="ser:guid" />
+      <xs:element minOccurs="0" name="IDAdministrator" type="xs:long" />
+      <xs:element minOccurs="0" name="IsDefault" type="xs:boolean" />
+    </xs:sequence>
+    <xs:attribute ref="ser:Id" />
+    <xs:attribute ref="ser:Ref" />
+  </xs:complexType>
+  <xs:element name="Email" nillable="true" type="tns:Email" />
 </xs:schema>
