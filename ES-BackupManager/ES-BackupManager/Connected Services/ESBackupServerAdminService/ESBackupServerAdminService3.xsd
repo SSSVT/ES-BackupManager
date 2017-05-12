@@ -12,11 +12,13 @@
       <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ID" type="xs:int" />
       <xs:element minOccurs="0" name="IDAdministrator" type="xs:long" />
+      <xs:element minOccurs="0" name="IsOnline" type="xs:boolean" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ReportInterval" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="Status" type="xs:unsignedByte" />
       <xs:element minOccurs="0" name="StatusReportEnabled" type="xs:boolean" />
       <xs:element minOccurs="0" name="UTCLastBackupTime" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="UTCLastConfigUpdate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="UTCLastStatusReportTime" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="UTCRegistrationDate" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Username" nillable="true" type="xs:string" />
@@ -25,13 +27,13 @@
     <xs:attribute ref="ser:Ref" />
   </xs:complexType>
   <xs:element name="Client" nillable="true" type="tns:Client" />
-  <xs:complexType name="ArrayOfBackup">
+  <xs:complexType name="ArrayOfBackupInfo">
     <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="Backup" nillable="true" type="tns:Backup" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="BackupInfo" nillable="true" type="tns:BackupInfo" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ArrayOfBackup" nillable="true" type="tns:ArrayOfBackup" />
-  <xs:complexType name="Backup">
+  <xs:element name="ArrayOfBackupInfo" nillable="true" type="tns:ArrayOfBackupInfo" />
+  <xs:complexType name="BackupInfo">
     <xs:sequence>
       <xs:element minOccurs="0" name="BackupType" type="xs:unsignedByte" />
       <xs:element minOccurs="0" name="BaseBackupID" nillable="true" type="xs:long" />
@@ -53,7 +55,7 @@
     <xs:attribute ref="ser:Id" />
     <xs:attribute ref="ser:Ref" />
   </xs:complexType>
-  <xs:element name="Backup" nillable="true" type="tns:Backup" />
+  <xs:element name="BackupInfo" nillable="true" type="tns:BackupInfo" />
   <xs:complexType name="ArrayOfLog">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Log" nillable="true" type="tns:Log" />

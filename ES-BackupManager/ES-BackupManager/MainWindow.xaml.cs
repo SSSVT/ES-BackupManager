@@ -72,11 +72,9 @@ namespace ES_BackupManager
 
         #region BindingLists for DataGrids/ListBoxes
         private BindingList<Client> _gridClientsList { get; set; } = new BindingList<Client>();
-        private BindingList<Backup> _gridBackupsList { get; set; } = new BindingList<Backup>();
+        private BindingList<BackupInfo> _gridBackupsList { get; set; } = new BindingList<BackupInfo>();
         private BindingList<Log> _gridLogsList { get; set; } = new BindingList<Log>();
-        private BindingList<BackupTemplate> _gridTemplatesList { get; set; } = new BindingList<BackupTemplate>();
-        private BindingList<string> _listBoxEmailsList { get; set; } = new BindingList<string>();
-
+        private BindingList<BackupTemplate> _gridTemplatesList { get; set; } = new BindingList<BackupTemplate>();        
         private BindingList<SourcePathInfo> _gridTemplateSourceList { get; set; } = new BindingList<SourcePathInfo>();
         private BindingList<DestinationPathInfo> _gridTemplateDestinationList { get; set; } = new BindingList<DestinationPathInfo>();
         #endregion
@@ -126,9 +124,9 @@ namespace ES_BackupManager
             }
 
             if (this._gridClientsList.Count > 0)
-                this.dataGrid_Clients.SelectedIndex = 0;
+                this.listBox_Clients.SelectedIndex = 0;
 
-            this.dataGrid_Clients.ItemsSource = this._gridClientsList;
+            this.listBox_Clients.ItemsSource = this._gridClientsList;
 
             client.Close();
         }
@@ -148,7 +146,7 @@ namespace ES_BackupManager
         private void TabControl_Main_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
-            Client c = this.dataGrid_Clients.SelectedItem as Client;
+            Client c = this.listBox_Clients.SelectedItem as Client;
 
             switch (this.TabControl_Main.SelectedIndex)
             {
@@ -170,12 +168,12 @@ namespace ES_BackupManager
         #endregion
 
         #region Client Controls        
-        private void dataGrid_Clients_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void listBox_Clients_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             this.TabControl_Main.IsEnabled = true;            
             this.btn_Client_Edit.IsEnabled = true;
 
-            Client c = this.dataGrid_Clients.SelectedItem as Client;  
+            Client c = this.listBox_Clients.SelectedItem as Client;  
             if(c != null)
             {
                 this._loadComponents(c);
@@ -218,17 +216,14 @@ namespace ES_BackupManager
 
             if (c.StatusReportEnabled)
             {
-                this.radioBtn_Client_ConnSet.IsChecked = true;                
+                this.radioBtn_Client_ConnSet.IsChecked = true;
                 this.IntUpDown_Client_StatusRepeat.Value = c.ReportInterval;
-
             }
             else
-            {
                 this.radioBtn_Client_ConnDefault.IsChecked = true;
-            }
 
-            this.dateTimePicker_Client_LastBackupTime.Value = c.UTCLastBackupTime != null ?  c.UTCLastBackupTime : null;
-            this.dateTimePicker_Client_LastReportTime.Value = c.UTCLastBackupTime != null ? c.UTCLastStatusReportTime : null;
+            this.dateTimePicker_Client_LastBackupTime.Value = c.UTCLastBackupTime;
+            this.dateTimePicker_Client_LastReportTime.Value = c.UTCLastStatusReportTime;
             this.dateTimePicker_Client_RegistrationDate.Value = c.UTCRegistrationDate;
 
             client.Close();
@@ -236,10 +231,9 @@ namespace ES_BackupManager
         private void btn_Client_Save_Click(object sender, RoutedEventArgs e)
         {
             ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
-            Client c = this.dataGrid_Clients.SelectedItem as Client;
+            Client c = this.listBox_Clients.SelectedItem as Client;
                         
-            c.Description = this.textBox_Client_Description.Text;
-            //c.Emails = this._convertEmailsFromListBox(this._listBoxEmailsList);
+            c.Description = this.textBox_Client_Description.Text;            
             c.Status = Convert.ToByte(this.comboBox_Client_Status.SelectedIndex);
             c.StatusReportEnabled = (bool)this.radioBtn_Client_ConnSet.IsChecked ? true : false ;
             if (c.StatusReportEnabled)
@@ -255,8 +249,7 @@ namespace ES_BackupManager
 
         private void btn_Client_Cancel_Click(object sender, RoutedEventArgs e)
         {
-            Client client = this.dataGrid_Clients.SelectedItem as Client;
-            this._listBoxEmailsList.Clear();
+            Client client = this.listBox_Clients.SelectedItem as Client;            
             this.LoadClientInfo(client);
         }
         private void btn_Client_Edit_Click(object sender, RoutedEventArgs e)
@@ -278,6 +271,7 @@ namespace ES_BackupManager
         {
             this.IntUpDown_Client_StatusRepeat.IsEnabled = false;
             this.IntUpDown_Client_StatusRepeat.Value = null;
+
         }        
         #endregion
         #region Backup Template Controls
@@ -312,8 +306,7 @@ namespace ES_BackupManager
                 this.dataGrid_Templates.SelectedIndex = 0;
                 this.btn_Template_Edit.IsEnabled = true;
             }
-
-                this.TemplatesLoaded = true;
+            this.TemplatesLoaded = true;
 
             client.Close();
             }
@@ -377,7 +370,7 @@ namespace ES_BackupManager
 
             if (this.TemplateMode == TemplateInputModes.Add)
             {
-                Client c = this.dataGrid_Clients.SelectedItem as Client;
+                Client c = this.listBox_Clients.SelectedItem as Client;
 
                 BackupTemplate template = new BackupTemplate();
                 template.IDClient = c.ID;
@@ -415,6 +408,7 @@ namespace ES_BackupManager
                     template.DaysToExpiration = (uint?)((DateTime)this.dateTimePicker_Template_Expire.Value - DateTime.Now).Days;
 
                 template.IsNotificationEnabled = this.radioBtn_Template_NotifEnable.IsChecked == true ? true :false;
+                template.IsEmailNotificationEnabled = this.checkBox_Template_EmailReport.IsChecked == true ? true : false;
 
                 this.TemplateMode = TemplateInputModes.None;
                 client.SaveTemplate(template);
@@ -465,6 +459,7 @@ namespace ES_BackupManager
                     template.DaysToExpiration = (uint?)((DateTime)this.dateTimePicker_Template_Expire.Value - DateTime.Now).Days;
 
                 template.IsNotificationEnabled = this.radioBtn_Template_NotifEnable.IsChecked == true ? true : false;
+                template.IsEmailNotificationEnabled = this.checkBox_Template_EmailReport.IsChecked == true ? true : false;
 
                 client.SaveTemplate(template);
                 this._templateTab_DisableComponents();
@@ -591,6 +586,7 @@ namespace ES_BackupManager
                     this.dateTimePicker_Template_Expire.Value = null;
 
                 this.radioBtn_Template_NotifEnable.IsChecked = bt.IsNotificationEnabled;
+                this.checkBox_Template_EmailReport.IsChecked = bt.IsEmailNotificationEnabled;
 
                 this.btn_Template_StatusChange.Content = bt.Enabled ? "Disable" : "Enable";
                 this.btn_Template_StatusChange.IsEnabled = true;
@@ -730,7 +726,7 @@ namespace ES_BackupManager
 
             ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
 
-            foreach (Backup item in client.GetBackupsByClientID(c.ID))
+            foreach (BackupInfo item in client.GetBackupsByClientID(c.ID))
             {
                 this._gridBackupsList.Add(item);
             }
@@ -751,7 +747,7 @@ namespace ES_BackupManager
             client.Close();
             }
         }
-        private void _loadBackupInfo(Backup b)
+        private void _loadBackupInfo(BackupInfo b)
         {            
             this._backupTab_DisableComponents();
             if (b != null)
@@ -815,7 +811,7 @@ namespace ES_BackupManager
         }
         private void dataGrid_Backups_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Backup b = this.dataGrid_Backups.SelectedItem as Backup;
+            BackupInfo b = this.dataGrid_Backups.SelectedItem as BackupInfo;
             this._loadBackupInfo(b);
             e.Handled = true;
         }
@@ -880,7 +876,7 @@ namespace ES_BackupManager
         }
         private void btn_Backup_Cancel_Click(object sender, RoutedEventArgs e)
         {
-            Backup backup = this.dataGrid_Backups.SelectedItem as Backup;            
+            BackupInfo backup = this.dataGrid_Backups.SelectedItem as BackupInfo;            
             this._loadBackupInfo(backup);
         }
         private void btn_Backup_Save_Click(object sender, RoutedEventArgs e)
@@ -888,7 +884,7 @@ namespace ES_BackupManager
             if (this._isBackupExpireDateValid(this.dateTimePicker_Backup_Expire.Value))
             {
                 ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
-                Backup backup = this.dataGrid_Backups.SelectedItem as Backup;
+                BackupInfo backup = this.dataGrid_Backups.SelectedItem as BackupInfo;
 
                 backup.Name = this.textBox_Backup_Name.Text;
                 backup.Description = this.textBox_Backup_Description.Text;

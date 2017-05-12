@@ -105,6 +105,12 @@
   <wsdl:message name="IESBackupServerAdminService_RemoveBackupTemplatePath_OutputMessage">
     <wsdl:part name="parameters" element="tns:RemoveBackupTemplatePathResponse" />
   </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_UpdateAdministrator_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateAdministrator" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_UpdateAdministrator_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateAdministratorResponse" />
+  </wsdl:message>
   <wsdl:portType name="IESBackupServerAdminService">
     <wsdl:operation name="GetClients">
       <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetClients" message="tns:IESBackupServerAdminService_GetClients_InputMessage" />
@@ -169,6 +175,10 @@
     <wsdl:operation name="RemoveBackupTemplatePath">
       <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/RemoveBackupTemplatePath" message="tns:IESBackupServerAdminService_RemoveBackupTemplatePath_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/RemoveBackupTemplatePathResponse" message="tns:IESBackupServerAdminService_RemoveBackupTemplatePath_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateAdministrator">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/UpdateAdministrator" message="tns:IESBackupServerAdminService_UpdateAdministrator_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/UpdateAdministratorResponse" message="tns:IESBackupServerAdminService_UpdateAdministrator_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IESBackupServerAdminService" type="tns:IESBackupServerAdminService">
@@ -310,6 +320,15 @@
     </wsdl:operation>
     <wsdl:operation name="RemoveBackupTemplatePath">
       <soap:operation soapAction="http://tempuri.org/IESBackupServerAdminService/RemoveBackupTemplatePath" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateAdministrator">
+      <soap:operation soapAction="http://tempuri.org/IESBackupServerAdminService/UpdateAdministrator" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

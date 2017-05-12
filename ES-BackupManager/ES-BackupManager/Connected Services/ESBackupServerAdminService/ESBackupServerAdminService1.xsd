@@ -29,7 +29,7 @@
   <xs:element name="GetBackupsByClientIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/ESBackupServer.Database.Objects" minOccurs="0" name="GetBackupsByClientIDResult" nillable="true" type="q4:ArrayOfBackup" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/ESBackupServer.Database.Objects" minOccurs="0" name="GetBackupsByClientIDResult" nillable="true" type="q4:ArrayOfBackupInfo" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -43,7 +43,7 @@
   <xs:element name="GetBackupByIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/ESBackupServer.Database.Objects" minOccurs="0" name="GetBackupByIDResult" nillable="true" type="q5:Backup" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/ESBackupServer.Database.Objects" minOccurs="0" name="GetBackupByIDResult" nillable="true" type="q5:BackupInfo" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -159,7 +159,7 @@
   <xs:element name="UpdateBackup">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/ESBackupServer.Database.Objects" minOccurs="0" name="backup" nillable="true" type="q12:Backup" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/ESBackupServer.Database.Objects" minOccurs="0" name="backup" nillable="true" type="q12:BackupInfo" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -213,6 +213,18 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="RemoveBackupTemplatePathResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateAdministrator">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/ESBackupServer.Database.Objects" minOccurs="0" name="admin" nillable="true" type="q15:Administrator" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateAdministratorResponse">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>

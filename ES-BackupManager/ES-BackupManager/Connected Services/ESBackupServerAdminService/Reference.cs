@@ -60,6 +60,9 @@ namespace ES_BackupManager.ESBackupServerAdminService {
         private long IDAdministratorField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsOnlineField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string NameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -73,6 +76,9 @@ namespace ES_BackupManager.ESBackupServerAdminService {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> UTCLastBackupTimeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> UTCLastConfigUpdateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> UTCLastStatusReportTimeField;
@@ -128,6 +134,19 @@ namespace ES_BackupManager.ESBackupServerAdminService {
                 if ((this.IDAdministratorField.Equals(value) != true)) {
                     this.IDAdministratorField = value;
                     this.RaisePropertyChanged("IDAdministrator");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsOnline {
+            get {
+                return this.IsOnlineField;
+            }
+            set {
+                if ((this.IsOnlineField.Equals(value) != true)) {
+                    this.IsOnlineField = value;
+                    this.RaisePropertyChanged("IsOnline");
                 }
             }
         }
@@ -198,6 +217,19 @@ namespace ES_BackupManager.ESBackupServerAdminService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> UTCLastConfigUpdate {
+            get {
+                return this.UTCLastConfigUpdateField;
+            }
+            set {
+                if ((this.UTCLastConfigUpdateField.Equals(value) != true)) {
+                    this.UTCLastConfigUpdateField = value;
+                    this.RaisePropertyChanged("UTCLastConfigUpdate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.Nullable<System.DateTime> UTCLastStatusReportTime {
             get {
                 return this.UTCLastStatusReportTimeField;
@@ -248,9 +280,9 @@ namespace ES_BackupManager.ESBackupServerAdminService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Backup", Namespace="http://schemas.datacontract.org/2004/07/ESBackupServer.Database.Objects", IsReference=true)]
+    [System.Runtime.Serialization.DataContractAttribute(Name="BackupInfo", Namespace="http://schemas.datacontract.org/2004/07/ESBackupServer.Database.Objects", IsReference=true)]
     [System.SerializableAttribute()]
-    public partial class Backup : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class BackupInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -1340,16 +1372,16 @@ namespace ES_BackupManager.ESBackupServerAdminService {
         System.Threading.Tasks.Task<System.Collections.Generic.List<ES_BackupManager.ESBackupServerAdminService.Client>> GetClientsAsync(ES_BackupManager.ESBackupServerAdminService.Filter filter, ES_BackupManager.ESBackupServerAdminService.Sort sort);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/GetBackupsByClientID", ReplyAction="http://tempuri.org/IESBackupServerAdminService/GetBackupsByClientIDResponse")]
-        System.Collections.Generic.List<ES_BackupManager.ESBackupServerAdminService.Backup> GetBackupsByClientID(int id);
+        System.Collections.Generic.List<ES_BackupManager.ESBackupServerAdminService.BackupInfo> GetBackupsByClientID(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/GetBackupsByClientID", ReplyAction="http://tempuri.org/IESBackupServerAdminService/GetBackupsByClientIDResponse")]
-        System.Threading.Tasks.Task<System.Collections.Generic.List<ES_BackupManager.ESBackupServerAdminService.Backup>> GetBackupsByClientIDAsync(int id);
+        System.Threading.Tasks.Task<System.Collections.Generic.List<ES_BackupManager.ESBackupServerAdminService.BackupInfo>> GetBackupsByClientIDAsync(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/GetBackupByID", ReplyAction="http://tempuri.org/IESBackupServerAdminService/GetBackupByIDResponse")]
-        ES_BackupManager.ESBackupServerAdminService.Backup GetBackupByID(long id);
+        ES_BackupManager.ESBackupServerAdminService.BackupInfo GetBackupByID(long id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/GetBackupByID", ReplyAction="http://tempuri.org/IESBackupServerAdminService/GetBackupByIDResponse")]
-        System.Threading.Tasks.Task<ES_BackupManager.ESBackupServerAdminService.Backup> GetBackupByIDAsync(long id);
+        System.Threading.Tasks.Task<ES_BackupManager.ESBackupServerAdminService.BackupInfo> GetBackupByIDAsync(long id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/GetLogsByClientID", ReplyAction="http://tempuri.org/IESBackupServerAdminService/GetLogsByClientIDResponse")]
         System.Collections.Generic.List<ES_BackupManager.ESBackupServerAdminService.Log> GetLogsByClientID(int id);
@@ -1402,10 +1434,10 @@ namespace ES_BackupManager.ESBackupServerAdminService {
         System.Threading.Tasks.Task RemoveBackupAsync(long id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/UpdateBackup", ReplyAction="http://tempuri.org/IESBackupServerAdminService/UpdateBackupResponse")]
-        void UpdateBackup(ES_BackupManager.ESBackupServerAdminService.Backup backup);
+        void UpdateBackup(ES_BackupManager.ESBackupServerAdminService.BackupInfo backup);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/UpdateBackup", ReplyAction="http://tempuri.org/IESBackupServerAdminService/UpdateBackupResponse")]
-        System.Threading.Tasks.Task UpdateBackupAsync(ES_BackupManager.ESBackupServerAdminService.Backup backup);
+        System.Threading.Tasks.Task UpdateBackupAsync(ES_BackupManager.ESBackupServerAdminService.BackupInfo backup);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/SaveTemplate", ReplyAction="http://tempuri.org/IESBackupServerAdminService/SaveTemplateResponse")]
         void SaveTemplate(ES_BackupManager.ESBackupServerAdminService.BackupTemplate template);
@@ -1430,6 +1462,12 @@ namespace ES_BackupManager.ESBackupServerAdminService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/RemoveBackupTemplatePath", ReplyAction="http://tempuri.org/IESBackupServerAdminService/RemoveBackupTemplatePathResponse")]
         System.Threading.Tasks.Task RemoveBackupTemplatePathAsync(System.Guid id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/UpdateAdministrator", ReplyAction="http://tempuri.org/IESBackupServerAdminService/UpdateAdministratorResponse")]
+        void UpdateAdministrator(ES_BackupManager.ESBackupServerAdminService.Administrator admin);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/UpdateAdministrator", ReplyAction="http://tempuri.org/IESBackupServerAdminService/UpdateAdministratorResponse")]
+        System.Threading.Tasks.Task UpdateAdministratorAsync(ES_BackupManager.ESBackupServerAdminService.Administrator admin);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1467,19 +1505,19 @@ namespace ES_BackupManager.ESBackupServerAdminService {
             return base.Channel.GetClientsAsync(filter, sort);
         }
         
-        public System.Collections.Generic.List<ES_BackupManager.ESBackupServerAdminService.Backup> GetBackupsByClientID(int id) {
+        public System.Collections.Generic.List<ES_BackupManager.ESBackupServerAdminService.BackupInfo> GetBackupsByClientID(int id) {
             return base.Channel.GetBackupsByClientID(id);
         }
         
-        public System.Threading.Tasks.Task<System.Collections.Generic.List<ES_BackupManager.ESBackupServerAdminService.Backup>> GetBackupsByClientIDAsync(int id) {
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<ES_BackupManager.ESBackupServerAdminService.BackupInfo>> GetBackupsByClientIDAsync(int id) {
             return base.Channel.GetBackupsByClientIDAsync(id);
         }
         
-        public ES_BackupManager.ESBackupServerAdminService.Backup GetBackupByID(long id) {
+        public ES_BackupManager.ESBackupServerAdminService.BackupInfo GetBackupByID(long id) {
             return base.Channel.GetBackupByID(id);
         }
         
-        public System.Threading.Tasks.Task<ES_BackupManager.ESBackupServerAdminService.Backup> GetBackupByIDAsync(long id) {
+        public System.Threading.Tasks.Task<ES_BackupManager.ESBackupServerAdminService.BackupInfo> GetBackupByIDAsync(long id) {
             return base.Channel.GetBackupByIDAsync(id);
         }
         
@@ -1547,11 +1585,11 @@ namespace ES_BackupManager.ESBackupServerAdminService {
             return base.Channel.RemoveBackupAsync(id);
         }
         
-        public void UpdateBackup(ES_BackupManager.ESBackupServerAdminService.Backup backup) {
+        public void UpdateBackup(ES_BackupManager.ESBackupServerAdminService.BackupInfo backup) {
             base.Channel.UpdateBackup(backup);
         }
         
-        public System.Threading.Tasks.Task UpdateBackupAsync(ES_BackupManager.ESBackupServerAdminService.Backup backup) {
+        public System.Threading.Tasks.Task UpdateBackupAsync(ES_BackupManager.ESBackupServerAdminService.BackupInfo backup) {
             return base.Channel.UpdateBackupAsync(backup);
         }
         
@@ -1585,6 +1623,14 @@ namespace ES_BackupManager.ESBackupServerAdminService {
         
         public System.Threading.Tasks.Task RemoveBackupTemplatePathAsync(System.Guid id) {
             return base.Channel.RemoveBackupTemplatePathAsync(id);
+        }
+        
+        public void UpdateAdministrator(ES_BackupManager.ESBackupServerAdminService.Administrator admin) {
+            base.Channel.UpdateAdministrator(admin);
+        }
+        
+        public System.Threading.Tasks.Task UpdateAdministratorAsync(ES_BackupManager.ESBackupServerAdminService.Administrator admin) {
+            return base.Channel.UpdateAdministratorAsync(admin);
         }
     }
 }

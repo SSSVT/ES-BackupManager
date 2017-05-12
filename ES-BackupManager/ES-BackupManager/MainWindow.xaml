@@ -9,6 +9,25 @@
         MinWidth="1000" MinHeight="650" WindowStartupLocation="Manual">
     <!-- STANDARD HEIGHT: 650 ,STANDARD WIDTH: 1000 -->
     <!-- CURRENT HEIGHT: 800 ,CURRENT WIDTH: 1280 -->
+    <Window.Resources>
+        <Style TargetType="{x:Type ListBoxItem}" x:Key="ClientStyle" >
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Status}" Value="0">
+                    <Setter Property="Background" Value="LightCyan"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Status}" Value="1">
+                    <Setter Property="Background" Value="LightYellow"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Status}" Value="2">
+                    <Setter Property="Background" Value="LightGray"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <BitmapImage x:Key="OnlineIcon" UriSource="Resources/ImgStatusOnline.png"/>
+        <BitmapImage x:Key="OfflineIcon" UriSource="Resources/ImgStatusOffline.png"/>
+        <BitmapImage x:Key="BannedIcon" UriSource="Resources/ImgStatusBanned.png"/>
+    </Window.Resources>
     <Grid>
         <StackPanel VerticalAlignment="Top">
             <Menu Width="auto" Height="20">
@@ -34,26 +53,33 @@
                 <ComboBoxItem Content="Banned"/>
             </ComboBox>
             <Button x:Name="btn_Main_ApplyFilter" Content="Apply" HorizontalAlignment="Left" Margin="65,66,0,0" VerticalAlignment="Top" Width="75" Click="btn_Main_ApplyFilter_Click"/>
-            <DataGrid Name="dataGrid_Clients" HorizontalAlignment="Left" Margin="10,91,0,10" Width="200" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="dataGrid_Clients_SelectionChanged" SelectionMode="Single">
-                <DataGrid.RowStyle>
-                    <Style TargetType="DataGridRow">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Status}" Value="0">
-                                <Setter Property="Background" Value="LightCyan"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding Status}" Value="1">
-                                <Setter Property="Background" Value="LightYellow"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding Status}" Value="2">
-                                <Setter Property="Background" Value="LightGray"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </DataGrid.RowStyle>
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Client Name" Binding="{Binding Name}" Width="*"/>
-                </DataGrid.Columns>
-            </DataGrid>
+            <ListBox Name="listBox_Clients" HorizontalAlignment="Left" Margin="10,91,0,10" Width="200" SelectionMode="Single" ItemContainerStyle="{StaticResource ClientStyle}" SelectionChanged="listBox_Clients_SelectionChanged">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="0,2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="20" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Image Margin="2 0 0 0" Grid.Column="0" Height="10" Width="10" HorizontalAlignment="Left">
+                                <Image.Style>
+                                    <Style TargetType="{x:Type Image}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsOnline}" Value="true">
+                                                <Setter Property="Source" Value="{StaticResource OnlineIcon}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding IsOnline}" Value="false">
+                                                <Setter Property="Source" Value="{StaticResource OfflineIcon}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                            <TextBlock Grid.Column="1" Text="{Binding Name}" />
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
             <TabControl Name="TabControl_Main" Margin="215,10,10,10" IsEnabled="False" SelectionChanged="TabControl_Main_SelectionChanged">
                 <TabItem Header="Information">
                     <Grid>
@@ -67,9 +93,9 @@
                                 <Label Content="Last report time:" HorizontalAlignment="Left" Margin="47,98,0,0" VerticalAlignment="Top"/>
                                 <xctk:DateTimePickerBase x:Name="dateTimePicker_Client_LastReportTime" TextAlignment="Left" Height="24" Margin="192,101,289,0" Watermark="Last report time" VerticalAlignment="Top" IsEnabled="False"/>
                                 <Label Content="Last backup time:" HorizontalAlignment="Left" Margin="41,128,0,0" VerticalAlignment="Top"/>
-                                <xctk:DateTimePickerBase x:Name="dateTimePicker_Client_LastBackupTime" Height="24" Margin="192,129,289,0" Watermark="Last backup time" VerticalAlignment="Top" IsEnabled="False"/>
+                                <xctk:DateTimePickerBase x:Name="dateTimePicker_Client_LastBackupTime" TextAlignment="Left" Height="24" Margin="192,129,289,0" Watermark="Last backup time" VerticalAlignment="Top" IsEnabled="False"/>
                                 <Label Content="Registration date:" HorizontalAlignment="Left" Margin="40,157,0,0" VerticalAlignment="Top"/>
-                                <xctk:DateTimePickerBase x:Name="dateTimePicker_Client_RegistrationDate" Height="24" Margin="192,158,289,0" Watermark="Registration date" VerticalAlignment="Top" IsEnabled="False"/>
+                                <xctk:DateTimePickerBase x:Name="dateTimePicker_Client_RegistrationDate" TextAlignment="Left" Height="24" Margin="192,158,289,0" Watermark="Registration date" VerticalAlignment="Top" IsEnabled="False"/>
                             </Grid>
                         </GroupBox>
                         <GroupBox Header="Client Settings" Margin="10,227,10,0" Height="218" VerticalAlignment="Top">
@@ -207,10 +233,8 @@
 
                                         </Grid>
                                     </GroupBox>
-                                    <GroupBox x:Name="groupBox" Header="Email Report Settings" Margin="10,868,10,391">
-                                        <Grid>
-
-                                        </Grid>
+                                    <GroupBox x:Name="groupBox" Header="Email Report Settings" Margin="10,868,10,318.6">
+                                        <CheckBox x:Name="checkBox_Template_EmailReport" Content="Include in email report" HorizontalAlignment="Left" Margin="58,10,0,0" VerticalAlignment="Top"/>
                                     </GroupBox>
                                     <GroupBox x:Name="groupBox_Template_Exception" Header="Exception Settings" Margin="10,538,10,0" VerticalAlignment="Top" Height="99">
                                         <Grid>
