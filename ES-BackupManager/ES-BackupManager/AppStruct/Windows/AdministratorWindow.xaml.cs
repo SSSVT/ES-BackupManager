@@ -77,13 +77,14 @@ namespace ES_BackupManager.AppStruct.Windows
             this.groupBox_Emails.IsEnabled = true;
         }
         private void btn_Edit_Click(object sender, RoutedEventArgs e)
-        {
-            //TODO: Validation
+        {            
             if (this.IsEditState && this.IsValid())
             {
                 ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
-                //TODO: Send update to server
+                
                 this.Admin.FirstName = this.textBox_FirstName.Text;
+                this.Admin.LastName = this.textBox_LastName.Text;
+                this.Admin.Emails = new List<Email>(this._gridEmailsList);
 
                 client.UpdateAdministrator(this.Admin);
 
@@ -118,8 +119,13 @@ namespace ES_BackupManager.AppStruct.Windows
                 this._gridEmailsList.RemoveAt(index);
         }
         private bool IsValid()
-        {
-            //TODO: Window validation      
+        {     
+            if (string.IsNullOrWhiteSpace(this.textBox_FirstName.Text))
+                return false;
+
+            if (string.IsNullOrWhiteSpace(this.textBox_LastName.Text))
+                return false;
+
             return true;
         }
     }
