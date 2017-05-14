@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"        
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"     
         mc:Ignorable="d"
-        Title="Backup Manager | Evolution Studio" Height="350" Width="700" MinHeight="350" MinWidth="700">
+        Title="Backup Manager | Evolution Studio" Height="395" Width="700" MinHeight="395" MinWidth="700">
     <Grid>
-        <GroupBox Name="groupBox_Emails" Header="Emails" Height="146" Margin="10,174,10.2,0" VerticalAlignment="Top">
+        <GroupBox Name="groupBox_Emails" Header="Emails" Margin="10,174,10,44">
             <Grid>
                 <DataGrid Name="dataGrid_Emails" Margin="10,5,100,5.2" AutoGenerateColumns="False" IsReadOnly="True">
                     <DataGrid.Columns>
@@ -30,7 +30,7 @@
                 <xctk:DateTimePicker x:Name="dateTimePicker_RegistrationDate" Watermark="Registration date" Height="24" Margin="190,101,79.2,0" VerticalAlignment="Top" IsEnabled="False"/>
             </Grid>
         </GroupBox>
-        <Button Name="btn_Edit" Content="Edit" Margin="0,343,90.2,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="75" Click="btn_Edit_Click"/>
-        <Button Name="btn_Cancel" Content="Cancel" Margin="710,343,10.2,0" Click="btn_Cancel_Click" Height="20" VerticalAlignment="Top" IsEnabled="False"/>
+        <Button Name="btn_Edit" Content="Edit" Margin="0,0,90,14" HorizontalAlignment="Right" Width="75" Click="btn_Edit_Click" Height="20" VerticalAlignment="Bottom"/>
+        <Button Name="btn_Cancel" Content="Cancel" Margin="0,0,10,14" Click="btn_Cancel_Click" Height="20" VerticalAlignment="Bottom" IsEnabled="False" HorizontalAlignment="Right" Width="75"/>
     </Grid>
 </Window>

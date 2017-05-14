@@ -34,6 +34,48 @@ namespace ES_BackupManager
         private bool TemplatesLoaded { get; set; }
         private bool BackupsLoaded { get; set; }
         private bool LogsLoaded { get; set; }
+
+        private bool _isBackupEditState;
+        public bool IsBackupEditState
+        {
+            get { return _isBackupEditState; }
+            set
+            {
+                _isBackupEditState = value;
+                if (value)
+                {
+                    this.btn_Backup_Edit.Content = "Save";
+                    this.btn_Backup_Cancel.IsEnabled = true;
+                }
+                else
+                {
+                    this.btn_Backup_Edit.Content = "Edit";
+                    this.btn_Backup_Cancel.IsEnabled = false;
+                }
+            }
+        }
+
+        private bool _isClientEditState;
+        private bool IsClientEditState
+        {
+            get { return _isClientEditState; }
+            set
+            {
+                _isClientEditState = value;
+
+                if(value)
+                {
+                    this.btn_Client_Edit.Content = "Save";
+                    this.btn_Client_Cancel.IsEnabled = true;
+                }
+                else
+                {
+                    this.btn_Client_Edit.Content = "Edit";
+                    this.btn_Client_Cancel.IsEnabled = false;
+                }
+            }
+        }
+
         private TemplateInputModes _templateMode;
         private TemplateInputModes TemplateMode
         {
@@ -185,8 +227,7 @@ namespace ES_BackupManager
         {
             this.textBox_Client_Name.IsEnabled = false;
             this.textBox_Client_Description.IsEnabled = false;            
-            this.btn_Client_Cancel.IsEnabled = false;
-            this.btn_Client_Save.IsEnabled = false;
+            this.btn_Client_Cancel.IsEnabled = false;            
             this.comboBox_Client_Status.IsEnabled = false;
             this.groupBox_Client_Connection.IsEnabled = false;     
         }
@@ -228,38 +269,44 @@ namespace ES_BackupManager
 
             client.Close();
         }
-        private void btn_Client_Save_Click(object sender, RoutedEventArgs e)
-        {
-            ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
-            Client c = this.listBox_Clients.SelectedItem as Client;
-                        
-            c.Description = this.textBox_Client_Description.Text;            
-            c.Status = Convert.ToByte(this.comboBox_Client_Status.SelectedIndex);
-            c.StatusReportEnabled = (bool)this.radioBtn_Client_ConnSet.IsChecked ? true : false ;
-            if (c.StatusReportEnabled)
-                c.ReportInterval = (int)this.IntUpDown_Client_StatusRepeat.Value;
-                
-
-            this._clientTab_DisableComponents();
-            this.btn_Client_Edit.IsEnabled = true;            
-
-            client.UpdateClient(c);
-            client.Close();
-        }
 
         private void btn_Client_Cancel_Click(object sender, RoutedEventArgs e)
         {
-            Client client = this.listBox_Clients.SelectedItem as Client;            
+            Client client = this.listBox_Clients.SelectedItem as Client;
+            this.IsClientEditState = false;
             this.LoadClientInfo(client);
         }
         private void btn_Client_Edit_Click(object sender, RoutedEventArgs e)
-        {                        
-            this.textBox_Client_Description.IsEnabled = true;
-            this.comboBox_Client_Status.IsEnabled = true;
-            this.groupBox_Client_Connection.IsEnabled = true;
+        {
+            if (this.IsClientEditState)
+            {
+                ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
+                Client c = this.listBox_Clients.SelectedItem as Client;
 
-            this.btn_Client_Save.IsEnabled = true;
-            this.btn_Client_Cancel.IsEnabled = true;
+                c.Description = this.textBox_Client_Description.Text;
+                c.Status = Convert.ToByte(this.comboBox_Client_Status.SelectedIndex);
+                c.StatusReportEnabled = (bool)this.radioBtn_Client_ConnSet.IsChecked ? true : false;
+                if (c.StatusReportEnabled)
+                    c.ReportInterval = (int)this.IntUpDown_Client_StatusRepeat.Value;
+
+
+                this._clientTab_DisableComponents();
+                this.btn_Client_Edit.IsEnabled = true;
+
+                client.UpdateClient(c);
+                client.Close();
+
+                this.IsClientEditState = false;
+            }
+            else
+            {
+                this.textBox_Client_Description.IsEnabled = true;
+                this.comboBox_Client_Status.IsEnabled = true;
+                this.groupBox_Client_Connection.IsEnabled = true;
+
+                this.IsClientEditState = true;
+            }
+            
 
         }
         private void radioBtn_Client_ConnSet_Checked(object sender, RoutedEventArgs e)
@@ -360,8 +407,11 @@ namespace ES_BackupManager
         {
             if (Xceed.Wpf.Toolkit.MessageBox.Show(this,"Are you sure?", "Confirm", MessageBoxButton.YesNo) == MessageBoxResult.Yes )
             {
-                //TODO: Implement - template remove
-                Xceed.Wpf.Toolkit.MessageBox.Show(this,"deleted");
+                ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();                
+                BackupTemplate bt = this.dataGrid_Templates.SelectedItem as BackupTemplate;
+                this._gridTemplatesList.Remove(bt);
+                client.RemoveBackupTemplate(bt.ID);
+                client.Close();
             }
         }
         private void btn_Template_Edit_Click(object sender, RoutedEventArgs e)
@@ -830,8 +880,7 @@ namespace ES_BackupManager
             this.textBox_Backup_Dest.IsEnabled = false;
             this.dateTimePicker_Backup_Expire.IsEnabled = false;
             this.dateTimePicker_Backup_Start.IsEnabled = false;
-            this.dateTimePicker_Backup_End.IsEnabled = false;
-            this.btn_Backup_Save.IsEnabled = false;
+            this.dateTimePicker_Backup_End.IsEnabled = false;            
             this.btn_Backup_Cancel.IsEnabled = false;
             this.btn_Backup_Edit.IsEnabled = false;
             this.label_Backup_ExpireError.Visibility = Visibility.Hidden;            
@@ -862,42 +911,43 @@ namespace ES_BackupManager
             this.btn_Template_Remove.IsEnabled = false;
         }
         private void btn_Backup_Edit_Click(object sender, RoutedEventArgs e)
-        {        
-            if (this.dataGrid_Backups.SelectedIndex >= 0)
+        {
+            if (this.IsBackupEditState)
             {
-                this.btn_Backup_Save.IsEnabled = true;
-                this.btn_Backup_Cancel.IsEnabled = true;
-                this.btn_Backup_Edit.IsEnabled = false;
+                if (this._isBackupExpireDateValid(this.dateTimePicker_Backup_Expire.Value))
+                {
+                    ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
+                    BackupInfo backup = this.dataGrid_Backups.SelectedItem as BackupInfo;
 
-                this.textBox_Backup_Name.IsEnabled = true;
-                this.textBox_Backup_Description.IsEnabled = true;
-                this.dateTimePicker_Backup_Expire.IsEnabled = true;
+                    backup.Name = this.textBox_Backup_Name.Text;
+                    backup.Description = this.textBox_Backup_Description.Text;
+                    backup.UTCExpiration = this.dateTimePicker_Backup_Expire.Value;
+
+                    this._backupTab_DisableComponents();
+                    this.btn_Backup_Edit.IsEnabled = true;
+
+                    client.UpdateBackup(backup);
+                    client.Close();
+                }
+                else
+                    this.label_Backup_ExpireError.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                if (this.dataGrid_Backups.SelectedIndex >= 0)
+                {
+                    this.IsBackupEditState = true;
+
+                    this.textBox_Backup_Name.IsEnabled = true;
+                    this.textBox_Backup_Description.IsEnabled = true;
+                    this.dateTimePicker_Backup_Expire.IsEnabled = true;
+                }
             }            
         }
         private void btn_Backup_Cancel_Click(object sender, RoutedEventArgs e)
         {
             BackupInfo backup = this.dataGrid_Backups.SelectedItem as BackupInfo;            
             this._loadBackupInfo(backup);
-        }
-        private void btn_Backup_Save_Click(object sender, RoutedEventArgs e)
-        {
-            if (this._isBackupExpireDateValid(this.dateTimePicker_Backup_Expire.Value))
-            {
-                ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
-                BackupInfo backup = this.dataGrid_Backups.SelectedItem as BackupInfo;
-
-                backup.Name = this.textBox_Backup_Name.Text;
-                backup.Description = this.textBox_Backup_Description.Text;
-                backup.UTCExpiration = this.dateTimePicker_Backup_Expire.Value;
-
-                this._backupTab_DisableComponents();
-                this.btn_Backup_Edit.IsEnabled = true;                
-
-                client.UpdateBackup(backup);
-                client.Close();
-            }
-            else
-                this.label_Backup_ExpireError.Visibility = Visibility.Visible;
         }
         private bool _isBackupExpireDateValid(DateTime? date)
         {

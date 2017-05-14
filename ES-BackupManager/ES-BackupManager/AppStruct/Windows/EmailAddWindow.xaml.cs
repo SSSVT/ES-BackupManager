@@ -21,11 +21,12 @@ namespace ES_BackupManager.AppStruct.Windows
     /// </summary>
     public partial class EmailAddWindow : Window
     {
-        public EmailAddWindow()
+        public EmailAddWindow(long id)
         {
             InitializeComponent();
+            this.AdminID = id;
         }
-
+        private long AdminID { get; set; }
         private void btn_Add_Click(object sender, RoutedEventArgs e)
         {
             if(this.IsEmailValid(this.textBox_EmailAdress.Text))
@@ -38,15 +39,14 @@ namespace ES_BackupManager.AppStruct.Windows
         }
         
         private bool IsEmailValid(string address)
-        {
-            //TODO: Regex email validation
-            return true;
-           // return Regex.IsMatch(address,"");
+        {            
+            return Regex.IsMatch(address, @"^[a-z0-9]+(\.?[a-z0-9]+)*@([a-z0-9]+\.)+[a-z]{2,}$");
         }
         public Email GetEmail()
         {
             return new Email()
             {
+                IDAdministrator = this.AdminID,
                 Address = this.textBox_EmailAdress.Text
             };
         }

@@ -7,9 +7,9 @@
         mc:Ignorable="d"
         Title="Backup Manager | Evolution Studio" Height="120" Width="400" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" >
     <Grid>
-        <xctk:WatermarkTextBox x:Name="textBox_EmailAdress" Height="24" Margin="25,25,25,0" Watermark="Type in valid email address" VerticalAlignment="Top"/>
-        <Button x:Name="btn_Add" Content="Add" HorizontalAlignment="Left" Margin="221,0,0,9.8" Width="75" Height="20" VerticalAlignment="Bottom" Click="btn_Add_Click"/>
-        <Button x:Name="btn_Cancel" Content="Cancel" HorizontalAlignment="Left" Margin="301,0,0,9.8" Width="75" Height="20" VerticalAlignment="Bottom" Click="btn_Cancel_Click"/>
+        <xctk:WatermarkTextBox x:Name="textBox_EmailAdress" Height="24" Margin="25,0,25,42" Watermark="Type in valid email address" VerticalAlignment="Bottom"/>
+        <Button x:Name="btn_Add" Content="Add" HorizontalAlignment="Left" Margin="221,0,0,10" Width="75" Click="btn_Add_Click" Height="20" VerticalAlignment="Bottom"/>
+        <Button x:Name="btn_Cancel" Content="Cancel" HorizontalAlignment="Left" Margin="301,0,0,10" Width="75" Click="btn_Cancel_Click" Height="20" VerticalAlignment="Bottom"/>
 
     </Grid>
 </Window>

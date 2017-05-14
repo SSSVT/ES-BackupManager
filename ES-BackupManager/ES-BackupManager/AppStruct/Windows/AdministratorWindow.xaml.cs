@@ -107,7 +107,7 @@ namespace ES_BackupManager.AppStruct.Windows
 
         private void btn_EmailAdd_Click(object sender, RoutedEventArgs e)
         {
-            EmailAddWindow emailWindow = new EmailAddWindow();
+            EmailAddWindow emailWindow = new EmailAddWindow(this.Admin.ID);
             if (emailWindow.ShowDialog() == true)
                 this._gridEmailsList.Add(emailWindow.GetEmail());
         }

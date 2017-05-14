@@ -18,9 +18,7 @@ namespace ES_BackupManager.AppStruct.Windows
             
             ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();                                
             if (client.Login(username, password))
-            {
-                //MessageBox.Show("Authentication was successful. Welcome to Admin! ");
-                //TODO: Pass administrator object to MainWindow constructor
+            {                                
                 MainWindow mw = new MainWindow(client.GetProfile(username));
                 mw.Show();
                 this.Close();
