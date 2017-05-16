@@ -35,15 +35,16 @@ namespace ES_BackupManager.AppStruct.Components
         #endregion
         public void Start()
         {
-            scheduler.Start();
+            this.scheduler.Start();
         }
-        public void StartJobs()
+        public void Stop()
         {
-
+            this.scheduler.Shutdown();
         }
-        public void ShutdownJobs()
-        {
 
+        public void ScheduleJob(IJobDetail job, ITrigger trigger)
+        {
+            this.scheduler.ScheduleJob(job,trigger);
         }
     }
 }

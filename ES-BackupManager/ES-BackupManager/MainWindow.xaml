@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"        
         mc:Ignorable="d"
-        Title="Backup Manager | Evolution Studio" Height="800" Width="1280" 
+        Title="Backup Manager | Evolution Studio" Height="1223" Width="1280" 
         MinWidth="1000" MinHeight="650" WindowStartupLocation="Manual">
     <!-- STANDARD HEIGHT: 650 ,STANDARD WIDTH: 1000 -->
     <!-- CURRENT HEIGHT: 800 ,CURRENT WIDTH: 1280 -->
@@ -232,7 +232,7 @@
 
                                         </Grid>
                                     </GroupBox>
-                                    <GroupBox x:Name="groupBox" Header="Email Report Settings" Margin="10,868,10,318.6">
+                                    <GroupBox x:Name="groupBox_Template_Email" Header="Email Report Settings" Margin="10,868,10,0" Height="53" VerticalAlignment="Top">
                                         <CheckBox x:Name="checkBox_Template_EmailReport" Content="Include in email report" HorizontalAlignment="Left" Margin="58,10,0,0" VerticalAlignment="Top"/>
                                     </GroupBox>
                                     <GroupBox x:Name="groupBox_Template_Exception" Header="Exception Settings" Margin="10,538,10,0" VerticalAlignment="Top" Height="99">

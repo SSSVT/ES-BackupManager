@@ -546,6 +546,7 @@ namespace ES_BackupManager
             this.groupBox_Template_Time.IsEnabled = true;
             //this.checkBox_Template_TimeBox.IsEnabled = true;            
             this.groupBox_Template_Notification.IsEnabled = true;
+            this.groupBox_Template_Email.IsEnabled = true;
         }
         private void _templateTab_DisableComponents()
         {
@@ -559,6 +560,7 @@ namespace ES_BackupManager
             this.groupBox_Template_Time.IsEnabled = false;
             //this.checkBox_Template_TimeBox.IsEnabled = false;            
             this.groupBox_Template_Notification.IsEnabled = false;
+            this.groupBox_Template_Email.IsEnabled = false;
 
             this.btn_Template_New.IsEnabled = true;
             this.btn_Template_Remove.IsEnabled = false;
