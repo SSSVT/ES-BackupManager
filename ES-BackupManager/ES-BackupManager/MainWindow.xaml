@@ -314,25 +314,57 @@
                 </TabItem>
                 <TabItem Header="Logs">
                     <Grid>
-                        <DataGrid x:Name="dataGrid_Logs" HorizontalAlignment="Left" Margin="10,10,0,10" Width="200" IsReadOnly="True" AutoGenerateColumns="False" SelectionMode="Single">
+                        <DataGrid x:Name="dataGrid_Logs" HorizontalAlignment="Left" Margin="10,30,0,10" Width="200" IsReadOnly="True" AutoGenerateColumns="False" SelectionMode="Single" SelectionChanged="dataGrid_Logs_SelectionChanged">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Log Time" Binding="{Binding UTCTime}" Width="*"/>
                             </DataGrid.Columns>
                         </DataGrid>
-                        <GroupBox Header="Log Info" Margin="225,10,10,10">
+                        <GroupBox Name="groupBox_Log_Logins" Header="Login Info" Margin="225,10,10,10" Visibility="Hidden">
                             <Grid>
-                                <Label Content="Backup:" HorizontalAlignment="Left" Margin="98,65,0,0" VerticalAlignment="Top"/>
-                                <Label Content="Log Type:" HorizontalAlignment="Left" Margin="89,92,0,0" VerticalAlignment="Top"/>
-                                <Label Content="UTC Time:" HorizontalAlignment="Left" Margin="86,121,0,0" VerticalAlignment="Top"/>
-                                <xctk:WatermarkTextBox x:Name="textBox_Log_BackupName" Height="23" Margin="176,68,92,0" TextWrapping="Wrap" Text="Backup name" VerticalAlignment="Top"/>
-                                <xctk:DateTimePicker Name="dateTimePicker_Log_Time" Margin="176,123,92,0" Height="24" VerticalAlignment="Top"/>
-                                <ComboBox x:Name="comboBox_Log_LogType" Margin="176,96,92,0" VerticalAlignment="Top">
-                                    <ComboBoxItem Content="Error"/>
-                                    <ComboBoxItem Content="Warning"/>
-                                    <ComboBoxItem Content="Message"/>
-                                </ComboBox>
+                                <Label Content="Client:" HorizontalAlignment="Left" Margin="94,10,0,0" VerticalAlignment="Top"/>
+                                <xctk:WatermarkTextBox x:Name="textBox_Log_Login_Client" Height="24" Margin="200,12,124,0" Watermark="Clients name" VerticalAlignment="Top"/>
+                                <Label Content="Login time:" HorizontalAlignment="Left" Margin="68,41,0,0" VerticalAlignment="Top"/>
+                                <xctk:DateTimePicker x:Name="dateTimePicker_Log_Logins_Time" TextAlignment="Left" Height="24" Margin="200,43,124,0" Watermark="Login time" VerticalAlignment="Top"/>
+                                <Label Content="IP address:" HorizontalAlignment="Left" Margin="70,72,0,0" VerticalAlignment="Top"/>
+                                <xctk:WatermarkTextBox x:Name="textBox_Log_Login_IP" Height="24" Margin="200,74,124,0" Watermark="Clients IP address" VerticalAlignment="Top"/>
                             </Grid>
                         </GroupBox>
+                        <GroupBox Name="groupBox_Log_LogsClient" Header="Log Info" Margin="225,10,10,10" Visibility="Hidden">
+                            <Grid>
+                                <Label Content="Client:" HorizontalAlignment="Left" Margin="94,10,0,0" VerticalAlignment="Top"/>
+                                <xctk:WatermarkTextBox x:Name="textBox_Log_LogsClient_Client" Height="24" Margin="200,12,124,0" Watermark="Clients name" VerticalAlignment="Top"/>
+                                <Label Content="Log type:" HorizontalAlignment="Left" Margin="78,41,0,0" VerticalAlignment="Top"/>
+                                <ComboBox x:Name="comboBox_Log_LogsClient_Type" Margin="200,45,124,0" VerticalAlignment="Top" SelectedIndex="0" IsReadOnly="True">
+                                    <ComboBoxItem>Error</ComboBoxItem>
+                                    <ComboBoxItem>Warning</ComboBoxItem>
+                                    <ComboBoxItem>Message</ComboBoxItem>
+                                </ComboBox>
+                                <Label Content="Log time:" HorizontalAlignment="Left" Margin="78,72,0,0" VerticalAlignment="Top"/>
+                                <xctk:DateTimePicker x:Name="dateTimePicker_Log_LogsClient_Time" Height="24" Margin="200,74,124,0" Watermark="Log time" VerticalAlignment="Top"/>
+                                <Label Content="Log value:" HorizontalAlignment="Left" Margin="74,101,0,0" VerticalAlignment="Top"/>
+                                <xctk:WatermarkTextBox x:Name="textBox_Log_LogsClient_Value" Height="24" Margin="200,103,124,0" Watermark="Log value" VerticalAlignment="Top"/>
+                            </Grid>
+                        </GroupBox>
+                        <GroupBox Name="groupBox_Log_LogsBackup" Header="Log Info" Margin="225,10,10,10" Visibility="Visible">
+                            <Grid>
+                                <Label Content="Client:" HorizontalAlignment="Left" Margin="94,10,0,0" VerticalAlignment="Top"/>
+                                <xctk:WatermarkTextBox x:Name="textBox_Log_LogsBackup_Client" Height="24" Margin="200,12,124,0" Watermark="Clients name" VerticalAlignment="Top"/>
+                                <Label Content="Log type:" HorizontalAlignment="Left" Margin="78,70,0,0" VerticalAlignment="Top"/>
+                                <ComboBox x:Name="comboBox_Log_LogsBackup_Type" Margin="200,74,124,0" VerticalAlignment="Top" SelectedIndex="0" IsReadOnly="True">
+                                    <ComboBoxItem>Error</ComboBoxItem>
+                                    <ComboBoxItem>Warning</ComboBoxItem>
+                                    <ComboBoxItem>Message</ComboBoxItem>
+                                </ComboBox>
+                                <Label Content="Log time:" HorizontalAlignment="Left" Margin="78,101,0,0" VerticalAlignment="Top"/>
+                                <xctk:DateTimePicker x:Name="dateTimePicker_Log_LogsBackup_Time" Height="24" Margin="200,103,124,0" Watermark="Log time" VerticalAlignment="Top"/>
+                                <Label Content="Log value:" HorizontalAlignment="Left" Margin="74,130,0,0" VerticalAlignment="Top"/>
+                                <xctk:WatermarkTextBox x:Name="textBox_Log_LogsBackup_Value" Height="24" Margin="200,132,124,0" Watermark="Log value" VerticalAlignment="Top"/>
+                                <Label Content="Backup:" HorizontalAlignment="Left" Margin="86,39,0,0" VerticalAlignment="Top"/>
+                                <xctk:WatermarkTextBox x:Name="textBox_Log_LogsBackup_Backup" Height="24" Margin="200,41,124,0" Watermark="Backups name" VerticalAlignment="Top"/>
+                            </Grid>
+                        </GroupBox>
+                        <RadioButton x:Name="radioBtn_Log_Logs" Content="Logs" HorizontalAlignment="Left" Margin="35,10,0,0" VerticalAlignment="Top" IsChecked="True" Checked="radioBtn_Log_Logs_Checked"/>
+                        <RadioButton x:Name="radioBtn_Log_Logins" Content="Logins" HorizontalAlignment="Left" Margin="95,10,0,0" VerticalAlignment="Top" Checked="radioBtn_Log_Logins_Checked"/>
                     </Grid>
                 </TabItem>
             </TabControl>

@@ -116,6 +116,7 @@ namespace ES_BackupManager
         private BindingList<Client> _gridClientsList { get; set; } = new BindingList<Client>();
         private BindingList<BackupInfo> _gridBackupsList { get; set; } = new BindingList<BackupInfo>();
         private BindingList<Log> _gridLogsList { get; set; } = new BindingList<Log>();
+        private BindingList<Login> _gridLoginsList { get; set; } = new BindingList<Login>();
         private BindingList<BackupTemplate> _gridTemplatesList { get; set; } = new BindingList<BackupTemplate>();        
         private BindingList<SourcePathInfo> _gridTemplateSourceList { get; set; } = new BindingList<SourcePathInfo>();
         private BindingList<DestinationPathInfo> _gridTemplateDestinationList { get; set; } = new BindingList<DestinationPathInfo>();
@@ -199,7 +200,7 @@ namespace ES_BackupManager
                     this.LoadBackupsData(c);
                     break;
                 case 3:
-                    this.LoadLogsData(c);
+                    this.LoadLogsData(c, true);
                     break;
                 default:
                     break;
@@ -957,31 +958,112 @@ namespace ES_BackupManager
         }
         #endregion
         #region Log Controls
-        private void LoadLogsData(Client c)
+        private void LoadLogsData(Client c, bool Logs)
         {
             this._gridLogsList.Clear();
 
             ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
 
-            //TODO: Implement
-
-            foreach (Log item in client.GetLogsByClientID(c.ID))
+            //TODO: Implement - TEST
+            if (Logs)
             {
-                this._gridLogsList.Add(item);
+                foreach (Log item in client.GetLogsByClientID(c.ID))
+                {
+                    this._gridLogsList.Add(item);
+                }
+                this.dataGrid_Logs.ItemsSource = this._gridLogsList;
             }
-            this.dataGrid_Logs.ItemsSource = this._gridLogsList;
-
+            else
+            {
+                foreach (Login item in client.GetLoginsByClient(c.ID))
+                {
+                    this._gridLoginsList.Add(item);
+                }
+                this.dataGrid_Logs.ItemsSource = this._gridLoginsList;
+            }           
             this._logTab_DisableComponents();
 
             client.Close();
         }
         private void _logTab_DisableComponents()
         {
-            this.textBox_Log_BackupName.IsEnabled = false;
-            this.comboBox_Log_LogType.IsEnabled = false;
-            this.dateTimePicker_Log_Time.IsEnabled = false;
+            this.groupBox_Log_Logins.IsEnabled = false;
+            this.groupBox_Log_LogsClient.IsEnabled = false;
+            this.groupBox_Log_LogsBackup.IsEnabled = false;
         }
 
+        private void radioBtn_Log_Logs_Checked(object sender, RoutedEventArgs e)
+        {
+            Client c = this.listBox_Clients.SelectedItem as Client;
+            this.LoadLogsData(c,true);                        
+        }
+
+        private void radioBtn_Log_Logins_Checked(object sender, RoutedEventArgs e)
+        {
+            Client c = this.listBox_Clients.SelectedItem as Client;
+            this.LoadLogsData(c,false);
+
+            this.groupBox_Log_Logins.Visibility = Visibility.Visible;
+            this.groupBox_Log_LogsClient.Visibility = Visibility.Hidden;
+            this.groupBox_Log_LogsBackup.Visibility = Visibility.Hidden;
+        }
+
+        private void dataGrid_Logs_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(this.radioBtn_Log_Logs.IsChecked == true)
+            {
+                Log log = this.dataGrid_Logs.SelectedItem as Log;
+                if (log.IDBackup != null)
+                    this._loadLogInfo(log, true);
+                else
+                    this._loadLogInfo(log, false);
+            }
+            else
+            {
+                Login login = this.dataGrid_Logs.SelectedItem as Login;
+                this._loadLoginInfo(login);
+            }
+        }
+
+        public void _loadLogInfo(Log log, bool WithBackup)
+        {
+            ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
+
+            if (WithBackup)
+            {                
+                this.groupBox_Log_LogsBackup.Visibility = Visibility.Visible;
+                this.groupBox_Log_LogsClient.Visibility = Visibility.Hidden;
+
+                this.textBox_Log_LogsBackup_Client.Text = client.GetClientByID(log.IDClient).Name;
+                this.textBox_Log_LogsBackup_Backup.Text = client.GetBackupByID((long)log.IDBackup).Name;
+                this.comboBox_Log_LogsBackup_Type.SelectedIndex = log.LogType;
+                this.dateTimePicker_Log_LogsBackup_Time.Value = log.UTCTime;
+                this.textBox_Log_LogsBackup_Value.Text = log.Value;
+            }
+            else
+            {
+                this.groupBox_Log_LogsClient.Visibility = Visibility.Visible;
+                this.groupBox_Log_LogsBackup.Visibility = Visibility.Hidden;
+
+                this.textBox_Log_LogsClient_Client.Text  = client.GetClientByID(log.IDClient).Name;
+                this.comboBox_Log_LogsClient_Type.SelectedIndex = log.LogType;
+                this.dateTimePicker_Log_LogsClient_Time.Value = log.UTCTime;
+                this.textBox_Log_LogsClient_Value.Text = log.Value;
+            }
+
+            client.Close();
+        }
+
+        public void _loadLoginInfo(Login login)
+        {
+            ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
+
+            this.textBox_Log_Login_Client.Text = client.GetClientByID(login.IDClient).Name;
+            this.dateTimePicker_Log_Logins_Time.Value = login.UTCTime;
+            this.textBox_Log_Login_IP.Text = login.IP;
+
+            client.Close();
+        }
         #endregion
     }
 }

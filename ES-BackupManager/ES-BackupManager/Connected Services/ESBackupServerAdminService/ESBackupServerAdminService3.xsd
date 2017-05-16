@@ -150,4 +150,21 @@
     <xs:attribute ref="ser:Ref" />
   </xs:complexType>
   <xs:element name="Email" nillable="true" type="tns:Email" />
+  <xs:complexType name="ArrayOfLogin">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Login" nillable="true" type="tns:Login" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfLogin" nillable="true" type="tns:ArrayOfLogin" />
+  <xs:complexType name="Login">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ID" type="ser:guid" />
+      <xs:element minOccurs="0" name="IDClient" type="xs:int" />
+      <xs:element minOccurs="0" name="IP" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UTCTime" type="xs:dateTime" />
+    </xs:sequence>
+    <xs:attribute ref="ser:Id" />
+    <xs:attribute ref="ser:Ref" />
+  </xs:complexType>
+  <xs:element name="Login" nillable="true" type="tns:Login" />
 </xs:schema>
