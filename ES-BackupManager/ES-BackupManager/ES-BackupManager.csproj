@@ -50,9 +50,6 @@
     <Reference Include="DynamicExpresso.Core, Version=1.3.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DynamicExpresso.Core.1.3.3.5\lib\net40\DynamicExpresso.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Quartz, Version=2.5.0.0, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Quartz.2.5.0\lib\net40\Quartz.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -103,10 +100,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="AppStruct\Components\CRON\CRONScheduler.cs" />
-    <Compile Include="AppStruct\Components\CRON\Factories\JobFactory.cs" />
-    <Compile Include="AppStruct\Components\CRON\Factories\TriggerFactory.cs" />
-    <Compile Include="AppStruct\Components\CRON\Interfaces\ICronExecutable.cs" />
     <Compile Include="AppStruct\Objects\DestinationPathInfo.cs" />
     <Compile Include="AppStruct\Objects\SourcePathInfo.cs" />
     <Compile Include="AppStruct\Windows\EmailAddWindow.xaml.cs">
@@ -187,9 +180,6 @@
     <None Include="Connected Services\ESBackupServerAdminService\ES_BackupManager.ESBackupServerAdminService.Login.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="job_scheduling_data_2_0.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -236,6 +226,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\ImgStatusOnline.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="AppStruct\Components\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -25,11 +25,18 @@ namespace ES_BackupManager
             this.Administrator = admin;            
             this._loadGrid(Filter.All,Sort.Asc);
 
+            this.StartTimer();
             //DEBUG
             //this.TabControl_Main.IsEnabled = true;           
         }
 
+        ~MainWindow()
+        {
+            this.StopTimer();
+        }
+
         #region Local Properties
+        private System.Timers.Timer timer;
         private Administrator Administrator { get; set; }
         private bool TemplatesLoaded { get; set; }
         private bool BackupsLoaded { get; set; }
@@ -130,6 +137,24 @@ namespace ES_BackupManager
         }
         #endregion
         #region Setup Controls
+        private void StartTimer()
+        {
+            this.timer = new System.Timers.Timer();
+            this.timer.Elapsed += Timer_Elapsed;
+            this.timer.Interval = 5000;
+            this.timer.Enabled = true;
+        }
+
+        private void StopTimer()
+        {
+            this.timer.Enabled = false;
+        }
+        private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            this._loadGrid(Filter.All, Sort.Asc);
+            MessageBox.Show("REFRESHED");
+        }
+
         private void btn_Main_ApplyFilter_Click(object sender, RoutedEventArgs e)
         {
             Filter filter;
@@ -333,8 +358,7 @@ namespace ES_BackupManager
             ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
 
             this.dataGrid_Template_Source.ItemsSource = this._gridTemplateSourceList;
-            this.dataGrid_Template_Destination.ItemsSource = this._gridTemplateDestinationList;
-            //TODO: Implement                 
+            this.dataGrid_Template_Destination.ItemsSource = this._gridTemplateDestinationList;                          
             Configuration config = client.GetConfigurationByClientID(c.ID);
 
             foreach (BackupTemplate item in config.Templates)
@@ -470,9 +494,7 @@ namespace ES_BackupManager
             }
 
             if (this.TemplateMode == TemplateInputModes.Edit)
-            {
-                //TODO: Edit mode
-
+            {                
                 BackupTemplate template = this.dataGrid_Templates.SelectedItem as BackupTemplate;
 
                 template.Name = this.textBox_Template_Name.Text;
@@ -959,12 +981,14 @@ namespace ES_BackupManager
         #endregion
         #region Log Controls
         private void LoadLogsData(Client c, bool Logs)
-        {
+        {            
+            if (c != null)
+            {
             this._gridLogsList.Clear();
 
             ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
 
-            //TODO: Implement - TEST
+            //TODO: Implement - TEST        
             if (Logs)
             {
                 foreach (Log item in client.GetLogsByClientID(c.ID))
@@ -984,6 +1008,7 @@ namespace ES_BackupManager
             this._logTab_DisableComponents();
 
             client.Close();
+            }
         }
         private void _logTab_DisableComponents()
         {
@@ -1001,11 +1026,14 @@ namespace ES_BackupManager
         private void radioBtn_Log_Logins_Checked(object sender, RoutedEventArgs e)
         {
             Client c = this.listBox_Clients.SelectedItem as Client;
-            this.LoadLogsData(c,false);
+            if(c != null)
+            {
+                this.LoadLogsData(c, false);
 
-            this.groupBox_Log_Logins.Visibility = Visibility.Visible;
-            this.groupBox_Log_LogsClient.Visibility = Visibility.Hidden;
-            this.groupBox_Log_LogsBackup.Visibility = Visibility.Hidden;
+                this.groupBox_Log_Logins.Visibility = Visibility.Visible;
+                this.groupBox_Log_LogsClient.Visibility = Visibility.Hidden;
+                this.groupBox_Log_LogsBackup.Visibility = Visibility.Hidden;
+            }            
         }
 
         private void dataGrid_Logs_SelectionChanged(object sender, SelectionChangedEventArgs e)
