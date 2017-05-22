@@ -17,7 +17,7 @@ namespace ES_BackupManager
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
-    {
+    {        
         public MainWindow(Administrator admin)
         {
             InitializeComponent();
@@ -137,8 +137,12 @@ namespace ES_BackupManager
         }
         #endregion
         #region Setup Controls
+
+        #region Timer
         private void StartTimer()
         {
+            //TODO: Set better interval
+
             this.timer = new System.Timers.Timer();
             this.timer.Elapsed += Timer_Elapsed;
             this.timer.Interval = 5000;
@@ -151,9 +155,9 @@ namespace ES_BackupManager
         }
         private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            this._loadGrid(Filter.All, Sort.Asc);
-            MessageBox.Show("REFRESHED");
+            this._loadGrid(Filter.All, Sort.Asc);            
         }
+        #endregion
 
         private void btn_Main_ApplyFilter_Click(object sender, RoutedEventArgs e)
         {
@@ -183,18 +187,35 @@ namespace ES_BackupManager
             this._loadGrid(filter, sort);
         }
         private void _loadGrid(Filter f,Sort s)
-        {           
+        {
+            App.Current.Dispatcher.Invoke(delegate
+            {
+                this._gridClientsList.Clear();
+            });
+
             ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
             
             foreach (Client item in client.GetClients(f,s))
-            {
-                this._gridClientsList.Add(item);
+            {;
+                App.Current.Dispatcher.Invoke(delegate 
+                {
+                    this._gridClientsList.Add(item);
+                });                
             }
 
             if (this._gridClientsList.Count > 0)
-                this.listBox_Clients.SelectedIndex = 0;
+            {
+                App.Current.Dispatcher.Invoke(delegate
+                {
+                    this.listBox_Clients.SelectedIndex = 0;
+                });
+            }
 
-            this.listBox_Clients.ItemsSource = this._gridClientsList;
+
+            App.Current.Dispatcher.Invoke(delegate
+            {
+                this.listBox_Clients.ItemsSource = this._gridClientsList;
+            });            
 
             client.Close();
         }
@@ -469,9 +490,7 @@ namespace ES_BackupManager
                         });
                     }
                 }
-                template.Paths = paths;
-
-                template.BackupEmptyDirectories = this.checkBox_Template_EmptyFolders.IsChecked == true ? true : false ;
+                template.Paths = paths;                
 
                 if (this.checkBox_Template_SearchPattern.IsChecked == true)
                     template.SearchPattern = this.textBox_Template_SearchPattern.Text;
@@ -518,9 +537,7 @@ namespace ES_BackupManager
                         });
                     }
                 }
-                template.Paths = paths;
-
-                template.BackupEmptyDirectories = this.checkBox_Template_EmptyFolders.IsChecked == true ? true : false;
+                template.Paths = paths;                
 
                 if (this.checkBox_Template_SearchPattern.IsChecked == true)
                     template.SearchPattern = this.textBox_Template_SearchPattern.Text;
@@ -646,8 +663,7 @@ namespace ES_BackupManager
                         this.dataGrid_Template_Destination.ItemsSource = this._gridTemplateDestinationList;
                     }
                 }
-
-                this.checkBox_Template_EmptyFolders.IsChecked = bt.BackupEmptyDirectories;
+                
                 if (!string.IsNullOrWhiteSpace(bt.SearchPattern))
                 {
                     this.checkBox_Template_SearchPattern.IsChecked = true;
@@ -725,8 +741,7 @@ namespace ES_BackupManager
             //Notification settings
             this.radioBtn_Template_NotifEnable.IsChecked = false;
 
-            //Exception settings
-            this.checkBox_Template_EmptyFolders.IsChecked = false;
+            //Exception settings            
             this.checkBox_Template_SearchPattern.IsChecked = false;
             this.textBox_Template_SearchPattern.Text = "";
         }

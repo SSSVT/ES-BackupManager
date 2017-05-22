@@ -196,7 +196,7 @@
 
                                         </Grid>
                                     </GroupBox>
-                                    <GroupBox Name="groupBox_Template_Time" Header="Time Settings" Height="140" Margin="10,642,10,0" VerticalAlignment="Top">
+                                    <GroupBox Name="groupBox_Template_Time" Header="Time Settings" Height="140" Margin="10,605,10,0" VerticalAlignment="Top">
                                         <Grid>
                                             <Label Content="CRON Value:" HorizontalAlignment="Left" Margin="40,10,0,0" VerticalAlignment="Top"/>
                                             <xctk:WatermarkTextBox x:Name="textBox_Template_CRON" Margin="182,12,210,0" Watermark="Type in CRON format" Height="24" VerticalAlignment="Top" TextChanged="textBox_Template_CRON_TextChanged"/>
@@ -224,7 +224,7 @@
                                             </Label>
                                         </Grid>
                                     </GroupBox>
-                                    <GroupBox Name="groupBox_Template_Notification" Header="Notification Settings" Height="76" Margin="10,787,10,0" VerticalAlignment="Top">
+                                    <GroupBox Name="groupBox_Template_Notification" Header="Notification Settings" Height="76" Margin="10,750,10,0" VerticalAlignment="Top">
                                         <Grid>
                                             <RadioButton x:Name="radioBtn_Template_NotifEnable" Content="Enabled" HorizontalAlignment="Left" Margin="60,10,0,0" Height="21" VerticalAlignment="Top"/>
                                             <RadioButton x:Name="radioBtn_Template_NotifDisable" Content="Disabled" HorizontalAlignment="Left" Margin="170,10,0,0" Height="21" VerticalAlignment="Top" IsChecked="True"/>
@@ -232,14 +232,13 @@
 
                                         </Grid>
                                     </GroupBox>
-                                    <GroupBox x:Name="groupBox_Template_Email" Header="Email Report Settings" Margin="10,868,10,0" Height="53" VerticalAlignment="Top">
+                                    <GroupBox x:Name="groupBox_Template_Email" Header="Email Report Settings" Margin="10,831,10,0" Height="53" VerticalAlignment="Top">
                                         <CheckBox x:Name="checkBox_Template_EmailReport" Content="Include in email report" HorizontalAlignment="Left" Margin="58,10,0,0" VerticalAlignment="Top"/>
                                     </GroupBox>
-                                    <GroupBox x:Name="groupBox_Template_Exception" Header="Exception Settings" Margin="10,538,10,0" VerticalAlignment="Top" Height="99">
+                                    <GroupBox x:Name="groupBox_Template_Exception" Header="Exception Settings" Margin="10,538,10,0" VerticalAlignment="Top" Height="62">
                                         <Grid>
-                                            <CheckBox x:Name="checkBox_Template_SearchPattern" Content="Search pattern" HorizontalAlignment="Left" Margin="73,41,0,0" VerticalAlignment="Top" Checked="checkBox_Template_SearchPattern_Checked"/>
-                                            <xctk:WatermarkTextBox x:Name="textBox_Template_SearchPattern" Height="23" Margin="187,39,58,0" TextWrapping="Wrap" Watermark="Type search pattern" VerticalAlignment="Top"/>
-                                            <CheckBox x:Name="checkBox_Template_EmptyFolders" Content="Exclude empty folders" HorizontalAlignment="Left" Margin="73,10,0,0" VerticalAlignment="Top"/>
+                                            <CheckBox x:Name="checkBox_Template_SearchPattern" Content="Search pattern" HorizontalAlignment="Left" Margin="68,12,0,0" VerticalAlignment="Top" Checked="checkBox_Template_SearchPattern_Checked"/>
+                                            <xctk:WatermarkTextBox x:Name="textBox_Template_SearchPattern" Height="23" Margin="182,10,63,0" TextWrapping="Wrap" Watermark="Type search pattern" VerticalAlignment="Top"/>
                                         </Grid>
                                     </GroupBox>
                                 </Grid>
