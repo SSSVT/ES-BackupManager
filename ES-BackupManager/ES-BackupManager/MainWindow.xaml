@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"        
         mc:Ignorable="d"
-        Title="Backup Manager | Evolution Studio" Height="1223" Width="1280" 
+        Title="Backup Manager | Evolution Studio" Height="650" Width="1280" 
         MinWidth="1000" MinHeight="650" WindowStartupLocation="Manual">
     <!-- STANDARD HEIGHT: 650 ,STANDARD WIDTH: 1000 -->
     <!-- CURRENT HEIGHT: 800 ,CURRENT WIDTH: 1280 -->
@@ -244,11 +244,11 @@
                                 </Grid>
                             </ScrollViewer>
                         </GroupBox>
-                        <Button x:Name="btn_Template_New" Content="New" Margin="215,0,0,15" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="73" Click="btn_Template_New_Click"/>
-                        <Button x:Name="btn_Template_Cancel" Content="Cancel" Margin="0,0,10,15" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Click="btn_Template_Cancel_Click" Grid.Column="1" IsEnabled="False"/>
-                        <Button x:Name="btn_Template_Edit" Content="Edit" Margin="0,0,90,15" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Click="btn_Template_Edit_Click" Grid.Column="1"/>
-                        <Button x:Name="btn_Template_StatusChange" Content="Enable" Margin="293,0,0,15" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="73" Click="btn_Template_StatusChange_Click"/>
-                        <Button x:Name="btn_Template_Remove" Content="Remove" Margin="371,0,0,15.4" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="73" Click="btn_Template_Remove_Click"/>
+                        <Button x:Name="btn_Template_New" Content="New" Margin="215,0,0,13"  VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="73" Click="btn_Template_New_Click"/>
+                        <Button x:Name="btn_Template_Cancel" Content="Cancel" Margin="0,0,10,10" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Click="btn_Template_Cancel_Click" IsEnabled="False"/>
+                        <Button x:Name="btn_Template_Edit" Content="Edit" Margin="0,0,90,10" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Click="btn_Template_Edit_Click"/>
+                        <Button x:Name="btn_Template_StatusChange" Content="Enable" Margin="293,0,0,13" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="73" Click="btn_Template_StatusChange_Click"/>
+                        <Button x:Name="btn_Template_Remove" Content="Remove" Margin="371,0,0,13" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="73" Click="btn_Template_Remove_Click"/>
                     </Grid>
 
                 </TabItem>
