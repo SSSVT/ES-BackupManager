@@ -145,7 +145,7 @@ namespace ES_BackupManager
 
             this.timer = new System.Timers.Timer();
             this.timer.Elapsed += Timer_Elapsed;
-            this.timer.Interval = 5000;
+            this.timer.Interval = 100005000;
             this.timer.Enabled = true;
         }
 
@@ -1055,6 +1055,7 @@ namespace ES_BackupManager
         {
             if(this.radioBtn_Log_Logs.IsChecked == true)
             {
+                //TODO: Fix this - crashes when log is selected
                 Log log = this.dataGrid_Logs.SelectedItem as Log;
                 if (log.IDBackup != null)
                     this._loadLogInfo(log, true);

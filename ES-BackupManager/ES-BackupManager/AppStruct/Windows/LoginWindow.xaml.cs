@@ -14,8 +14,7 @@ namespace ES_BackupManager.AppStruct.Windows
         }
 
         public void Authorize(string username, string password)
-        {
-            
+        {            
             ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();                                
             if (client.Login(username, password))
             {                                
