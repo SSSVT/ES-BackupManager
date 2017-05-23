@@ -25,7 +25,7 @@ namespace ES_BackupManager
             this.Administrator = admin;            
             this._loadGrid(Filter.All,Sort.Asc);
 
-            this.StartTimer();
+            //this.StartTimer();
             //DEBUG
             //this.TabControl_Main.IsEnabled = true;           
         }
@@ -145,13 +145,13 @@ namespace ES_BackupManager
 
             this.timer = new System.Timers.Timer();
             this.timer.Elapsed += Timer_Elapsed;
-            this.timer.Interval = 100005000;
+            this.timer.Interval = 5000;
             this.timer.Enabled = true;
         }
 
         private void StopTimer()
         {
-            this.timer.Enabled = false;
+            //this.timer.Enabled = false;
         }
         private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
@@ -503,13 +503,14 @@ namespace ES_BackupManager
 
                 template.IsNotificationEnabled = this.radioBtn_Template_NotifEnable.IsChecked == true ? true :false;
                 template.IsEmailNotificationEnabled = this.checkBox_Template_EmailReport.IsChecked == true ? true : false;
-
-                this.TemplateMode = TemplateInputModes.None;
+               
                 client.SaveTemplate(template);
                 this._gridTemplatesList.Add(template);
-                this.dataGrid_Templates.SelectedIndex = this.dataGrid_Templates.Items.Count - 1;
 
-                this.LoadTemplatesData(c);  
+                this.dataGrid_Templates.SelectedIndex = this.dataGrid_Templates.Items.Count - 1;
+                this._templateTab_DisableComponents();
+                this.TemplateMode = TemplateInputModes.None;
+                this.LoadTemplatesData(c);
             }
 
             if (this.TemplateMode == TemplateInputModes.Edit)
