@@ -36,10 +36,10 @@ namespace ES_BackupManager
         }
 
         #region Local Properties
-        private System.Timers.Timer timer;
+        private System.Timers.Timer timer { get; set; }
         private Administrator Administrator { get; set; }
         private bool TemplatesLoaded { get; set; }
-        private bool BackupsLoaded { get; set; }
+        private bool BackupsLoaded { get; set; }        
         private bool LogsLoaded { get; set; }
 
         private bool _isBackupEditState;
@@ -100,19 +100,25 @@ namespace ES_BackupManager
                 {
                     this.btn_Template_New.IsEnabled = true;
                     this.btn_Template_StatusChange.IsEnabled = true;
+                    this.btn_Template_Remove.IsEnabled = true;
                     this.btn_Template_Edit.Content = "Edit";
+                    this.btn_Template_Cancel.IsEnabled = false;
                 }
                 else if (value == TemplateInputModes.Add)
                 {
                     this.btn_Template_New.IsEnabled = false;
                     this.btn_Template_StatusChange.IsEnabled = false;
+                    this.btn_Template_Remove.IsEnabled = false;
                     this.btn_Template_Edit.Content = "Add";
+                    this.btn_Template_Cancel.IsEnabled = true;
                 }
                 else if (value == TemplateInputModes.Edit)
                 {
                     this.btn_Template_New.IsEnabled = false;
                     this.btn_Template_StatusChange.IsEnabled = false;
+                    this.btn_Template_Remove.IsEnabled = false;
                     this.btn_Template_Edit.Content = "Save";
+                    this.btn_Template_Cancel.IsEnabled = true;
                 }
 
             }
@@ -246,6 +252,7 @@ namespace ES_BackupManager
                     this.LoadBackupsData(c);
                     break;
                 case 3:
+                    this.radioBtn_Log_Logs.IsChecked = true;
                     this.LoadLogsData(c, true);
                     break;
                 default:
@@ -504,16 +511,16 @@ namespace ES_BackupManager
                 template.IsNotificationEnabled = this.radioBtn_Template_NotifEnable.IsChecked == true ? true :false;
                 template.IsEmailNotificationEnabled = this.checkBox_Template_EmailReport.IsChecked == true ? true : false;
                
-                client.SaveTemplate(template);
-                this._gridTemplatesList.Add(template);
-
-                this.dataGrid_Templates.SelectedIndex = this.dataGrid_Templates.Items.Count - 1;
+                client.SaveTemplate(template);                              
+                
                 this._templateTab_DisableComponents();
                 this.TemplateMode = TemplateInputModes.None;
-                this.LoadTemplatesData(c);
-            }
 
-            if (this.TemplateMode == TemplateInputModes.Edit)
+                this.TemplatesLoaded = false;
+                this.LoadTemplatesData(c);
+                this.dataGrid_Templates.SelectedIndex = this.dataGrid_Templates.Items.Count - 1;
+            }
+            else if (this.TemplateMode == TemplateInputModes.Edit)
             {                
                 BackupTemplate template = this.dataGrid_Templates.SelectedItem as BackupTemplate;
 
@@ -560,7 +567,8 @@ namespace ES_BackupManager
             {
                 this.TemplateMode = TemplateInputModes.Edit;
                 this._templateTab_EnableComponents();
-            }                
+            }      
+            
             client.Close();
         }
 
@@ -620,6 +628,7 @@ namespace ES_BackupManager
         }
         private void _loadTemplateInfo(BackupTemplate bt)
         {
+            this.TemplateMode = TemplateInputModes.None;
             this._templateTab_DisableComponents();
             this._gridTemplateSourceList.Clear();
             this._gridTemplateDestinationList.Clear();
@@ -1000,30 +1009,30 @@ namespace ES_BackupManager
         {            
             if (c != null)
             {
-            this._gridLogsList.Clear();
+                this._gridLogsList.Clear();
+                this._gridLoginsList.Clear();                
 
-            ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
-
-            //TODO: Implement - TEST        
-            if (Logs)
-            {
-                foreach (Log item in client.GetLogsByClientID(c.ID))
-                {
-                    this._gridLogsList.Add(item);
+                ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
+               
+                if (Logs)
+                {                 
+                    foreach (Log item in client.GetLogsByClientID(c.ID))
+                    {
+                        this._gridLogsList.Add(item);
+                    }
+                    this.dataGrid_Logs.ItemsSource = this._gridLogsList;
                 }
-                this.dataGrid_Logs.ItemsSource = this._gridLogsList;
-            }
-            else
-            {
-                foreach (Login item in client.GetLoginsByClient(c.ID))
-                {
-                    this._gridLoginsList.Add(item);
-                }
-                this.dataGrid_Logs.ItemsSource = this._gridLoginsList;
-            }           
-            this._logTab_DisableComponents();
-
-            client.Close();
+                else
+                {                    
+                    foreach (Login item in client.GetLoginsByClient(c.ID))
+                    {
+                        this._gridLoginsList.Add(item);
+                    }
+                    this.dataGrid_Logs.ItemsSource = this._gridLoginsList;
+                }           
+                this._logTab_DisableComponents();
+                this.LogsLoaded = true;
+                client.Close();
             }
         }
         private void _logTab_DisableComponents()
@@ -1036,38 +1045,40 @@ namespace ES_BackupManager
         private void radioBtn_Log_Logs_Checked(object sender, RoutedEventArgs e)
         {
             Client c = this.listBox_Clients.SelectedItem as Client;
+            this.LogsLoaded = false;
             this.LoadLogsData(c,true);                        
         }
 
         private void radioBtn_Log_Logins_Checked(object sender, RoutedEventArgs e)
         {
             Client c = this.listBox_Clients.SelectedItem as Client;
-            if(c != null)
-            {
-                this.LoadLogsData(c, false);
+            this.LogsLoaded = false;
+            this.LoadLogsData(c, false);
 
-                this.groupBox_Log_Logins.Visibility = Visibility.Visible;
-                this.groupBox_Log_LogsClient.Visibility = Visibility.Hidden;
-                this.groupBox_Log_LogsBackup.Visibility = Visibility.Hidden;
-            }            
+            this.groupBox_Log_Logins.Visibility = Visibility.Visible;
+            this.groupBox_Log_LogsClient.Visibility = Visibility.Hidden;
+            this.groupBox_Log_LogsBackup.Visibility = Visibility.Hidden;
         }
 
         private void dataGrid_Logs_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(this.radioBtn_Log_Logs.IsChecked == true)
+            if (this.LogsLoaded)
             {
-                //TODO: Fix this - crashes when log is selected
-                Log log = this.dataGrid_Logs.SelectedItem as Log;
-                if (log.IDBackup != null)
-                    this._loadLogInfo(log, true);
+                if (this.radioBtn_Log_Logs.IsChecked == true)
+                {                    
+                    Log log = this.dataGrid_Logs.SelectedItem as Log;
+                    if (log.IDBackup != null)
+                        this._loadLogInfo(log, true);
+                    else
+                        this._loadLogInfo(log, false);
+                }
                 else
-                    this._loadLogInfo(log, false);
+                {
+                    Login login = this.dataGrid_Logs.SelectedItem as Login;
+                    this._loadLoginInfo(login);
+                }
             }
-            else
-            {
-                Login login = this.dataGrid_Logs.SelectedItem as Login;
-                this._loadLoginInfo(login);
-            }
+            e.Handled = true;
         }
 
         public void _loadLogInfo(Log log, bool WithBackup)
@@ -1078,22 +1089,24 @@ namespace ES_BackupManager
             {                
                 this.groupBox_Log_LogsBackup.Visibility = Visibility.Visible;
                 this.groupBox_Log_LogsClient.Visibility = Visibility.Hidden;
+                this.groupBox_Log_Logins.Visibility = Visibility.Hidden;
 
                 this.textBox_Log_LogsBackup_Client.Text = client.GetClientByID(log.IDClient).Name;
                 this.textBox_Log_LogsBackup_Backup.Text = client.GetBackupByID((long)log.IDBackup).Name;
                 this.comboBox_Log_LogsBackup_Type.SelectedIndex = log.LogType;
                 this.dateTimePicker_Log_LogsBackup_Time.Value = log.UTCTime;
-                this.textBox_Log_LogsBackup_Value.Text = log.Value;
+                this.textBox_Log_LogsBackup_Value.Text = this._formatLogValue(log.Value);
             }
             else
             {
                 this.groupBox_Log_LogsClient.Visibility = Visibility.Visible;
                 this.groupBox_Log_LogsBackup.Visibility = Visibility.Hidden;
+                this.groupBox_Log_Logins.Visibility = Visibility.Hidden;
 
                 this.textBox_Log_LogsClient_Client.Text  = client.GetClientByID(log.IDClient).Name;
                 this.comboBox_Log_LogsClient_Type.SelectedIndex = log.LogType;
                 this.dateTimePicker_Log_LogsClient_Time.Value = log.UTCTime;
-                this.textBox_Log_LogsClient_Value.Text = log.Value;
+                this.textBox_Log_LogsClient_Value.Text = this._formatLogValue(log.Value);
             }
 
             client.Close();
@@ -1108,6 +1121,11 @@ namespace ES_BackupManager
             this.textBox_Log_Login_IP.Text = login.IP;
 
             client.Close();
+        }
+
+        private string _formatLogValue(string value)
+        {
+            return value.Replace(";", "\n");
         }
         #endregion
     }

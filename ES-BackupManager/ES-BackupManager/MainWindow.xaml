@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"        
         mc:Ignorable="d"
-        Title="Backup Manager | Evolution Studio" Height="650" Width="1280" 
-        MinWidth="1000" MinHeight="650" WindowStartupLocation="Manual">
+        Title="Backup Manager | Evolution Studio" Height="700" Width="1280" 
+        MinWidth="1000" MinHeight="700" WindowStartupLocation="Manual">
     <!-- STANDARD HEIGHT: 650 ,STANDARD WIDTH: 1000 -->
     <!-- CURRENT HEIGHT: 800 ,CURRENT WIDTH: 1280 -->
     <Window.Resources>
@@ -341,7 +341,7 @@
                                 <Label Content="Log time:" HorizontalAlignment="Left" Margin="78,72,0,0" VerticalAlignment="Top"/>
                                 <xctk:DateTimePicker x:Name="dateTimePicker_Log_LogsClient_Time" Height="24" Margin="200,74,124,0" Watermark="Log time" VerticalAlignment="Top"/>
                                 <Label Content="Log value:" HorizontalAlignment="Left" Margin="74,101,0,0" VerticalAlignment="Top"/>
-                                <xctk:WatermarkTextBox x:Name="textBox_Log_LogsClient_Value" Height="24" Margin="200,103,124,0" Watermark="Log value" VerticalAlignment="Top"/>
+                                <xctk:WatermarkTextBox x:Name="textBox_Log_LogsClient_Value" TextWrapping="Wrap" Height="80" Margin="200,103,124,0" Watermark="Log value" VerticalAlignment="Top"/>
                             </Grid>
                         </GroupBox>
                         <GroupBox Name="groupBox_Log_LogsBackup" Header="Log Info" Margin="225,10,10,10" Visibility="Visible">
@@ -357,7 +357,7 @@
                                 <Label Content="Log time:" HorizontalAlignment="Left" Margin="78,101,0,0" VerticalAlignment="Top"/>
                                 <xctk:DateTimePicker x:Name="dateTimePicker_Log_LogsBackup_Time" Height="24" Margin="200,103,124,0" Watermark="Log time" VerticalAlignment="Top"/>
                                 <Label Content="Log value:" HorizontalAlignment="Left" Margin="74,130,0,0" VerticalAlignment="Top"/>
-                                <xctk:WatermarkTextBox x:Name="textBox_Log_LogsBackup_Value" Height="24" Margin="200,132,124,0" Watermark="Log value" VerticalAlignment="Top"/>
+                                <xctk:WatermarkTextBox x:Name="textBox_Log_LogsBackup_Value" TextWrapping="Wrap" Height="80" Margin="200,132,124,0" Watermark="Log value" VerticalAlignment="Top"/>
                                 <Label Content="Backup:" HorizontalAlignment="Left" Margin="86,39,0,0" VerticalAlignment="Top"/>
                                 <xctk:WatermarkTextBox x:Name="textBox_Log_LogsBackup_Backup" Height="24" Margin="200,41,124,0" Watermark="Backups name" VerticalAlignment="Top"/>
                             </Grid>

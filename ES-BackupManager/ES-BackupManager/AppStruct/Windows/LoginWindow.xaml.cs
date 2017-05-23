@@ -1,5 +1,6 @@
 ﻿using ES_BackupManager.ESBackupServerAdminService;
 using System.Windows;
+using System.Windows.Media;
 
 namespace ES_BackupManager.AppStruct.Windows
 {
