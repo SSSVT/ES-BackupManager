@@ -69,7 +69,7 @@
                                                 <Setter Property="Source" Value="{StaticResource OnlineIcon}"/>
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding IsOnline}" Value="false">
-                                                <Setter Property="Source" Value="{StaticResource OfflineIcon}"/>
+                                                <Setter Property="Source" Value="{StaticResource BannedIcon}"/>
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
