@@ -80,7 +80,20 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <TabControl Name="TabControl_Main" Margin="215,10,10,10" IsEnabled="False" SelectionChanged="TabControl_Main_SelectionChanged">
+            <GroupBox Name="groupBox_Verification" Margin="215,10,10,10" Header="Verification" Visibility="Hidden">
+                <Grid>
+                    <Button x:Name="btn_Verification_Verify" Content="Verify" HorizontalAlignment="Left" Margin="100,175,0,0" VerticalAlignment="Top" Width="225" Height="80" FontSize="48" Click="btn_Verification_Verify_Click"/>
+                    <Button x:Name="btn_Verification_Ban" Content="Ban" HorizontalAlignment="Left" Margin="400,175,0,0" VerticalAlignment="Top" Width="225" Height="80" FontSize="48" Click="btn_Verification_Ban_Click"/>
+                    <Label x:Name="lbl_Verification" Content="To see clients info you have to verify him." HorizontalAlignment="Left" Margin="125,99,0,0" VerticalAlignment="Top" FontSize="24" FontWeight="Bold"/>
+                </Grid>
+            </GroupBox>
+            <GroupBox Name="groupBox_Banned" Margin="215,10,10,10" Header="Unban" Visibility="Hidden">
+                <Grid>
+                    <Button x:Name="btn_Ban_Unban" Content="Unban" HorizontalAlignment="Left" Margin="300,170,0,0" VerticalAlignment="Top" Width="225" Height="80" FontSize="48" Click="btn_Ban_Unban_Click"/>
+                    <Label x:Name="lbl_Ban" Content="This client is banned and you can't access his data." HorizontalAlignment="Left" Margin="125,99,0,0" VerticalAlignment="Top" FontSize="24" FontWeight="Bold"/>
+                </Grid>
+            </GroupBox>
+            <TabControl Name="TabControl_Main" Visibility="Visible" Margin="215,10,10,10" IsEnabled="False" SelectionChanged="TabControl_Main_SelectionChanged">
                 <TabItem Header="Information">
                     <Grid>
                         <GroupBox Header="Client Details" Margin="10,0" Height="222" VerticalAlignment="Top">
@@ -98,14 +111,9 @@
                                 <xctk:DateTimePickerBase x:Name="dateTimePicker_Client_RegistrationDate" TextAlignment="Left" Height="24" Margin="192,158,289,0" Watermark="Registration date" VerticalAlignment="Top" IsEnabled="False"/>
                             </Grid>
                         </GroupBox>
-                        <GroupBox Header="Client Settings" Margin="10,227,10,0" Height="218" VerticalAlignment="Top">
+                        <GroupBox Header="Client Settings" Margin="10,227,10,0" Height="146" VerticalAlignment="Top">
                             <Grid>
-                                <ComboBox x:Name="comboBox_Client_Status" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="250" IsReadOnly="True" Height="50" FontSize="35">
-                                    <ComboBoxItem Content="Verified"/>
-                                    <ComboBoxItem Content="Unverified"/>
-                                    <ComboBoxItem Content="Banned"/>
-                                </ComboBox>
-                                <GroupBox x:Name="groupBox_Client_Connection" Header="Connection Info" Margin="10,80,10,0" VerticalAlignment="Top" Height="108">
+                                <GroupBox x:Name="groupBox_Client_Connection" Header="Connection Info" Margin="10,10,10,0" VerticalAlignment="Top" Height="108">
                                     <Grid>
                                         <Label x:Name="label" Content="Refresh Interval (ms):" HorizontalAlignment="Left" Margin="26,42,0,0" VerticalAlignment="Top"/>
                                         <xctk:IntegerUpDown x:Name="IntUpDown_Client_StatusRepeat" Margin="182,42,276,0" Height="24" VerticalAlignment="Top" Watermark="Connection refresh interval" />
@@ -118,6 +126,7 @@
                         </GroupBox>
                         <Button x:Name="btn_Client_Edit" Content="Edit" Margin="0,0,90,15" Click="btn_Client_Edit_Click" HorizontalAlignment="Right" Width="75" Height="22" VerticalAlignment="Bottom"/>
                         <Button x:Name="btn_Client_Cancel" Content="Cancel" Margin="0,0,10,15" Click="btn_Client_Cancel_Click" Height="22" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75"/>
+                        <Button x:Name="btn_Client_Ban" Content="Ban" Margin="10,0,0,15" HorizontalAlignment="Left" Width="75" Height="22" VerticalAlignment="Bottom" Click="btn_Client_Ban_Click"/>
                     </Grid>
                 </TabItem>
                 <TabItem Header="Backup Templates">

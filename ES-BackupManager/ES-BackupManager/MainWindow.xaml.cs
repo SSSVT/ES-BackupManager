@@ -32,7 +32,7 @@ namespace ES_BackupManager
 
         ~MainWindow()
         {
-            this.StopTimer();
+            //this.StopTimer();
         }
 
         #region Local Properties
@@ -264,6 +264,48 @@ namespace ES_BackupManager
         #endregion
 
         #region Client Controls        
+        #region Verification window
+        private void btn_Verification_Verify_Click(object sender, RoutedEventArgs e)
+        {
+            ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
+
+            Client c = this.listBox_Clients.SelectedItem as Client;
+            c.Status = 0;
+            
+            client.UpdateClient(c);
+
+            this.SetClientCorrectWindow(c);
+
+            client.Close();
+        }
+        private void btn_Verification_Ban_Click(object sender, RoutedEventArgs e)
+        {
+            ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
+
+            Client c = this.listBox_Clients.SelectedItem as Client;
+            c.Status = 2;
+
+            client.UpdateClient(c);
+
+            this.SetClientCorrectWindow(c);
+
+            client.Close();
+        }
+        #endregion
+        #region Ban window
+        private void btn_Ban_Unban_Click(object sender, RoutedEventArgs e)
+        {
+            ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
+            Client c = this.listBox_Clients.SelectedItem as Client;
+            c.Status = 1;
+            
+            client.UpdateClient(c);
+
+            this.SetClientCorrectWindow(c);
+
+            client.Close();
+        }
+        #endregion
         private void listBox_Clients_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             this.TabControl_Main.IsEnabled = true;            
@@ -271,19 +313,40 @@ namespace ES_BackupManager
 
             Client c = this.listBox_Clients.SelectedItem as Client;  
             if(c != null)
-            {
-                this._loadComponents(c);
-                this.LoadClientInfo(c);
-            }                                  
+                this.SetClientCorrectWindow(c);                                
         }
 
         private void _clientTab_DisableComponents()
         {
             this.textBox_Client_Name.IsEnabled = false;
             this.textBox_Client_Description.IsEnabled = false;            
-            this.btn_Client_Cancel.IsEnabled = false;            
-            this.comboBox_Client_Status.IsEnabled = false;
+            this.btn_Client_Cancel.IsEnabled = false;                        
             this.groupBox_Client_Connection.IsEnabled = false;     
+        }
+        private void SetClientCorrectWindow(Client c)
+        {
+            switch (c.Status)
+            {
+                case 0:
+                    this.groupBox_Verification.Visibility = Visibility.Hidden;
+                    this.groupBox_Banned.Visibility = Visibility.Hidden;
+                    this.TabControl_Main.Visibility = Visibility.Visible;
+                    this._loadComponents(c);
+                    this.LoadClientInfo(c);
+                    break;
+                case 1:
+                    this.groupBox_Banned.Visibility = Visibility.Hidden;
+                    this.TabControl_Main.Visibility = Visibility.Hidden;
+                    this.groupBox_Verification.Visibility = Visibility.Visible;
+                    break;
+                case 2:
+                    this.groupBox_Verification.Visibility = Visibility.Hidden;
+                    this.TabControl_Main.Visibility = Visibility.Hidden;
+                    this.groupBox_Banned.Visibility = Visibility.Visible;
+                    break;
+                default:
+                    break;
+            }
         }
         private void LoadClientInfo(Client c)
         {
@@ -292,22 +355,6 @@ namespace ES_BackupManager
 
             this.textBox_Client_Name.Text = c.Name;
             this.textBox_Client_Description.Text = c.Description;
-
-            switch (c.Status)
-            {
-                case 0:
-                    this.comboBox_Client_Status.SelectedIndex = 0;
-                    break;
-                case 1:
-                    this.comboBox_Client_Status.SelectedIndex = 1;
-                    break;
-                case 2:
-                    this.comboBox_Client_Status.SelectedIndex = 2;
-                    break;
-                default:
-                    this.comboBox_Client_Status.SelectedIndex = 1;
-                    break;
-            }
 
             if (c.StatusReportEnabled)
             {
@@ -337,8 +384,7 @@ namespace ES_BackupManager
                 ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
                 Client c = this.listBox_Clients.SelectedItem as Client;
 
-                c.Description = this.textBox_Client_Description.Text;
-                c.Status = Convert.ToByte(this.comboBox_Client_Status.SelectedIndex);
+                c.Description = this.textBox_Client_Description.Text;                
                 c.StatusReportEnabled = (bool)this.radioBtn_Client_ConnSet.IsChecked ? true : false;
                 if (c.StatusReportEnabled)
                     c.ReportInterval = (int)this.IntUpDown_Client_StatusRepeat.Value;
@@ -354,14 +400,29 @@ namespace ES_BackupManager
             }
             else
             {
-                this.textBox_Client_Description.IsEnabled = true;
-                this.comboBox_Client_Status.IsEnabled = true;
+                this.textBox_Client_Description.IsEnabled = true;                
                 this.groupBox_Client_Connection.IsEnabled = true;
 
                 this.IsClientEditState = true;
             }
             
 
+        }
+        private void btn_Client_Ban_Click(object sender, RoutedEventArgs e)
+
+        {
+            Client c = this.listBox_Clients.SelectedItem as Client;
+            if (Xceed.Wpf.Toolkit.MessageBox.Show(this, "Do you wish to ban client \""+ c.Name + "\" ?", "Confirm", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                ESBackupServerAdminServiceClient client = new ESBackupServerAdminServiceClient();
+                c.Status = 2;
+
+                client.UpdateClient(c);
+
+                this.SetClientCorrectWindow(c);
+
+                client.Close();
+            }
         }
         private void radioBtn_Client_ConnSet_Checked(object sender, RoutedEventArgs e)
         {
@@ -502,7 +563,7 @@ namespace ES_BackupManager
                 if (this.checkBox_Template_SearchPattern.IsChecked == true)
                     template.SearchPattern = this.textBox_Template_SearchPattern.Text;
                 else
-                    template.SearchPattern = "*";
+                    template.SearchPattern = ".*";
 
                 template.CRONRepeatInterval = this.textBox_Template_CRON.Text;
                 if(this.dateTimePicker_Template_Expire.Value != null)
@@ -1046,7 +1107,11 @@ namespace ES_BackupManager
         {
             Client c = this.listBox_Clients.SelectedItem as Client;
             this.LogsLoaded = false;
-            this.LoadLogsData(c,true);                        
+            this.LoadLogsData(c,true);
+
+            this.groupBox_Log_Logins.Visibility = Visibility.Hidden;
+            this.groupBox_Log_LogsClient.Visibility = Visibility.Hidden;
+            this.groupBox_Log_LogsBackup.Visibility = Visibility.Visible;
         }
 
         private void radioBtn_Log_Logins_Checked(object sender, RoutedEventArgs e)
@@ -1054,10 +1119,10 @@ namespace ES_BackupManager
             Client c = this.listBox_Clients.SelectedItem as Client;
             this.LogsLoaded = false;
             this.LoadLogsData(c, false);
-
-            this.groupBox_Log_Logins.Visibility = Visibility.Visible;
+            
             this.groupBox_Log_LogsClient.Visibility = Visibility.Hidden;
             this.groupBox_Log_LogsBackup.Visibility = Visibility.Hidden;
+            this.groupBox_Log_Logins.Visibility = Visibility.Visible;
         }
 
         private void dataGrid_Logs_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -1067,10 +1132,13 @@ namespace ES_BackupManager
                 if (this.radioBtn_Log_Logs.IsChecked == true)
                 {                    
                     Log log = this.dataGrid_Logs.SelectedItem as Log;
-                    if (log.IDBackup != null)
-                        this._loadLogInfo(log, true);
-                    else
-                        this._loadLogInfo(log, false);
+                    if(log != null)
+                    {                    
+                        if (log.IDBackup != null)
+                            this._loadLogInfo(log, true);
+                        else
+                            this._loadLogInfo(log, false);
+                    }
                 }
                 else
                 {
