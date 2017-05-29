@@ -22,6 +22,11 @@
                     <Setter Property="Background" Value="LightGray"/>
                 </DataTrigger>
             </Style.Triggers>
+            <Setter Property="ToolTip">
+                <Setter.Value>
+                    <TextBlock>Hello</TextBlock>
+                </Setter.Value>
+            </Setter>
         </Style>
 
         <BitmapImage x:Key="OnlineIcon" UriSource="Resources/ImgStatusOnline.png"/>
@@ -53,7 +58,7 @@
                 <ComboBoxItem Content="Banned"/>
             </ComboBox>
             <Button x:Name="btn_Main_ApplyFilter" Content="Apply" HorizontalAlignment="Left" Margin="65,66,0,0" VerticalAlignment="Top" Width="75" Click="btn_Main_ApplyFilter_Click"/>
-            <ListBox Name="listBox_Clients" HorizontalAlignment="Left" Margin="10,91,0,10" Width="200" SelectionMode="Single" ItemContainerStyle="{StaticResource ClientStyle}" SelectionChanged="listBox_Clients_SelectionChanged">
+            <ListBox Name="listBox_Clients" HorizontalAlignment="Left" Margin="10,91,0,10" Width="200" SelectionMode="Single" ItemContainerStyle="{StaticResource ClientStyle}" SelectionChanged="listBox_Clients_SelectionChanged" >
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid Margin="0,2">
