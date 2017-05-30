@@ -24,15 +24,15 @@ namespace ES_BackupManager
 
             this.Administrator = admin;            
             this._loadGrid(Filter.All,Sort.Asc);
+            this.StartTimer();
 
-            //this.StartTimer();
             //DEBUG
             //this.TabControl_Main.IsEnabled = true;           
         }
 
         ~MainWindow()
         {
-            //this.StopTimer();
+            this.StopTimer();
         }
 
         #region Local Properties

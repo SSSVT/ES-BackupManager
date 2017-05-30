@@ -216,12 +216,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="bin\Debug\icons\ES.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="bin\Debug\icons\icon.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\ImgStatusOffline.png" />
   </ItemGroup>
   <ItemGroup>
@@ -229,6 +223,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AppStruct\Components\" />
+    <Folder Include="bin\Debug\icons\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
