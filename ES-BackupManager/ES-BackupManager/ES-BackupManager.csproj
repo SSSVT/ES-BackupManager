@@ -105,7 +105,7 @@
     <Compile Include="AppStruct\Windows\EmailAddWindow.xaml.cs">
       <DependentUpon>EmailAddWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AppStruct\Windows\TemplateInputModes.cs" />
+    <Compile Include="AppStruct\Objects\TemplateInputModes.cs" />
     <Compile Include="AppStruct\Windows\AdministratorWindow.xaml.cs">
       <DependentUpon>AdministratorWindow.xaml</DependentUpon>
     </Compile>

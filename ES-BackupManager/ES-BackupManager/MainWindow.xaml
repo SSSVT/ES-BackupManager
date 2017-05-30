@@ -120,7 +120,7 @@
                             <Grid>
                                 <GroupBox x:Name="groupBox_Client_Connection" Header="Connection Info" Margin="10,10,10,0" VerticalAlignment="Top" Height="108">
                                     <Grid>
-                                        <Label x:Name="label" Content="Refresh Interval (ms):" HorizontalAlignment="Left" Margin="26,42,0,0" VerticalAlignment="Top"/>
+                                        <Label x:Name="label" Content="Refresh Interval (s):" HorizontalAlignment="Left" Margin="36,41,0,0" VerticalAlignment="Top"/>
                                         <xctk:IntegerUpDown x:Name="IntUpDown_Client_StatusRepeat" Margin="182,42,276,0" Height="24" VerticalAlignment="Top" Watermark="Connection refresh interval" />
                                         <Label x:Name="label_Copy" Content="Connection refresh:" HorizontalAlignment="Left" Margin="33,10,0,0" VerticalAlignment="Top"/>
                                         <RadioButton x:Name="radioBtn_Client_ConnDefault" Content="Default" HorizontalAlignment="Left" Margin="194,16,0,0" VerticalAlignment="Top" Checked="radioBtn_Client_ConnDefault_Checked"/>

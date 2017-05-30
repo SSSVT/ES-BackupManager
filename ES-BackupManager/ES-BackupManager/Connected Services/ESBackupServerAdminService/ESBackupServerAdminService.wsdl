@@ -123,6 +123,12 @@
   <wsdl:message name="IESBackupServerAdminService_UpdateAdministrator_OutputMessage">
     <wsdl:part name="parameters" element="tns:UpdateAdministratorResponse" />
   </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_ClientConfigUpdated_InputMessage">
+    <wsdl:part name="parameters" element="tns:ClientConfigUpdated" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_ClientConfigUpdated_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ClientConfigUpdatedResponse" />
+  </wsdl:message>
   <wsdl:portType name="IESBackupServerAdminService">
     <wsdl:operation name="GetClients">
       <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetClients" message="tns:IESBackupServerAdminService_GetClients_InputMessage" />
@@ -199,6 +205,10 @@
     <wsdl:operation name="UpdateAdministrator">
       <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/UpdateAdministrator" message="tns:IESBackupServerAdminService_UpdateAdministrator_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/UpdateAdministratorResponse" message="tns:IESBackupServerAdminService_UpdateAdministrator_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ClientConfigUpdated">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/ClientConfigUpdated" message="tns:IESBackupServerAdminService_ClientConfigUpdated_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/ClientConfigUpdatedResponse" message="tns:IESBackupServerAdminService_ClientConfigUpdated_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IESBackupServerAdminService" type="tns:IESBackupServerAdminService">
@@ -367,6 +377,15 @@
     </wsdl:operation>
     <wsdl:operation name="UpdateAdministrator">
       <soap:operation soapAction="http://tempuri.org/IESBackupServerAdminService/UpdateAdministrator" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ClientConfigUpdated">
+      <soap:operation soapAction="http://tempuri.org/IESBackupServerAdminService/ClientConfigUpdated" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

@@ -24,18 +24,14 @@ namespace ES_BackupManager
 
             this.Administrator = admin;            
             this._loadGrid(Filter.All,Sort.Asc);
-            this.StartTimer();
+            //this.StartTimer();
 
             //DEBUG
             //this.TabControl_Main.IsEnabled = true;           
         }
 
-        ~MainWindow()
-        {
-            this.StopTimer();
-        }
-
         #region Local Properties
+        private int SelectedClientIndex { get; set; }
         private System.Timers.Timer timer { get; set; }
         private Administrator Administrator { get; set; }
         private bool TemplatesLoaded { get; set; }
@@ -154,14 +150,15 @@ namespace ES_BackupManager
             this.timer.Interval = 5000;
             this.timer.Enabled = true;
         }
-
-        private void StopTimer()
-        {
-            //this.timer.Enabled = false;
-        }
         private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            this._loadGrid(Filter.All, Sort.Asc);            
+            int tmp = this.SelectedClientIndex;
+            this._loadGrid(Filter.All, Sort.Asc);
+
+            App.Current.Dispatcher.Invoke(delegate
+            {
+                this.listBox_Clients.SelectedIndex = tmp;
+            });            
         }
         #endregion
 
@@ -313,7 +310,10 @@ namespace ES_BackupManager
 
             Client c = this.listBox_Clients.SelectedItem as Client;  
             if(c != null)
-                this.SetClientCorrectWindow(c);                                
+            {
+                this.SetClientCorrectWindow(c);
+                this.SelectedClientIndex = this.listBox_Clients.SelectedIndex;
+            }                
         }
 
         private void _clientTab_DisableComponents()
@@ -918,7 +918,7 @@ namespace ES_BackupManager
                 this.textBox_Backup_Name.Text = b.Name;
                 this.textBox_Backup_Description.Text = b.Description;
                 
-                //this.textBox_Backup_Template.Text = client.GetTemplateByID(Convert.ToInt32(b.IDBackupTemplate)).Name;
+                this.textBox_Backup_Template.Text = client.GetTemplateByID(Convert.ToInt32(b.IDBackupTemplate)).Name;
                
                 
                 if(b.BaseBackupID != null)

@@ -318,7 +318,7 @@ namespace ES_BackupManager.ESBackupServerAdminService {
         private string NameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private ushort PathOrderField;
+        private int PathOrderField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string SourceField;
@@ -476,7 +476,7 @@ namespace ES_BackupManager.ESBackupServerAdminService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public ushort PathOrder {
+        public int PathOrder {
             get {
                 return this.PathOrderField;
             }
@@ -791,9 +791,6 @@ namespace ES_BackupManager.ESBackupServerAdminService {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool BackupEmptyDirectoriesField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private byte BackupTypeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -839,19 +836,6 @@ namespace ES_BackupManager.ESBackupServerAdminService {
             }
             set {
                 this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool BackupEmptyDirectories {
-            get {
-                return this.BackupEmptyDirectoriesField;
-            }
-            set {
-                if ((this.BackupEmptyDirectoriesField.Equals(value) != true)) {
-                    this.BackupEmptyDirectoriesField = value;
-                    this.RaisePropertyChanged("BackupEmptyDirectories");
-                }
             }
         }
         
@@ -1053,6 +1037,9 @@ namespace ES_BackupManager.ESBackupServerAdminService {
         private long IDBackupTemplateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PasswordField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private short PathOrderField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -1060,6 +1047,9 @@ namespace ES_BackupManager.ESBackupServerAdminService {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private byte TargetTypeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UsernameField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -1111,6 +1101,19 @@ namespace ES_BackupManager.ESBackupServerAdminService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Password {
+            get {
+                return this.PasswordField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PasswordField, value) != true)) {
+                    this.PasswordField = value;
+                    this.RaisePropertyChanged("Password");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public short PathOrder {
             get {
                 return this.PathOrderField;
@@ -1145,6 +1148,19 @@ namespace ES_BackupManager.ESBackupServerAdminService {
                 if ((this.TargetTypeField.Equals(value) != true)) {
                     this.TargetTypeField = value;
                     this.RaisePropertyChanged("TargetType");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Username {
+            get {
+                return this.UsernameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UsernameField, value) != true)) {
+                    this.UsernameField = value;
+                    this.RaisePropertyChanged("Username");
                 }
             }
         }
@@ -1573,6 +1589,12 @@ namespace ES_BackupManager.ESBackupServerAdminService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/UpdateAdministrator", ReplyAction="http://tempuri.org/IESBackupServerAdminService/UpdateAdministratorResponse")]
         System.Threading.Tasks.Task UpdateAdministratorAsync(ES_BackupManager.ESBackupServerAdminService.Administrator admin);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/ClientConfigUpdated", ReplyAction="http://tempuri.org/IESBackupServerAdminService/ClientConfigUpdatedResponse")]
+        void ClientConfigUpdated(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IESBackupServerAdminService/ClientConfigUpdated", ReplyAction="http://tempuri.org/IESBackupServerAdminService/ClientConfigUpdatedResponse")]
+        System.Threading.Tasks.Task ClientConfigUpdatedAsync(int id);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1752,6 +1774,14 @@ namespace ES_BackupManager.ESBackupServerAdminService {
         
         public System.Threading.Tasks.Task UpdateAdministratorAsync(ES_BackupManager.ESBackupServerAdminService.Administrator admin) {
             return base.Channel.UpdateAdministratorAsync(admin);
+        }
+        
+        public void ClientConfigUpdated(int id) {
+            base.Channel.ClientConfigUpdated(id);
+        }
+        
+        public System.Threading.Tasks.Task ClientConfigUpdatedAsync(int id) {
+            return base.Channel.ClientConfigUpdatedAsync(id);
         }
     }
 }

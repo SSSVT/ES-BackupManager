@@ -45,7 +45,7 @@
       <xs:element minOccurs="0" name="IDBackupTemplate" type="xs:long" />
       <xs:element minOccurs="0" name="IDClient" type="xs:int" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="PathOrder" type="xs:unsignedShort" />
+      <xs:element minOccurs="0" name="PathOrder" type="xs:int" />
       <xs:element minOccurs="0" name="Source" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Status" type="xs:unsignedByte" />
       <xs:element minOccurs="0" name="UTCEnd" nillable="true" type="xs:dateTime" />
@@ -83,7 +83,6 @@
   <xs:element name="ArrayOfBackupTemplate" nillable="true" type="tns:ArrayOfBackupTemplate" />
   <xs:complexType name="BackupTemplate">
     <xs:sequence>
-      <xs:element minOccurs="0" name="BackupEmptyDirectories" type="xs:boolean" />
       <xs:element minOccurs="0" name="BackupType" type="xs:unsignedByte" />
       <xs:element minOccurs="0" name="CRONRepeatInterval" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Compression" type="xs:boolean" />
@@ -113,9 +112,11 @@
       <xs:element minOccurs="0" name="Destination" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ID" type="ser:guid" />
       <xs:element minOccurs="0" name="IDBackupTemplate" type="xs:long" />
+      <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PathOrder" type="xs:short" />
       <xs:element minOccurs="0" name="Source" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="TargetType" type="xs:unsignedByte" />
+      <xs:element minOccurs="0" name="Username" nillable="true" type="xs:string" />
     </xs:sequence>
     <xs:attribute ref="ser:Id" />
     <xs:attribute ref="ser:Ref" />
