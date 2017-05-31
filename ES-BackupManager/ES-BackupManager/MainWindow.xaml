@@ -11,20 +11,9 @@
     <!-- CURRENT HEIGHT: 800 ,CURRENT WIDTH: 1280 -->
     <Window.Resources>
         <Style TargetType="{x:Type ListBoxItem}" x:Key="ClientStyle" >
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding Status}" Value="0">
-                    <Setter Property="Background" Value="LightCyan"/>
-                </DataTrigger>
-                <DataTrigger Binding="{Binding Status}" Value="1">
-                    <Setter Property="Background" Value="LightYellow"/>
-                </DataTrigger>
-                <DataTrigger Binding="{Binding Status}" Value="2">
-                    <Setter Property="Background" Value="LightGray"/>
-                </DataTrigger>
-            </Style.Triggers>
             <Setter Property="ToolTip">
                 <Setter.Value>
-                    <TextBlock>Hello</TextBlock>
+                    <ToolTip Content="{Binding }"/>
                 </Setter.Value>
             </Setter>
         </Style>
@@ -32,6 +21,7 @@
         <BitmapImage x:Key="OnlineIcon" UriSource="Resources/ImgStatusOnline.png"/>
         <BitmapImage x:Key="OfflineIcon" UriSource="Resources/ImgStatusOffline.png"/>
         <BitmapImage x:Key="BannedIcon" UriSource="Resources/ImgStatusBanned.png"/>
+        <BitmapImage x:Key="UnverifiedIcon" UriSource="Resources/ImgStatusUnverified.png"/>
     </Window.Resources>
     <Grid>
         <StackPanel VerticalAlignment="Top">
@@ -74,7 +64,13 @@
                                                 <Setter Property="Source" Value="{StaticResource OnlineIcon}"/>
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding IsOnline}" Value="false">
+                                                <Setter Property="Source" Value="{StaticResource OfflineIcon}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Status}" Value="2">
                                                 <Setter Property="Source" Value="{StaticResource BannedIcon}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Status}" Value="1">
+                                                <Setter Property="Source" Value="{StaticResource UnverifiedIcon}"/>
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>

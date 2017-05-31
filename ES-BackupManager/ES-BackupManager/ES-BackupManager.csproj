@@ -225,5 +225,8 @@
     <Folder Include="AppStruct\Components\" />
     <Folder Include="bin\Debug\icons\" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ImgStatusUnverified.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
