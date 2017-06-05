@@ -125,9 +125,9 @@
                                 </GroupBox>
                             </Grid>
                         </GroupBox>
-                        <Button x:Name="btn_Client_Edit" Content="Edit" Margin="0,0,90,15" Click="btn_Client_Edit_Click" HorizontalAlignment="Right" Width="75" Height="22" VerticalAlignment="Bottom"/>
-                        <Button x:Name="btn_Client_Cancel" Content="Cancel" Margin="0,0,10,15" Click="btn_Client_Cancel_Click" Height="22" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75"/>
-                        <Button x:Name="btn_Client_Ban" Content="Ban" Margin="10,0,0,15" HorizontalAlignment="Left" Width="75" Height="22" VerticalAlignment="Bottom" Click="btn_Client_Ban_Click"/>
+                        <Button x:Name="btn_Client_Edit" Content="Edit" Margin="0,0,90,10" Click="btn_Client_Edit_Click" HorizontalAlignment="Right" Width="75" VerticalAlignment="Bottom"/>
+                        <Button x:Name="btn_Client_Cancel" Content="Cancel" Margin="0,0,10,10" Click="btn_Client_Cancel_Click" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75"/>
+                        <Button x:Name="btn_Client_Ban" Content="Ban" Margin="10,0,0,10" HorizontalAlignment="Left" Width="75" VerticalAlignment="Bottom" Click="btn_Client_Ban_Click"/>
                     </Grid>
                 </TabItem>
                 <TabItem Header="Backup Templates">
@@ -309,8 +309,8 @@
                                         <RadioButton x:Name="radioBtn_Backup_NoCompress" Content="No Compress" Margin="263,10,0,0" Height="21" VerticalAlignment="Top" IsChecked="True" HorizontalAlignment="Left" Width="91"/>
                                     </Grid>
                                 </GroupBox>
-                                <Button Name="btn_Backup_Edit" Content="Edit" Margin="0,0,90,10" HorizontalAlignment="Right" Width="75" Height="20" VerticalAlignment="Bottom" Click="btn_Backup_Edit_Click"/>
-                                <Button Name ="btn_Backup_Cancel" Content="Cancel" HorizontalAlignment="Left" Margin="709,0,0,10" VerticalAlignment="Bottom" Width="75" Click="btn_Backup_Cancel_Click" Height="20" IsEnabled="False"/>
+                                <Button Name="btn_Backup_Edit" Content="Edit" Margin="0,0,90,10" HorizontalAlignment="Right" Width="75" VerticalAlignment="Bottom" Click="btn_Backup_Edit_Click"/>
+                                <Button Name ="btn_Backup_Cancel" Content="Cancel" Margin="0,0,10,10" VerticalAlignment="Bottom" Click="btn_Backup_Cancel_Click" IsEnabled="False" HorizontalAlignment="Right" Width="75"/>
                                 <Label Content="Created By Template:" HorizontalAlignment="Left" Margin="20,69,0,0" VerticalAlignment="Top"/>
                                 <TextBox x:Name="textBox_Backup_Template" Height="23" Margin="192,72,77,0" TextWrapping="Wrap" Text="Backup template" VerticalAlignment="Top"/>
                                 <Button x:Name="btn_Backup_TemplateTree" Content="..." HorizontalAlignment="Right" Margin="0,75,52,0" Width="20" ToolTip="Show tree of this template" Height="20" VerticalAlignment="Top"/>

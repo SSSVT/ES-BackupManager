@@ -591,6 +591,8 @@ namespace ESBackupManager
                 template.BackupType = this._template_GetTemplateType();
                 template.Compression = this.radioBtn_Template_Compress.IsChecked == true ? true : false;
 
+                //TODO: Maybe rework?
+                /*
                 List<BackupTemplatePath> paths = new List<BackupTemplatePath>();
                 foreach (SourcePathInfo source in this._gridTemplateSourceList)
                 {
@@ -607,6 +609,7 @@ namespace ESBackupManager
                     }
                 }
                 template.Paths = paths;                
+                */
 
                 if (this.checkBox_Template_SearchPattern.IsChecked == true)
                     template.SearchPattern = this.textBox_Template_SearchPattern.Text;
@@ -628,6 +631,8 @@ namespace ESBackupManager
             {
                 this.TemplateMode = TemplateInputModes.Edit;
                 this._templateTab_EnableComponents();
+                this.groupBox_Template_Path.IsEnabled = false;
+                this.groupBox_Template_Type.IsEnabled = false;
             }      
             
             client.Close();
