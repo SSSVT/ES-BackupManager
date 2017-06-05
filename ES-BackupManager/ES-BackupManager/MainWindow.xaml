@@ -47,7 +47,7 @@
                 <ComboBoxItem Content="Unverified"/>
                 <ComboBoxItem Content="Banned"/>
             </ComboBox>
-            <Button x:Name="btn_Main_ApplyFilter" Content="Apply" HorizontalAlignment="Left" Margin="65,66,0,0" VerticalAlignment="Top" Width="75" Click="btn_Main_ApplyFilter_Click"/>
+            <Button x:Name="btn_Main_ApplyFilter" Content="Apply" HorizontalAlignment="Left" Margin="21,66,0,0" VerticalAlignment="Top" Width="75" Click="btn_Main_ApplyFilter_Click"/>
             <ListBox Name="listBox_Clients" HorizontalAlignment="Left" Margin="10,91,0,10" Width="200" SelectionMode="Single" ItemContainerStyle="{StaticResource ClientStyle}" SelectionChanged="listBox_Clients_SelectionChanged" >
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -254,11 +254,11 @@
                                 </Grid>
                             </ScrollViewer>
                         </GroupBox>
-                        <Button x:Name="btn_Template_New" Content="New" Margin="215,0,0,13"  VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="73" Click="btn_Template_New_Click"/>
+                        <Button x:Name="btn_Template_New" Content="New" Margin="230,0,0,10"  VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="73" Click="btn_Template_New_Click"/>
                         <Button x:Name="btn_Template_Cancel" Content="Cancel" Margin="0,0,10,10" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Click="btn_Template_Cancel_Click" IsEnabled="False"/>
                         <Button x:Name="btn_Template_Edit" Content="Edit" Margin="0,0,90,10" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Click="btn_Template_Edit_Click"/>
-                        <Button x:Name="btn_Template_StatusChange" Content="Enable" Margin="293,0,0,13" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="73" Click="btn_Template_StatusChange_Click"/>
-                        <Button x:Name="btn_Template_Remove" Content="Remove" Margin="371,0,0,13" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="73" Click="btn_Template_Remove_Click"/>
+                        <Button x:Name="btn_Template_StatusChange" Content="Enable" Margin="308,0,0,10" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="73" Click="btn_Template_StatusChange_Click"/>
+                        <Button x:Name="btn_Template_Remove" Content="Remove" Margin="386,0,0,10" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="73" Click="btn_Template_Remove_Click"/>
                     </Grid>
 
                 </TabItem>
@@ -317,6 +317,7 @@
                                 <Label Content="Base backup:" HorizontalAlignment="Left" Margin="60,122,0,0" VerticalAlignment="Top"/>
                                 <TextBox x:Name="textBox_Backup_BaseBackup" Height="23" Margin="192,125,77,0" TextWrapping="Wrap" Text="Base backup" VerticalAlignment="Top"/>
                                 <Label Content="*Base backup is only shown if the backup was differencial or incremental" HorizontalAlignment="Left" Margin="70,100,0,0" VerticalAlignment="Top" FontSize="10"/>
+                                <Button x:Name="btn_Backup_Restore" Content="Restore" Margin="20,0,0,10" HorizontalAlignment="Left" Width="75" VerticalAlignment="Bottom"/>
                             </Grid>
                         </GroupBox>
                     </Grid>
@@ -377,6 +378,7 @@
                     </Grid>
                 </TabItem>
             </TabControl>
+            <CheckBox Content="Show banned" HorizontalAlignment="Left" Margin="101,71,0,0" VerticalAlignment="Top"/>
         </Grid>
     </Grid>
 </Window>

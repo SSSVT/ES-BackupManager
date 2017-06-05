@@ -227,6 +227,7 @@ namespace ESBackupManager
             if (!this.TabControl_Main.IsEnabled)
                 this.TabControl_Main.IsEnabled = true;
 
+            this.TabControl_Main.SelectedIndex = 0;
             this.TemplatesLoaded = false;
             this.BackupsLoaded = false;
             this.LogsLoaded = false;
@@ -907,6 +908,7 @@ namespace ESBackupManager
             else
             {
                 this.dataGrid_Backups.SelectedIndex = 0;
+                this.IsBackupEditState = false;
                 this.btn_Backup_Edit.IsEnabled = true;
             }
 
