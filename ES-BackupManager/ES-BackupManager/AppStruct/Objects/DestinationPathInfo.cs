@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ES_BackupManager.AppStruct.Objects
+namespace ESBackupManager.AppStruct.Objects
 {
     public class DestinationPathInfo
     {

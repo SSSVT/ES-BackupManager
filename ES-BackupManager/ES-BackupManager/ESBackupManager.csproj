@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{EDD1C3CE-66A8-459B-BF62-079521A693EC}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>ES_BackupManager</RootNamespace>
-    <AssemblyName>ES-BackupManager</AssemblyName>
+    <RootNamespace>ESBackupManager</RootNamespace>
+    <AssemblyName>ESBackupManager</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -143,6 +143,27 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Connected Services\ESBackupServerAdminService\ESBackupManager.ESBackupServerAdminService.Administrator.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\ESBackupServerAdminService\ESBackupManager.ESBackupServerAdminService.BackupInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\ESBackupServerAdminService\ESBackupManager.ESBackupServerAdminService.BackupTemplate.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\ESBackupServerAdminService\ESBackupManager.ESBackupServerAdminService.Client.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\ESBackupServerAdminService\ESBackupManager.ESBackupServerAdminService.Configuration.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\ESBackupServerAdminService\ESBackupManager.ESBackupServerAdminService.Log.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\ESBackupServerAdminService\ESBackupManager.ESBackupServerAdminService.Login.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\ESBackupServerAdminService\ESBackupServerAdminService.wsdl" />
     <None Include="Connected Services\ESBackupServerAdminService\ESBackupServerAdminService.xsd">
       <SubType>Designer</SubType>
@@ -158,27 +179,6 @@
     </None>
     <None Include="Connected Services\ESBackupServerAdminService\ESBackupServerAdminService4.xsd">
       <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\ESBackupServerAdminService\ES_BackupManager.ESBackupServerAdminService.Administrator.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\ESBackupServerAdminService\ES_BackupManager.ESBackupServerAdminService.BackupInfo.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\ESBackupServerAdminService\ES_BackupManager.ESBackupServerAdminService.BackupTemplate.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\ESBackupServerAdminService\ES_BackupManager.ESBackupServerAdminService.Client.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\ESBackupServerAdminService\ES_BackupManager.ESBackupServerAdminService.Configuration.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\ESBackupServerAdminService\ES_BackupManager.ESBackupServerAdminService.Log.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\ESBackupServerAdminService\ES_BackupManager.ESBackupServerAdminService.Login.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

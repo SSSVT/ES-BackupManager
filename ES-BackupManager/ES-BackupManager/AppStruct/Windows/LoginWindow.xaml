@@ -1,9 +1,9 @@
-﻿<Window x:Class="ES_BackupManager.AppStruct.Windows.LoginWindow"
+﻿<Window x:Class="ESBackupManager.AppStruct.Windows.LoginWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ES_BackupManager.AppStruct.Windows"
+        xmlns:local="clr-namespace:ESBackupManager.AppStruct.Windows"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"     
         mc:Ignorable="d"
         Title="Backup Manager | Evolution Studio" Height="210" Width="300" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">

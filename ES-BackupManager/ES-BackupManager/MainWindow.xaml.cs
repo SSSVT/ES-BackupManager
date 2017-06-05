@@ -1,6 +1,6 @@
-﻿using ES_BackupManager.AppStruct.Objects;
-using ES_BackupManager.AppStruct.Windows;
-using ES_BackupManager.ESBackupServerAdminService;
+﻿using ESBackupManager.AppStruct.Objects;
+using ESBackupManager.AppStruct.Windows;
+using ESBackupManager.ESBackupServerAdminService;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,7 +11,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 
-namespace ES_BackupManager
+namespace ESBackupManager
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

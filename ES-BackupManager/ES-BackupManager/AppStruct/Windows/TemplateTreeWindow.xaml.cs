@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace ES_BackupManager.AppStruct.Windows
+namespace ESBackupManager.AppStruct.Windows
 {
     /// <summary>
     /// Interaction logic for TemplateTreeWindow.xaml

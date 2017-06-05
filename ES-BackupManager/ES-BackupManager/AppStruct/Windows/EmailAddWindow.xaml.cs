@@ -1,4 +1,4 @@
-﻿using ES_BackupManager.ESBackupServerAdminService;
+﻿using ESBackupManager.ESBackupServerAdminService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace ES_BackupManager.AppStruct.Windows
+namespace ESBackupManager.AppStruct.Windows
 {
     /// <summary>
     /// Interaction logic for EmailAddWindow.xaml

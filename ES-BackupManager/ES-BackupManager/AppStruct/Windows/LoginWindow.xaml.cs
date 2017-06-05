@@ -1,8 +1,8 @@
-﻿using ES_BackupManager.ESBackupServerAdminService;
+﻿using ESBackupManager.ESBackupServerAdminService;
 using System.Windows;
 using System.Windows.Media;
 
-namespace ES_BackupManager.AppStruct.Windows
+namespace ESBackupManager.AppStruct.Windows
 {
     /// <summary>
     /// Interaction logic for LoginWindow.xaml

@@ -1,4 +1,4 @@
-﻿namespace ES_BackupManager.AppStruct.Objects
+﻿namespace ESBackupManager.AppStruct.Objects
 {
     public class SourcePathInfo
     {
