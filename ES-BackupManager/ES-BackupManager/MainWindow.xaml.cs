@@ -24,9 +24,9 @@ namespace ESBackupManager
 
             this.Administrator = admin;            
             this._loadGrid(Filter.All,Sort.Asc);
-            //this.StartTimer();
+            this.StartTimer();
 
-            //DEBUG
+            //TODO: DEBUG
             //this.TabControl_Main.IsEnabled = true;           
         }
 
@@ -142,12 +142,10 @@ namespace ESBackupManager
 
         #region Timer
         private void StartTimer()
-        {
-            //TODO: Set better interval
-
+        {            
             this.timer = new System.Timers.Timer();
             this.timer.Elapsed += Timer_Elapsed;
-            this.timer.Interval = 5000;
+            this.timer.Interval = 1800000; //Every half hour
             this.timer.Enabled = true;
         }
         private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
@@ -592,25 +590,24 @@ namespace ESBackupManager
                 template.BackupType = this._template_GetTemplateType();
                 template.Compression = this.radioBtn_Template_Compress.IsChecked == true ? true : false;
 
-                //TODO: Maybe rework?
-                /*
-                List<BackupTemplatePath> paths = new List<BackupTemplatePath>();
-                foreach (SourcePathInfo source in this._gridTemplateSourceList)
-                {
-                    foreach (DestinationPathInfo dest in this._gridTemplateDestinationList)
-                    {
-                        paths.Add(new BackupTemplatePath()
-                        {
-                            IDBackupTemplate = template.ID,
-                            Source = source.Value,
-                            Destination = dest.Value,
-                            PathOrder = Convert.ToInt16(paths.Count),
-                            TargetType = dest.TypeByte
-                        });
-                    }
-                }
-                template.Paths = paths;                
-                */
+                //TODO: Maybe rework?                
+                //List<BackupTemplatePath> paths = new List<BackupTemplatePath>();
+                //foreach (SourcePathInfo source in this._gridTemplateSourceList)
+                //{
+                //    foreach (DestinationPathInfo dest in this._gridTemplateDestinationList)
+                //    {
+                //        paths.Add(new BackupTemplatePath()
+                //        {
+                //            IDBackupTemplate = template.ID,
+                //            Source = source.Value,
+                //            Destination = dest.Value,
+                //            PathOrder = Convert.ToInt16(paths.Count),
+                //            TargetType = dest.TypeByte
+                //        });
+                //    }
+                //}
+                //template.Paths = paths;                
+                
 
                 if (this.checkBox_Template_SearchPattern.IsChecked == true)
                     template.SearchPattern = this.textBox_Template_SearchPattern.Text;
@@ -1069,6 +1066,9 @@ namespace ESBackupManager
         }
         private bool _isBackupExpireDateValid(DateTime? date)
         {
+            if (date == null)
+                return false;
+
             return date.Value > DateTime.Now.Date ? true : false;
         }
         #endregion
