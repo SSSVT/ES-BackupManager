@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ESBackupServerAdminService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:53095/ESBackupServerAdminService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:53095/ESBackupServerAdminService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:53095/ESBackupServerAdminService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/ESBackupServer.App.Objects.Filters" />
+      <xsd:import schemaLocation="http://localhost:53095/ESBackupServerAdminService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/ESBackupServer.Database.Objects" />
+      <xsd:import schemaLocation="http://localhost:53095/ESBackupServerAdminService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/ESBackupServer.App.Objects" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IESBackupServerAdminService_GetClients_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetClients" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_GetClients_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetClientsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_GetClientByID_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetClientByID" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_GetClientByID_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetClientByIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_GetBackupsByClientID_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBackupsByClientID" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_GetBackupsByClientID_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBackupsByClientIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_GetBackupByID_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBackupByID" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_GetBackupByID_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBackupByIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_GetLogsByClientID_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLogsByClientID" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_GetLogsByClientID_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLogsByClientIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_GetLogsByBackupID_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLogsByBackupID" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_GetLogsByBackupID_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLogsByBackupIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_GetConfigurationByClientID_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetConfigurationByClientID" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_GetConfigurationByClientID_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetConfigurationByClientIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_GetTemplateByID_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTemplateByID" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_GetTemplateByID_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTemplateByIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_Login_InputMessage">
+    <wsdl:part name="parameters" element="tns:Login" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_Login_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_GetProfile_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetProfile" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_GetProfile_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetProfileResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_GetLoginsByClient_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLoginsByClient" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_GetLoginsByClient_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLoginsByClientResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_UpdateClient_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateClient" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_UpdateClient_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateClientResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_RemoveBackup_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveBackup" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_RemoveBackup_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveBackupResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_UpdateBackup_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateBackup" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_UpdateBackup_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateBackupResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_SaveTemplate_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveTemplate" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_SaveTemplate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveTemplateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_SetTemplateStatus_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetTemplateStatus" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_SetTemplateStatus_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetTemplateStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_RemoveBackupTemplate_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveBackupTemplate" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_RemoveBackupTemplate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveBackupTemplateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_RemoveBackupTemplatePath_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveBackupTemplatePath" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_RemoveBackupTemplatePath_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveBackupTemplatePathResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_UpdateAdministrator_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateAdministrator" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_UpdateAdministrator_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateAdministratorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_ClientConfigUpdated_InputMessage">
+    <wsdl:part name="parameters" element="tns:ClientConfigUpdated" />
+  </wsdl:message>
+  <wsdl:message name="IESBackupServerAdminService_ClientConfigUpdated_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ClientConfigUpdatedResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IESBackupServerAdminService">
+    <wsdl:operation name="GetClients">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetClients" message="tns:IESBackupServerAdminService_GetClients_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetClientsResponse" message="tns:IESBackupServerAdminService_GetClients_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetClientByID">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetClientByID" message="tns:IESBackupServerAdminService_GetClientByID_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetClientByIDResponse" message="tns:IESBackupServerAdminService_GetClientByID_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBackupsByClientID">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetBackupsByClientID" message="tns:IESBackupServerAdminService_GetBackupsByClientID_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetBackupsByClientIDResponse" message="tns:IESBackupServerAdminService_GetBackupsByClientID_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBackupByID">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetBackupByID" message="tns:IESBackupServerAdminService_GetBackupByID_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetBackupByIDResponse" message="tns:IESBackupServerAdminService_GetBackupByID_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLogsByClientID">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetLogsByClientID" message="tns:IESBackupServerAdminService_GetLogsByClientID_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetLogsByClientIDResponse" message="tns:IESBackupServerAdminService_GetLogsByClientID_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLogsByBackupID">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetLogsByBackupID" message="tns:IESBackupServerAdminService_GetLogsByBackupID_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetLogsByBackupIDResponse" message="tns:IESBackupServerAdminService_GetLogsByBackupID_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetConfigurationByClientID">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetConfigurationByClientID" message="tns:IESBackupServerAdminService_GetConfigurationByClientID_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetConfigurationByClientIDResponse" message="tns:IESBackupServerAdminService_GetConfigurationByClientID_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTemplateByID">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetTemplateByID" message="tns:IESBackupServerAdminService_GetTemplateByID_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetTemplateByIDResponse" message="tns:IESBackupServerAdminService_GetTemplateByID_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/Login" message="tns:IESBackupServerAdminService_Login_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/LoginResponse" message="tns:IESBackupServerAdminService_Login_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProfile">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetProfile" message="tns:IESBackupServerAdminService_GetProfile_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetProfileResponse" message="tns:IESBackupServerAdminService_GetProfile_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLoginsByClient">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetLoginsByClient" message="tns:IESBackupServerAdminService_GetLoginsByClient_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/GetLoginsByClientResponse" message="tns:IESBackupServerAdminService_GetLoginsByClient_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateClient">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/UpdateClient" message="tns:IESBackupServerAdminService_UpdateClient_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/UpdateClientResponse" message="tns:IESBackupServerAdminService_UpdateClient_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveBackup">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/RemoveBackup" message="tns:IESBackupServerAdminService_RemoveBackup_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/RemoveBackupResponse" message="tns:IESBackupServerAdminService_RemoveBackup_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateBackup">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/UpdateBackup" message="tns:IESBackupServerAdminService_UpdateBackup_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/UpdateBackupResponse" message="tns:IESBackupServerAdminService_UpdateBackup_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveTemplate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/SaveTemplate" message="tns:IESBackupServerAdminService_SaveTemplate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/SaveTemplateResponse" message="tns:IESBackupServerAdminService_SaveTemplate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetTemplateStatus">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/SetTemplateStatus" message="tns:IESBackupServerAdminService_SetTemplateStatus_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/SetTemplateStatusResponse" message="tns:IESBackupServerAdminService_SetTemplateStatus_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveBackupTemplate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/RemoveBackupTemplate" message="tns:IESBackupServerAdminService_RemoveBackupTemplate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/RemoveBackupTemplateResponse" message="tns:IESBackupServerAdminService_RemoveBackupTemplate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveBackupTemplatePath">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/RemoveBackupTemplatePath" message="tns:IESBackupServerAdminService_RemoveBackupTemplatePath_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/RemoveBackupTemplatePathResponse" message="tns:IESBackupServerAdminService_RemoveBackupTemplatePath_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateAdministrator">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/UpdateAdministrator" message="tns:IESBackupServerAdminService_UpdateAdministrator_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/UpdateAdministratorResponse" message="tns:IESBackupServerAdminService_UpdateAdministrator_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ClientConfigUpdated">
+      <wsdl:input wsaw:Action="http://tempuri.org/IESBackupServerAdminService/ClientConfigUpdated" message="tns:IESBackupServerAdminService_ClientConfigUpdated_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IESBackupServerAdminService/ClientConfigUpdatedResponse" message="tns:IESBackupServerAdminService_ClientConfigUpdated_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IESBackupServerAdminService" type="tns:IESBackupServerAdminService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetClients">
+      <soap:operation soapAction="http://tempuri.org/IESBackupServerAdminService/GetClients" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetClientByID">
+      <soap:operation soapAction="http://tempuri.org/IESBackupServerAdminService/GetClientByID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBackupsByClientID">
+      <soap:operation soapAction="http://tempuri.org/IESBackupServerAdminService/GetBackupsByClientID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBackupByID">
+      <soap:operation soapAction="http://tempuri.org/IESBackupServerAdminService/GetBackupByID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLogsByClientID">
+      <soap:operation soapAction="http://tempuri.org/IESBackupServerAdminService/GetLogsByClientID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLogsByBackupID">
+      <soap:operation soapAction="http://tempuri.org/IESBackupServerAdminService/GetLogsByBackupID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetConfigurationByClientID">
+      <soap:operation soapAction="http://tempuri.org/IESBackupServerAdminService/GetConfigurationByClientID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTemplateByID">
+      <soap:operation soapAction="http://tempuri.org/IESBackupServerAdminService/GetTemplateByID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <soap:operation soapAction="http://tempuri.org/IESBackupServerAdminService/Login" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProfile">
+      <soap:operation soapAction="http://tempuri.org/IESBackupServerAdminService/GetProfile" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLoginsByClient">
+      <soap:operation soapAction="http://tempuri.org/IESBackupServerAdminService/GetLoginsByClient" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateClient">
+      <soap:operation soapAction="http://tempuri.org/IESBackupServerAdminService/UpdateClient" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveBackup">
+      <soap:operation soapAction="http://tempuri.org/IESBackupServerAdminService/RemoveBackup" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateBackup">
+      <soap:operation soapAction="http://tempuri.org/IESBackupServerAdminService/UpdateBackup" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveTemplate">
+      <soap:operation soapAction="http://tempuri.org/IESBackupServerAdminService/SaveTemplate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetTemplateStatus">
+      <soap:operation soapAction="http://tempuri.org/IESBackupServerAdminService/SetTemplateStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveBackupTemplate">
+      <soap:operation soapAction="http://tempuri.org/IESBackupServerAdminService/RemoveBackupTemplate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveBackupTemplatePath">
+      <soap:operation soapAction="http://tempuri.org/IESBackupServerAdminService/RemoveBackupTemplatePath" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateAdministrator">
+      <soap:operation soapAction="http://tempuri.org/IESBackupServerAdminService/UpdateAdministrator" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ClientConfigUpdated">
+      <soap:operation soapAction="http://tempuri.org/IESBackupServerAdminService/ClientConfigUpdated" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ESBackupServerAdminService">
+    <wsdl:port name="BasicHttpBinding_IESBackupServerAdminService" binding="tns:BasicHttpBinding_IESBackupServerAdminService">
+      <soap:address location="http://localhost:53095/ESBackupServerAdminService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

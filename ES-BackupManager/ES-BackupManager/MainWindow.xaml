@@ -1,0 +1,384 @@
+﻿<Window x:Class="ESBackupManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"        
+        mc:Ignorable="d"
+        Title="Backup Manager | Evolution Studio" Height="700" Width="1280" 
+        MinWidth="1000" MinHeight="700" WindowStartupLocation="Manual">
+    <!-- STANDARD HEIGHT: 650 ,STANDARD WIDTH: 1000 -->
+    <!-- CURRENT HEIGHT: 800 ,CURRENT WIDTH: 1280 -->
+    <Window.Resources>
+        <Style TargetType="{x:Type ListBoxItem}" x:Key="ClientStyle" >
+            <Setter Property="ToolTip">
+                <Setter.Value>
+                    <ToolTip Content="{Binding }"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <BitmapImage x:Key="OnlineIcon" UriSource="Resources/ImgStatusOnline.png"/>
+        <BitmapImage x:Key="OfflineIcon" UriSource="Resources/ImgStatusOffline.png"/>
+        <BitmapImage x:Key="BannedIcon" UriSource="Resources/ImgStatusBanned.png"/>
+        <BitmapImage x:Key="UnverifiedIcon" UriSource="Resources/ImgStatusUnverified.png"/>
+    </Window.Resources>
+    <Grid>
+        <StackPanel VerticalAlignment="Top">
+            <Menu Width="auto" Height="20">
+                <MenuItem x:Name="Admin" Header="_Admin" Click="Admin_Click"/>
+                <MenuItem Header="_Help">
+                    <MenuItem x:Name="About" Header="About" HorizontalAlignment="Left" Width="140"/>
+                </MenuItem>
+            </Menu>
+        </StackPanel>
+        <Grid Margin="0,20,0,0">
+            <!-- Musel jsem to prohodit kvůli null reference exception, instancuje se to jako HTML -->
+            <Label Content="Sort by:" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top"/>
+            <ComboBox x:Name="comboBox_Main_Sort" HorizontalAlignment="Left" Margin="65,40,0,0" VerticalAlignment="Top" Width="140" SelectedIndex="0" IsEnabled="False">
+                <ComboBoxItem Content="Default"/>
+                <ComboBoxItem Content="Active ↑ (ASC)"/>
+                <ComboBoxItem Content="Active ↓ (DESC)"/>
+            </ComboBox>
+            <Label Content="Filter:" HorizontalAlignment="Left" Margin="21,9,0,0" VerticalAlignment="Top"/>
+            <ComboBox x:Name="comboBox_Main_Filter" HorizontalAlignment="Left" Margin="65,12,0,0" VerticalAlignment="Top" Width="140" SelectedIndex="0" SelectionChanged="comboBox_Main_Filter_SelectionChanged">
+                <ComboBoxItem Content="All"/>
+                <ComboBoxItem Content="Verified"/>
+                <ComboBoxItem Content="Unverified"/>
+                <ComboBoxItem Content="Banned"/>
+            </ComboBox>
+            <Button x:Name="btn_Main_ApplyFilter" Content="Apply" HorizontalAlignment="Left" Margin="21,66,0,0" VerticalAlignment="Top" Width="75" Click="btn_Main_ApplyFilter_Click"/>
+            <ListBox Name="listBox_Clients" HorizontalAlignment="Left" Margin="10,91,0,10" Width="200" SelectionMode="Single" ItemContainerStyle="{StaticResource ClientStyle}" SelectionChanged="listBox_Clients_SelectionChanged" >
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="0,2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="20" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Image Margin="2 0 0 0" Grid.Column="0" Height="10" Width="10" HorizontalAlignment="Left">
+                                <Image.Style>
+                                    <Style TargetType="{x:Type Image}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsOnline}" Value="true">
+                                                <Setter Property="Source" Value="{StaticResource OnlineIcon}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding IsOnline}" Value="false">
+                                                <Setter Property="Source" Value="{StaticResource OfflineIcon}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Status}" Value="2">
+                                                <Setter Property="Source" Value="{StaticResource BannedIcon}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Status}" Value="1">
+                                                <Setter Property="Source" Value="{StaticResource UnverifiedIcon}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                            <TextBlock Grid.Column="1" Text="{Binding Name}" />
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <GroupBox Name="groupBox_Verification" Margin="215,10,10,10" Header="Verification" Visibility="Hidden">
+                <Grid>
+                    <Button x:Name="btn_Verification_Verify" Content="Verify" HorizontalAlignment="Left" Margin="100,175,0,0" VerticalAlignment="Top" Width="225" Height="80" FontSize="48" Click="btn_Verification_Verify_Click"/>
+                    <Button x:Name="btn_Verification_Ban" Content="Ban" HorizontalAlignment="Left" Margin="400,175,0,0" VerticalAlignment="Top" Width="225" Height="80" FontSize="48" Click="btn_Verification_Ban_Click"/>
+                    <Label x:Name="lbl_Verification" Content="To see clients info you have to verify him." HorizontalAlignment="Left" Margin="125,99,0,0" VerticalAlignment="Top" FontSize="24" FontWeight="Bold"/>
+                </Grid>
+            </GroupBox>
+            <GroupBox Name="groupBox_Banned" Margin="215,10,10,10" Header="Unban" Visibility="Hidden">
+                <Grid>
+                    <Button x:Name="btn_Ban_Unban" Content="Unban" HorizontalAlignment="Left" Margin="300,170,0,0" VerticalAlignment="Top" Width="225" Height="80" FontSize="48" Click="btn_Ban_Unban_Click"/>
+                    <Label x:Name="lbl_Ban" Content="This client is banned and you can't access his data." HorizontalAlignment="Left" Margin="125,99,0,0" VerticalAlignment="Top" FontSize="24" FontWeight="Bold"/>
+                </Grid>
+            </GroupBox>
+            <TabControl Name="TabControl_Main" Visibility="Visible" Margin="215,10,10,10" IsEnabled="False" SelectionChanged="TabControl_Main_SelectionChanged">
+                <TabItem Header="Information">
+                    <Grid>
+                        <GroupBox Header="Client Details" Margin="10,0" Height="222" VerticalAlignment="Top">
+                            <Grid>
+                                <Label Content="Name:" HorizontalAlignment="Left" Margin="99,10,0,0" VerticalAlignment="Top"/>
+                                <TextBox x:Name="textBox_Client_Name" Height="24" Margin="192,13,289,0" TextWrapping="Wrap" Text="Client name" VerticalAlignment="Top" />
+                                <Label Content="Description:" HorizontalAlignment="Left" Margin="70,38,0,0" VerticalAlignment="Top"/>
+                                <xctk:WatermarkTextBox x:Name="textBox_Client_Description" Height="24" Margin="192,42,289,0" TextWrapping="Wrap" Watermark="Description not set" VerticalAlignment="Top"/>
+                                <Separator Height="22" Margin="10,69,10,0" VerticalAlignment="Top"/>
+                                <Label Content="Last report time:" HorizontalAlignment="Left" Margin="47,98,0,0" VerticalAlignment="Top"/>
+                                <xctk:DateTimePickerBase x:Name="dateTimePicker_Client_LastReportTime" TextAlignment="Left" Height="24" Margin="192,101,289,0" Watermark="Last report time" VerticalAlignment="Top" IsEnabled="False"/>
+                                <Label Content="Last backup time:" HorizontalAlignment="Left" Margin="41,128,0,0" VerticalAlignment="Top"/>
+                                <xctk:DateTimePickerBase x:Name="dateTimePicker_Client_LastBackupTime" TextAlignment="Left" Height="24" Margin="192,129,289,0" Watermark="Last backup time" VerticalAlignment="Top" IsEnabled="False"/>
+                                <Label Content="Registration date:" HorizontalAlignment="Left" Margin="40,157,0,0" VerticalAlignment="Top"/>
+                                <xctk:DateTimePickerBase x:Name="dateTimePicker_Client_RegistrationDate" TextAlignment="Left" Height="24" Margin="192,158,289,0" Watermark="Registration date" VerticalAlignment="Top" IsEnabled="False"/>
+                            </Grid>
+                        </GroupBox>
+                        <GroupBox Header="Client Settings" Margin="10,227,10,0" Height="146" VerticalAlignment="Top">
+                            <Grid>
+                                <GroupBox x:Name="groupBox_Client_Connection" Header="Connection Info" Margin="10,10,10,0" VerticalAlignment="Top" Height="108">
+                                    <Grid>
+                                        <Label x:Name="label" Content="Refresh Interval (s):" HorizontalAlignment="Left" Margin="36,41,0,0" VerticalAlignment="Top"/>
+                                        <xctk:IntegerUpDown x:Name="IntUpDown_Client_StatusRepeat" Margin="182,42,276,0" Height="24" VerticalAlignment="Top" Watermark="Connection refresh interval" />
+                                        <Label x:Name="label_Copy" Content="Connection refresh:" HorizontalAlignment="Left" Margin="33,10,0,0" VerticalAlignment="Top"/>
+                                        <RadioButton x:Name="radioBtn_Client_ConnDefault" Content="Default" HorizontalAlignment="Left" Margin="194,16,0,0" VerticalAlignment="Top" Checked="radioBtn_Client_ConnDefault_Checked"/>
+                                        <RadioButton x:Name="radioBtn_Client_ConnSet" Content="Customize" Margin="318,16,0,0" VerticalAlignment="Top" Checked="radioBtn_Client_ConnSet_Checked" HorizontalAlignment="Left" Width="74"/>
+                                    </Grid>
+                                </GroupBox>
+                            </Grid>
+                        </GroupBox>
+                        <Button x:Name="btn_Client_Edit" Content="Edit" Margin="0,0,90,10" Click="btn_Client_Edit_Click" HorizontalAlignment="Right" Width="75" VerticalAlignment="Bottom"/>
+                        <Button x:Name="btn_Client_Cancel" Content="Cancel" Margin="0,0,10,10" Click="btn_Client_Cancel_Click" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75"/>
+                        <Button x:Name="btn_Client_Ban" Content="Ban" Margin="10,0,0,10" HorizontalAlignment="Left" Width="75" VerticalAlignment="Bottom" Click="btn_Client_Ban_Click"/>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Backup Templates">
+                    <Grid>
+                        <DataGrid x:Name="dataGrid_Templates" HorizontalAlignment="Left" Margin="10,10,0,10" Width="200" IsReadOnly="True" AutoGenerateColumns="False" SelectionMode="Single" SelectionChanged="dataGrid_BackupTemplates_SelectionChanged" Grid.ColumnSpan="2">
+                            <DataGrid.RowStyle>
+                                <Style TargetType="DataGridRow">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Enabled}" Value="true">
+                                            <Setter Property="Background" Value="LightGreen"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Enabled}" Value="false">
+                                            <Setter Property="Background" Value="Red"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGrid.RowStyle>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Template Name" Binding="{Binding Name}" Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <GroupBox Header="Backup Template Info" Margin="215,10,10,40">
+                            <ScrollViewer VerticalScrollBarVisibility="Visible">
+                                <Grid>
+                                    <Label Content="Name:" HorizontalAlignment="Left" Margin="99,10,0,0" VerticalAlignment="Top"/>
+                                    <xctk:WatermarkTextBox x:Name="textBox_Template_Name" Height="23" Margin="192,13,77,0" TextWrapping="Wrap" Watermark="Backup name" VerticalAlignment="Top" />
+                                    <Label Content="Description:" HorizontalAlignment="Left" Margin="70,38,0,0" VerticalAlignment="Top"/>
+                                    <xctk:WatermarkTextBox x:Name="textBox_Template_Description" Height="23" Margin="192,42,77,0" TextWrapping="Wrap" Watermark="Backup description" VerticalAlignment="Top" />
+                                    <GroupBox Name="groupBox_Template_Type" Header="Type Settings" Height="62" Margin="10,70,10,0" VerticalAlignment="Top">
+                                        <Grid>
+                                            <Label Content="Backup Type:" HorizontalAlignment="Left" Margin="48,4,0,0" VerticalAlignment="Top"/>
+                                            <RadioButton Name="radioBtn_Template_Full" Content="Full" HorizontalAlignment="Left" Margin="179,10,0,0" Height="21" VerticalAlignment="Top"/>
+                                            <RadioButton Name="radioBtn_Template_Diff" Content="Differencial" HorizontalAlignment="Left" Margin="263,10,0,0" Height="21" VerticalAlignment="Top" IsChecked="True"/>
+                                            <RadioButton Name="radioBtn_Template_Increm" Content="Incremental" HorizontalAlignment="Left" Margin="375,10,0,0" Height="21" VerticalAlignment="Top"/>
+                                        </Grid>
+                                    </GroupBox>
+                                    <GroupBox Name="groupBox_Template_Compression" Header="Compression Settings" Height="62" Margin="10,137,10,0" VerticalAlignment="Top">
+                                        <Grid>
+                                            <Label Content="Compression Type:" HorizontalAlignment="Left" Margin="19,4,0,0" VerticalAlignment="Top"/>
+                                            <RadioButton x:Name="radioBtn_Template_Compress" Content="Compress" HorizontalAlignment="Left" Margin="179,10,0,0" Height="21" VerticalAlignment="Top"/>
+                                            <RadioButton x:Name="radioBtn_Template_NoCompress" Content="No Compress" HorizontalAlignment="Left" Margin="263,10,0,0" Height="21" VerticalAlignment="Top" IsChecked="True"/>
+                                        </Grid>
+                                    </GroupBox>
+                                    <GroupBox x:Name="groupBox_Template_Path" Header="Path Settings" Margin="10,204,10,0" VerticalAlignment="Top" Height="329">
+                                        <Grid>
+                                            <GroupBox x:Name="groupBox_Template_Source" Header="Source Path(s)" Margin="10,10,10,0" VerticalAlignment="Top" Height="145">
+                                                <Grid>
+                                                    <xctk:WatermarkTextBox x:Name="textBox_Template_Source" Height="23" Margin="10,30,270,0" TextWrapping="Wrap" VerticalAlignment="Top" Watermark="Source path"/>
+                                                    <DataGrid x:Name="dataGrid_Template_Source" Height="103" Margin="0,10,10,0" VerticalAlignment="Top" AutoGenerateColumns="False" HorizontalAlignment="Right" Width="255">
+                                                        <DataGrid.Columns>
+                                                            <DataGridTextColumn Header="Path Value" Width="*" Binding="{Binding Value}"/>
+                                                        </DataGrid.Columns>
+                                                    </DataGrid>
+                                                    <Button x:Name="btn_Template_SourceAdd" Content="Add" HorizontalAlignment="Left" Margin="10,93,0,0" VerticalAlignment="Top" Width="75" Click="btn_Template_SourceAdd_Click"/>
+                                                    <Button x:Name="btn_Template_SourceRemove" Content="Remove" Margin="0,93,270,0" VerticalAlignment="Top" Click="btn_Template_SourceRemove_Click" HorizontalAlignment="Right" Width="75"/>
+                                                </Grid>
+                                            </GroupBox>
+                                            <GroupBox x:Name="groupBox_Template_Destination" Header="Destination Path(s)" Margin="10,160,10,0" VerticalAlignment="Top" Height="145">
+                                                <Grid>
+                                                    <xctk:WatermarkTextBox x:Name="textBox_Template_Dest" Height="23" Margin="75,30,270,0" TextWrapping="Wrap" Watermark="Destination path" VerticalAlignment="Top"/>
+                                                    <DataGrid x:Name="dataGrid_Template_Destination" Height="103" Margin="0,10,10,0" VerticalAlignment="Top" AutoGenerateColumns="False" HorizontalAlignment="Right" Width="255">
+                                                        <DataGrid.Columns>
+                                                            <DataGridTextColumn Header="Type" Width="50" Binding="{Binding Type}"/>
+                                                            <DataGridTextColumn Header="Path Value" Width="*" Binding="{Binding Value}"/>
+                                                        </DataGrid.Columns>
+                                                    </DataGrid>
+                                                    <Button x:Name="btn_Template_DestinationAdd" Content="Add" HorizontalAlignment="Left" Margin="10,93,0,0" VerticalAlignment="Top" Width="75" Click="btn_Template_DestinationAdd_Click"/>
+                                                    <Button x:Name="btn_Template_DestinationRemove" Content="Remove" Margin="0,93,270,0" VerticalAlignment="Top" Click="btn_Template_DestinationRemove_Click" HorizontalAlignment="Right" Width="75"/>
+                                                    <ComboBox x:Name="comboBox_Template_DestinationType" Margin="10,31,0,0" SelectedIndex="0" HorizontalAlignment="Left" Width="64" Height="22" VerticalAlignment="Top">
+                                                        <ComboBoxItem Content="LOCAL"/>
+                                                        <ComboBoxItem Content="FTP"/>
+                                                        <ComboBoxItem Content="SSH"/>
+                                                    </ComboBox>
+                                                </Grid>
+                                            </GroupBox>
+
+                                        </Grid>
+                                    </GroupBox>
+                                    <GroupBox Name="groupBox_Template_Time" Header="Time Settings" Height="140" Margin="10,605,10,0" VerticalAlignment="Top">
+                                        <Grid>
+                                            <Label Content="CRON Value:" HorizontalAlignment="Left" Margin="40,10,0,0" VerticalAlignment="Top"/>
+                                            <xctk:WatermarkTextBox x:Name="textBox_Template_CRON" Margin="182,12,210,0" Watermark="Type in CRON format" Height="24" VerticalAlignment="Top" TextChanged="textBox_Template_CRON_TextChanged"/>
+                                            <Label Content="*For documentation" HorizontalAlignment="Left" Margin="1,41,0,0" VerticalAlignment="Top"/>
+                                            <Label HorizontalAlignment="Left" Margin="117,41,0,0" VerticalAlignment="Top">
+                                                <Hyperlink NavigateUri="http://www.quartz-scheduler.org/documentation/quartz-2.x/tutorials/crontrigger.html" RequestNavigate="Hyperlink_RequestNavigate_CRONDocumentation">
+                                                    <Run Text="click here"/>
+                                                </Hyperlink>
+                                            </Label>
+                                            <Label Content = "Expiration Date:" HorizontalAlignment = "Left" Margin = "24,79,0,0" VerticalAlignment = "Top" />
+                                            <xctk:DateTimePicker Name = "dateTimePicker_Template_Expire" Margin = "182,81,67,0" Height = "24" VerticalAlignment = "Top" Watermark="Set expiration date or leave default" />
+                                            <Label x:Name= "label_Template_ExpireError" Content = "*" ToolTip = "Date must be higher than current date." Margin = "0,81,38,0" VerticalAlignment = "Top" Foreground = "Red" Visibility = "Hidden" HorizontalAlignment = "Right" Width = "29" />
+                                            <ComboBox Name="comboBox_Template_CRONTemplates" Margin="0,14,63,0" VerticalAlignment="Top" SelectedIndex="0" SelectionChanged="comboBox_Template_CRONTemplates_SelectionChanged" HorizontalAlignment="Right" Width="138">
+                                                <ComboBoxItem Content="Custom"/>
+                                                <ComboBoxItem Content="Every hour"/>
+                                                <ComboBoxItem Content="Every day"/>
+                                                <ComboBoxItem Content="Every week"/>
+                                                <ComboBoxItem Content="Every month"/>
+                                            </ComboBox>
+                                            <Label Content="or for CRON format generator" HorizontalAlignment="Left" Margin="182,41,0,0" VerticalAlignment="Top"/>
+                                            <Label Name="hyperlink_CRONGenerator" HorizontalAlignment="Left" Margin="351,41,0,0" VerticalAlignment="Top">
+                                                <Hyperlink NavigateUri="http://www.cronmaker.com/" RequestNavigate="Hyperlink_RequestNavigate_CRONGenerator">
+                                                    <Run Text="click here"/>
+                                                </Hyperlink>
+                                            </Label>
+                                        </Grid>
+                                    </GroupBox>
+                                    <GroupBox Name="groupBox_Template_Notification" Header="Notification Settings" Height="76" Margin="10,750,10,0" VerticalAlignment="Top">
+                                        <Grid>
+                                            <RadioButton x:Name="radioBtn_Template_NotifEnable" Content="Enabled" HorizontalAlignment="Left" Margin="60,10,0,0" Height="21" VerticalAlignment="Top"/>
+                                            <RadioButton x:Name="radioBtn_Template_NotifDisable" Content="Disabled" HorizontalAlignment="Left" Margin="170,10,0,0" Height="21" VerticalAlignment="Top" IsChecked="True"/>
+                                            <Label Content="*Notification on client's screen" HorizontalAlignment="Left" Margin="0,28,0,0" VerticalAlignment="Top"/>
+
+                                        </Grid>
+                                    </GroupBox>
+                                    <GroupBox x:Name="groupBox_Template_Email" Header="Email Report Settings" Margin="10,831,10,0" Height="53" VerticalAlignment="Top">
+                                        <CheckBox x:Name="checkBox_Template_EmailReport" Content="Include in email report" HorizontalAlignment="Left" Margin="58,10,0,0" VerticalAlignment="Top"/>
+                                    </GroupBox>
+                                    <GroupBox x:Name="groupBox_Template_Exception" Header="Exception Settings" Margin="10,538,10,0" VerticalAlignment="Top" Height="62">
+                                        <Grid>
+                                            <CheckBox x:Name="checkBox_Template_SearchPattern" Content="Search pattern" HorizontalAlignment="Left" Margin="68,12,0,0" VerticalAlignment="Top" Checked="checkBox_Template_SearchPattern_Checked"/>
+                                            <xctk:WatermarkTextBox x:Name="textBox_Template_SearchPattern" Height="23" Margin="182,10,63,0" TextWrapping="Wrap" Watermark="Type search pattern" VerticalAlignment="Top"/>
+                                        </Grid>
+                                    </GroupBox>
+                                </Grid>
+                            </ScrollViewer>
+                        </GroupBox>
+                        <Button x:Name="btn_Template_New" Content="New" Margin="230,0,0,10"  VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="73" Click="btn_Template_New_Click"/>
+                        <Button x:Name="btn_Template_Cancel" Content="Cancel" Margin="0,0,10,10" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Click="btn_Template_Cancel_Click" IsEnabled="False"/>
+                        <Button x:Name="btn_Template_Edit" Content="Edit" Margin="0,0,90,10" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Click="btn_Template_Edit_Click"/>
+                        <Button x:Name="btn_Template_StatusChange" Content="Enable" Margin="308,0,0,10" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="73" Click="btn_Template_StatusChange_Click"/>
+                        <Button x:Name="btn_Template_Remove" Content="Remove" Margin="386,0,0,10" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="73" Click="btn_Template_Remove_Click"/>
+                    </Grid>
+
+                </TabItem>
+                <TabItem Header="Backups">
+                    <Grid x:Name="Backup_Grid">
+                        <DataGrid x:Name="dataGrid_Backups" HorizontalAlignment="Left" Margin="10,10,0,10" Width="200" IsReadOnly="True" AutoGenerateColumns="False" SelectionChanged="dataGrid_Backups_SelectionChanged" SelectionMode="Single">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Backup Name" Binding="{Binding Name}" Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <GroupBox Header="Backup Info" Margin="225,10,10,10" Grid.ColumnSpan="11">
+                            <Grid>
+                                <Label Content="Name:" HorizontalAlignment="Left" Margin="99,10,0,0" VerticalAlignment="Top"/>
+                                <TextBox x:Name="textBox_Backup_Name" Height="23" Margin="192,13,77,0" TextWrapping="Wrap" Text="Backup name" VerticalAlignment="Top" />
+                                <Label Content="Description:" HorizontalAlignment="Left" Margin="70,38,0,0" VerticalAlignment="Top"/>
+                                <TextBox x:Name="textBox_Backup_Description" Height="23" Margin="192,42,77,0" TextWrapping="Wrap" Text="Backup description" VerticalAlignment="Top" />
+                                <GroupBox Header="Type Settings" Height="62" Margin="10,153,10,0" VerticalAlignment="Top">
+                                    <Grid>
+                                        <Label Content="Backup Type:" HorizontalAlignment="Left" Margin="48,4,0,0" VerticalAlignment="Top"/>
+                                        <RadioButton Name="radioBtn_Backup_Full" Content="Full" HorizontalAlignment="Left" Margin="179,10,0,0" Height="21" VerticalAlignment="Top"/>
+                                        <RadioButton Name="radioBtn_Backup_Diff" Content="Differencial" Margin="265,9,0,0" Height="21" VerticalAlignment="Top" IsChecked="True" HorizontalAlignment="Left" Width="79"/>
+                                        <RadioButton Name="radioBtn_Backup_Increm" Content="Incremental" Margin="394,10,0,0" Height="21" VerticalAlignment="Top" IsChecked="False" HorizontalAlignment="Left" Width="90" IsEnabled="False"/>
+                                    </Grid>
+                                </GroupBox>
+                                <GroupBox Header="Path Settings" Height="90" Margin="10,287,10,0" VerticalAlignment="Top" >
+                                    <Grid>
+                                        <Label Content="Source:" HorizontalAlignment="Left" Margin="79,5,0,0" VerticalAlignment="Top"/>
+                                        <TextBox x:Name="textBox_Backup_Source" Height="23" Margin="175,9,62,0" TextWrapping="Wrap" Text="Backup source path" VerticalAlignment="Top"/>
+                                        <Label Content="Destination:" HorizontalAlignment="Left" Margin="55,33,0,0" VerticalAlignment="Top"/>
+                                        <TextBox x:Name="textBox_Backup_Dest" Height="23" Margin="175,37,62,0" TextWrapping="Wrap" Text="Backup destination path" VerticalAlignment="Top"/>
+                                    </Grid>
+                                </GroupBox>
+                                <GroupBox Header="Time Settings" Margin="10,382,9.6,0" Height="131" VerticalAlignment="Top">
+                                    <Grid>
+                                        <Label Content="Expiration Date:" HorizontalAlignment="Left" Margin="36,9,0,0" VerticalAlignment="Top"/>
+                                        <Label Content="Start Time:" HorizontalAlignment="Left" Margin="63,38,0,0" VerticalAlignment="Top"/>
+                                        <Label Content="End Time:" HorizontalAlignment="Left" Margin="67,67,0,0" VerticalAlignment="Top"/>
+                                        <xctk:DateTimePicker Name="dateTimePicker_Backup_Expire" Margin="178,11,34,0" Height="24" VerticalAlignment="Top"/>
+                                        <xctk:DateTimePicker x:Name="dateTimePicker_Backup_Start" Margin="178,40,34,0" Height="24" VerticalAlignment="Top"/>
+                                        <xctk:DateTimePicker x:Name="dateTimePicker_Backup_End" Margin="178,69,34,0" Height="24" VerticalAlignment="Top"/>
+                                        <Label x:Name="label_Backup_ExpireError" Content="*" ToolTip="Date must be higher than current date." Margin="0,11,5,0" VerticalAlignment="Top" Foreground="Red" Visibility="Hidden" HorizontalAlignment="Right" Width="29"/>
+                                    </Grid>
+                                </GroupBox>
+                                <GroupBox Header="Compression Settings" Height="62" Margin="10,220,10,0" VerticalAlignment="Top">
+                                    <Grid>
+                                        <Label Content="Compression Type:" HorizontalAlignment="Left" Margin="19,4,0,0" VerticalAlignment="Top"/>
+                                        <RadioButton x:Name="radioBtn_Backup_Compress" Content="Compress" HorizontalAlignment="Left" Margin="179,10,0,0" Height="21" VerticalAlignment="Top"/>
+                                        <RadioButton x:Name="radioBtn_Backup_NoCompress" Content="No Compress" Margin="263,10,0,0" Height="21" VerticalAlignment="Top" IsChecked="True" HorizontalAlignment="Left" Width="91"/>
+                                    </Grid>
+                                </GroupBox>
+                                <Button Name="btn_Backup_Edit" Content="Edit" Margin="0,0,90,0" HorizontalAlignment="Right" Width="75" VerticalAlignment="Bottom" Click="btn_Backup_Edit_Click"/>
+                                <Button Name ="btn_Backup_Cancel" Content="Cancel" Margin="0,0,10,0" VerticalAlignment="Bottom" Click="btn_Backup_Cancel_Click" IsEnabled="False" HorizontalAlignment="Right" Width="75"/>
+                                <Label Content="Created By Template:" HorizontalAlignment="Left" Margin="20,69,0,0" VerticalAlignment="Top"/>
+                                <TextBox x:Name="textBox_Backup_Template" Height="23" Margin="192,72,77,0" TextWrapping="Wrap" Text="Backup template" VerticalAlignment="Top"/>
+                                <Button x:Name="btn_Backup_TemplateTree" Content="..." HorizontalAlignment="Right" Margin="0,75,52,0" Width="20" ToolTip="Show tree of this template" Height="20" VerticalAlignment="Top"/>
+                                <Label Content="Base backup:" HorizontalAlignment="Left" Margin="60,122,0,0" VerticalAlignment="Top"/>
+                                <TextBox x:Name="textBox_Backup_BaseBackup" Height="23" Margin="192,125,77,0" TextWrapping="Wrap" Text="Base backup" VerticalAlignment="Top"/>
+                                <Label Content="*Base backup is only shown if the backup was differencial or incremental" HorizontalAlignment="Left" Margin="70,100,0,0" VerticalAlignment="Top" FontSize="10"/>
+                                <Button x:Name="btn_Backup_Restore" Content="Restore" Margin="20,0,0,0" HorizontalAlignment="Left" Width="75" VerticalAlignment="Bottom"/>
+                            </Grid>
+                        </GroupBox>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Logs">
+                    <Grid>
+                        <DataGrid x:Name="dataGrid_Logs" HorizontalAlignment="Left" Margin="10,30,0,10" Width="200" IsReadOnly="True" AutoGenerateColumns="False" SelectionMode="Single" SelectionChanged="dataGrid_Logs_SelectionChanged">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Log Time" Binding="{Binding UTCTime}" Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <GroupBox Name="groupBox_Log_Logins" Header="Login Info" Margin="225,10,10,10" Visibility="Hidden">
+                            <Grid>
+                                <Label Content="Client:" HorizontalAlignment="Left" Margin="94,10,0,0" VerticalAlignment="Top"/>
+                                <xctk:WatermarkTextBox x:Name="textBox_Log_Login_Client" Height="24" Margin="200,12,124,0" Watermark="Clients name" VerticalAlignment="Top"/>
+                                <Label Content="Login time:" HorizontalAlignment="Left" Margin="68,41,0,0" VerticalAlignment="Top"/>
+                                <xctk:DateTimePicker x:Name="dateTimePicker_Log_Logins_Time" TextAlignment="Left" Height="24" Margin="200,43,124,0" Watermark="Login time" VerticalAlignment="Top"/>
+                                <Label Content="IP address:" HorizontalAlignment="Left" Margin="70,72,0,0" VerticalAlignment="Top"/>
+                                <xctk:WatermarkTextBox x:Name="textBox_Log_Login_IP" Height="24" Margin="200,74,124,0" Watermark="Clients IP address" VerticalAlignment="Top"/>
+                            </Grid>
+                        </GroupBox>
+                        <GroupBox Name="groupBox_Log_LogsClient" Header="Log Info" Margin="225,10,10,10" Visibility="Hidden">
+                            <Grid>
+                                <Label Content="Client:" HorizontalAlignment="Left" Margin="94,10,0,0" VerticalAlignment="Top"/>
+                                <xctk:WatermarkTextBox x:Name="textBox_Log_LogsClient_Client" Height="24" Margin="200,12,124,0" Watermark="Clients name" VerticalAlignment="Top"/>
+                                <Label Content="Log type:" HorizontalAlignment="Left" Margin="78,41,0,0" VerticalAlignment="Top"/>
+                                <ComboBox x:Name="comboBox_Log_LogsClient_Type" Margin="200,45,124,0" VerticalAlignment="Top" SelectedIndex="0" IsReadOnly="True">
+                                    <ComboBoxItem>Error</ComboBoxItem>
+                                    <ComboBoxItem>Warning</ComboBoxItem>
+                                    <ComboBoxItem>Message</ComboBoxItem>
+                                </ComboBox>
+                                <Label Content="Log time:" HorizontalAlignment="Left" Margin="78,72,0,0" VerticalAlignment="Top"/>
+                                <xctk:DateTimePicker x:Name="dateTimePicker_Log_LogsClient_Time" Height="24" Margin="200,74,124,0" Watermark="Log time" VerticalAlignment="Top"/>
+                                <Label Content="Log value:" HorizontalAlignment="Left" Margin="74,101,0,0" VerticalAlignment="Top"/>
+                                <xctk:WatermarkTextBox x:Name="textBox_Log_LogsClient_Value" TextWrapping="Wrap" Height="80" Margin="200,103,124,0" Watermark="Log value" VerticalAlignment="Top"/>
+                            </Grid>
+                        </GroupBox>
+                        <GroupBox Name="groupBox_Log_LogsBackup" Header="Log Info" Margin="225,10,10,10" Visibility="Visible">
+                            <Grid>
+                                <Label Content="Client:" HorizontalAlignment="Left" Margin="94,10,0,0" VerticalAlignment="Top"/>
+                                <xctk:WatermarkTextBox x:Name="textBox_Log_LogsBackup_Client" Height="24" Margin="200,12,124,0" Watermark="Clients name" VerticalAlignment="Top"/>
+                                <Label Content="Log type:" HorizontalAlignment="Left" Margin="78,70,0,0" VerticalAlignment="Top"/>
+                                <ComboBox x:Name="comboBox_Log_LogsBackup_Type" Margin="200,74,124,0" VerticalAlignment="Top" SelectedIndex="0" IsReadOnly="True">
+                                    <ComboBoxItem>Error</ComboBoxItem>
+                                    <ComboBoxItem>Warning</ComboBoxItem>
+                                    <ComboBoxItem>Message</ComboBoxItem>
+                                </ComboBox>
+                                <Label Content="Log time:" HorizontalAlignment="Left" Margin="78,101,0,0" VerticalAlignment="Top"/>
+                                <xctk:DateTimePicker x:Name="dateTimePicker_Log_LogsBackup_Time" Height="24" Margin="200,103,124,0" Watermark="Log time" VerticalAlignment="Top"/>
+                                <Label Content="Log value:" HorizontalAlignment="Left" Margin="74,130,0,0" VerticalAlignment="Top"/>
+                                <xctk:WatermarkTextBox x:Name="textBox_Log_LogsBackup_Value" TextWrapping="Wrap" Height="80" Margin="200,132,124,0" Watermark="Log value" VerticalAlignment="Top"/>
+                                <Label Content="Backup:" HorizontalAlignment="Left" Margin="86,39,0,0" VerticalAlignment="Top"/>
+                                <xctk:WatermarkTextBox x:Name="textBox_Log_LogsBackup_Backup" Height="24" Margin="200,41,124,0" Watermark="Backups name" VerticalAlignment="Top"/>
+                            </Grid>
+                        </GroupBox>
+                        <RadioButton x:Name="radioBtn_Log_Logs" Content="Logs" HorizontalAlignment="Left" Margin="35,10,0,0" VerticalAlignment="Top" IsChecked="True" Checked="radioBtn_Log_Logs_Checked"/>
+                        <RadioButton x:Name="radioBtn_Log_Logins" Content="Logins" HorizontalAlignment="Left" Margin="95,10,0,0" VerticalAlignment="Top" Checked="radioBtn_Log_Logins_Checked"/>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+            <CheckBox Content="Show banned" HorizontalAlignment="Left" Margin="101,71,0,0" VerticalAlignment="Top"/>
+        </Grid>
+    </Grid>
+</Window>

@@ -1,0 +1,36 @@
+﻿<Window x:Class="ESBackupManager.AppStruct.Windows.AdministratorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"        
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"     
+        mc:Ignorable="d"
+        Title="Backup Manager | Evolution Studio" Height="395" Width="700" MinHeight="395" MinWidth="700">
+    <Grid>
+        <GroupBox Name="groupBox_Emails" Header="Emails" Margin="10,174,10,44">
+            <Grid>
+                <DataGrid Name="dataGrid_Emails" Margin="10,5,100,5.2" AutoGenerateColumns="False" IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Email Address" Binding="{Binding Address}" Width="*"/>
+                        <DataGridCheckBoxColumn Header="Default" Binding="{Binding IsDefault}" Width="100"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <Button x:Name="btn_EmailAdd" Content="Add" HorizontalAlignment="Right" Margin="0,10,10.2,0" VerticalAlignment="Top" Width="85" Click="btn_EmailAdd_Click"/>
+                <Button x:Name="btn_EmailRemove" Content="Remove" HorizontalAlignment="Right" Margin="0,35,10.2,0" VerticalAlignment="Top" Width="85" Click="btn_EmailRemove_Click"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox Name="groupBox_Details" Header="Information Details" Margin="10,10,10.2,0" Height="159" VerticalAlignment="Top">
+            <Grid>
+                <Label Content="First name:" HorizontalAlignment="Left" Margin="56,10,0,0" VerticalAlignment="Top"/>
+                <Label Content="Last name:" HorizontalAlignment="Left" Margin="57,41,0,0" VerticalAlignment="Top"/>
+                <Separator Margin="0,83,0.2,50" />
+                <TextBox x:Name="textBox_FirstName" Height="24" Margin="190,13,79.2,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+                <TextBox x:Name="textBox_LastName" Height="24" Margin="190,44,79.2,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+                <Label Content="Registration date:" HorizontalAlignment="Left" Margin="21,99,0,0" VerticalAlignment="Top"/>
+                <xctk:DateTimePicker x:Name="dateTimePicker_RegistrationDate" Watermark="Registration date" Height="24" Margin="190,101,79.2,0" VerticalAlignment="Top" IsEnabled="False"/>
+            </Grid>
+        </GroupBox>
+        <Button Name="btn_Edit" Content="Edit" Margin="0,0,90,14" HorizontalAlignment="Right" Width="75" Click="btn_Edit_Click" Height="20" VerticalAlignment="Bottom"/>
+        <Button Name="btn_Cancel" Content="Cancel" Margin="0,0,10,14" Click="btn_Cancel_Click" Height="20" VerticalAlignment="Bottom" IsEnabled="False" HorizontalAlignment="Right" Width="75"/>
+    </Grid>
+</Window>
